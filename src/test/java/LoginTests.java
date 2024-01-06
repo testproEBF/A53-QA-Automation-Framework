@@ -15,7 +15,7 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void loginValidEmailPassword() {
-        try{
+
             provideEmail("demo@class.com");
             providePassword("te$t$tudent");
             clickSubmit();
@@ -23,9 +23,7 @@ public class LoginTests extends BaseTest {
             //Assertion
             WebElement avatarIcon = driver.findElement(By.cssSelector("img[class='avatar']"));
             Assert.assertTrue(avatarIcon.isDisplayed());
-        } catch (Exception e){
-            System.out.println("Something went wrong." + e);
-        }
+
     }
 
     @Test
