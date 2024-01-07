@@ -11,16 +11,16 @@ public class Homework18 extends BaseTest{
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         // Click Play (Done first because nothing is played when Next Button
         // is clicked right after logging in)
         clickMediaPlayerPlayButton();
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
         //Click play next song (media player)
         clickMediaPlayerNextButton();
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
         //Assertion (sound bar/pause button is displayed)
         WebElement mediaPlayerPauseButton = driver.findElement(By.cssSelector("#mainFooter .fa.fa-pause"));
