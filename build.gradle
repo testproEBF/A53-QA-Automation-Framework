@@ -17,7 +17,6 @@ dependencies {
 
 test {
     useTestNG() {
-       // suites "src/test/resources/TestNG.xml"
-        suites "src/test/resources/PlaySongTests.xml"
+       suites "src/test/resources/TestNG.xml"
     }
 }

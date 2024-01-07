@@ -7,28 +7,31 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import java.time.Duration;
+import java.util.UUID;
 
 
 public class BaseTest {
 
     public WebDriver driver;
-    public String url = "https://qa.koel.app/";
+    public String url = "";
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeMethod
-    public void launchBrowser(){
+    @Parameters ({"BaseURL"})
+    public void launchBrowser(String BaseURL){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-
+        url = BaseURL;
         navigateToUrl();
     }
 
@@ -56,5 +59,9 @@ public class BaseTest {
 
     public void navigateToUrl(){
         driver.get(url);
+    }
+
+    public String generateRandomName(){
+        return UUID.randomUUID().toString().replace("-", "");
     }
 }
