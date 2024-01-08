@@ -1,9 +1,13 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class Homework19 extends BaseTest{
 
@@ -13,12 +17,14 @@ public class Homework19 extends BaseTest{
         provideEmail(email);
         providePassword(password);
         clickSubmit();
-        Thread.sleep(2000);
 
         //create playlist
         String newPlaylistName = generateRandomName();
         clickPlusButton();
         createNewPlaylist(newPlaylistName);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("Created playlist")));
 
         //delete playlist
         deleteEmptyPlaylist(newPlaylistName);
@@ -30,38 +36,33 @@ public class Homework19 extends BaseTest{
     }
 
     public void clickPlusButton() throws InterruptedException{
-        WebElement playlistPlusButton = driver.findElement(By.cssSelector("[title=\"Create a new playlist\"]"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement playlistPlusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title=\"Create a new playlist\"]")));
         playlistPlusButton.click();
-        Thread.sleep(2000);
     }
 
     public void createNewPlaylist(String newPlaylistName) throws InterruptedException{
-        WebElement newPlaylistList = driver.findElement(By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement newPlaylistList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]")));
         newPlaylistList.click();
-        Thread.sleep(2000);
 
-        WebElement playlistNameField = driver.findElement(By.cssSelector("#playlists [type=\"text\"]"));
+        WebElement playlistNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#playlists [type=\"text\"]")));
         playlistNameField.click();
         playlistNameField.sendKeys(newPlaylistName);
-        Thread.sleep(2000);
         playlistNameField.sendKeys(Keys.RETURN);
-
-        Thread.sleep(2000);
     }
 
     public void selectPlaylist(String newPlaylistName) throws InterruptedException{
-        WebElement playlist = driver.findElement(By.linkText(newPlaylistName));
-        Assert.assertNotNull(playlist);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement playlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(newPlaylistName)));
         playlist.click();
-
-        Thread.sleep(2000);
     }
 
     public void clickDeletePlaylistButton(String newPlaylistName) throws InterruptedException{
         selectPlaylist(newPlaylistName);
-        WebElement deletePlaylistButton = driver.findElement(By.cssSelector(".del.btn-delete-playlist"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".del.btn-delete-playlist")));
         deletePlaylistButton.click();
-        Thread.sleep(2000);
     }
 
     public void deleteEmptyPlaylist(String newPlaylistName) throws InterruptedException{
@@ -69,7 +70,8 @@ public class Homework19 extends BaseTest{
     }
 
     public String getNotification (){
-        WebElement actualNotificationText = driver.findElement(By.cssSelector(".success.show"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement actualNotificationText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
         return actualNotificationText.getText();
     }
 }
