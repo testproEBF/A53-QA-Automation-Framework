@@ -13,7 +13,7 @@ public class Homework19 extends BaseTest{
 
     @Test
     @Parameters({"email", "password"})
-    public void deletePlaylist(String email, String password) throws InterruptedException {
+    public void deletePlaylist(String email, String password){
         provideEmail(email);
         providePassword(password);
         clickSubmit();
@@ -23,7 +23,7 @@ public class Homework19 extends BaseTest{
         clickPlusButton();
         createNewPlaylist(newPlaylistName);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("Created playlist")));
 
         //delete playlist
@@ -35,13 +35,13 @@ public class Homework19 extends BaseTest{
 
     }
 
-    public void clickPlusButton() throws InterruptedException{
+    public void clickPlusButton(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement playlistPlusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title=\"Create a new playlist\"]")));
         playlistPlusButton.click();
     }
 
-    public void createNewPlaylist(String newPlaylistName) throws InterruptedException{
+    public void createNewPlaylist(String newPlaylistName){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement newPlaylistList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]")));
         newPlaylistList.click();
@@ -52,20 +52,20 @@ public class Homework19 extends BaseTest{
         playlistNameField.sendKeys(Keys.RETURN);
     }
 
-    public void selectPlaylist(String newPlaylistName) throws InterruptedException{
+    public void selectPlaylist(String newPlaylistName){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement playlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(newPlaylistName)));
         playlist.click();
     }
 
-    public void clickDeletePlaylistButton(String newPlaylistName) throws InterruptedException{
+    public void clickDeletePlaylistButton(String newPlaylistName){
         selectPlaylist(newPlaylistName);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".del.btn-delete-playlist")));
         deletePlaylistButton.click();
     }
 
-    public void deleteEmptyPlaylist(String newPlaylistName) throws InterruptedException{
+    public void deleteEmptyPlaylist(String newPlaylistName){
         clickDeletePlaylistButton(newPlaylistName);
     }
 
