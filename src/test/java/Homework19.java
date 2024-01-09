@@ -1,5 +1,4 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,6 +9,8 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class Homework19 extends BaseTest{
+
+    //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     @Test
     @Parameters({"email", "password"})
@@ -35,33 +36,11 @@ public class Homework19 extends BaseTest{
 
     }
 
-    public void clickPlusButton(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement playlistPlusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title=\"Create a new playlist\"]")));
-        playlistPlusButton.click();
-    }
-
-    public void createNewPlaylist(String newPlaylistName){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement newPlaylistList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]")));
-        newPlaylistList.click();
-
-        WebElement playlistNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#playlists [type=\"text\"]")));
-        playlistNameField.click();
-        playlistNameField.sendKeys(newPlaylistName);
-        playlistNameField.sendKeys(Keys.RETURN);
-    }
-
-    public void selectPlaylist(String newPlaylistName){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement playlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(newPlaylistName)));
-        playlist.click();
-    }
-
     public void clickDeletePlaylistButton(String newPlaylistName){
         selectPlaylist(newPlaylistName);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".del.btn-delete-playlist")));
+        String locator = ".del.btn-delete-playlist";
+        WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
         deletePlaylistButton.click();
     }
 
@@ -69,9 +48,4 @@ public class Homework19 extends BaseTest{
         clickDeletePlaylistButton(newPlaylistName);
     }
 
-    public String getNotification (){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement actualNotificationText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
-        return actualNotificationText.getText();
-    }
 }

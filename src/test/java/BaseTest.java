@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -70,5 +71,34 @@ public class BaseTest {
 
     public String generateRandomName(){
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public void createNewPlaylist(String newPlaylistName){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement newPlaylistList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]")));
+        newPlaylistList.click();
+
+        WebElement playlistNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#playlists [type=\"text\"]")));
+        playlistNameField.click();
+        playlistNameField.sendKeys(newPlaylistName);
+        playlistNameField.sendKeys(Keys.RETURN);
+    }
+
+    public void selectPlaylist(String newPlaylistName){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement playlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(newPlaylistName)));
+        playlist.click();
+    }
+
+    public void clickPlusButton(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement playlistPlusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title=\"Create a new playlist\"]")));
+        playlistPlusButton.click();
+    }
+
+    public String getNotification (){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement actualNotificationText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
+        return actualNotificationText.getText();
     }
 }
