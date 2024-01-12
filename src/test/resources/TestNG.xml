@@ -8,7 +8,11 @@
     <test name="Example Test" preserve-order="false">
         <classes>
             <class name="BaseTest"/>
-            <class name="Homework21"/>
+            <class name="PlaylistPageTest"/>
+            <class name="pages.BasePage"/>
+            <class name="pages.LoginPage"/>
+            <class name="pages.SharedPage"/>
+            <class name="pages.PlaylistPage"/>
         </classes>
     </test>
 </suite>
