@@ -1,21 +1,22 @@
 package pages;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-
 import java.time.Duration;
 import java.util.UUID;
 
 public class BasePage {
 
-    WebDriver driver;
-    WebDriverWait wait;
-    Actions actions;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected Actions actions;
+    private final By playlistPlusButton = By.cssSelector("[title=\"Create a new playlist\"]");
+    private final By newPlaylistList = By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]");
+    private final By playlistNameField = By.cssSelector("#playlists [type=\"text\"]");
 
     public BasePage (WebDriver givenDriver){
         driver = givenDriver;
@@ -36,10 +37,23 @@ public class BasePage {
         return findElement(actualNotificationText).getText();
     }
 
-    public void contextClick(String playlistName) {
-        By playlist = By.linkText(playlistName);
-        Assert.assertNotNull(playlist, "Playlist empty.");
-        findElement(playlist).click();
-        actions.contextClick(findElement(playlist)).perform();
+    public void waitForInvisibility(String message){
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText(message)));
+    }
+
+    public void contextClickElement (By locator) {
+        actions.contextClick(findElement(locator)).perform();
+    }
+
+
+    public void clickPlusButton(){
+        findElement(playlistPlusButton).click();
+    }
+
+    public void clickNewPlaylist(String newPlaylistName){
+        findElement(newPlaylistList).click();
+        findElement(playlistNameField).click();
+        findElement(playlistNameField).sendKeys(newPlaylistName);
+        findElement(playlistNameField).sendKeys(Keys.RETURN);
     }
 }

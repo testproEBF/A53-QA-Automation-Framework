@@ -1,14 +1,10 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.PlaylistPage;
-import pages.SharedPage;
-import java.time.Duration;
 
 public class PlaylistPageTest extends BaseTest {
 
@@ -18,7 +14,6 @@ public class PlaylistPageTest extends BaseTest {
 
         BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        SharedPage sharedPage = new SharedPage(driver);
         PlaylistPage playlistPage = new PlaylistPage(driver);
 
         loginPage.provideEmail(email);
@@ -29,17 +24,19 @@ public class PlaylistPageTest extends BaseTest {
         String newPlaylistName = basePage.generateRandomName();
 
 
-        sharedPage.clickPlusButton();
-        sharedPage.clickNewPlaylist(newPlaylistName);
+        basePage.clickPlusButton();
+        basePage.clickNewPlaylist(newPlaylistName);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("Created playlist")));
+        String message = "Created playlist";
+        basePage.waitForInvisibility(message);
 
         //right-click Playlist
-        basePage.contextClick(newPlaylistName);
+        By playlist = By.linkText(newPlaylistName);
+        basePage.contextClickElement(playlist);
 
         //choose Edit
-        playlistPage.clickEdit(playlistNewName);
+        playlistPage.clickEdit();
+        playlistPage.enterPlaylistNewName(playlistNewName);
 
         //assertion
         String expectedSuccessMessage = String.format("Updated playlist \"%s.\"", playlistNewName);
