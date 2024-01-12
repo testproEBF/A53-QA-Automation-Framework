@@ -1,28 +1,37 @@
 package pages;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class SharedPage extends BasePage {
     public SharedPage (WebDriver givenDriver){
         super (givenDriver);
     }
 
-    By playlistPlusButton = By.cssSelector("[title=\"Create a new playlist\"]");
-    By newPlaylistList = By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]");
-    By playlistNameField = By.cssSelector("#playlists [type=\"text\"]");
+    @FindBy(css = "[title=\"Create a new playlist\"]")
+    WebElement playlistPlusButton;
+    @FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
+    WebElement newPlaylistList;
+    @FindBy(css = "#playlists [type=\"text\"]")
+    WebElement playlistNameField;
 
 
-    public void clickPlusButton(){
-        findElement(playlistPlusButton).click();
+    public SharedPage clickPlusButton(){
+        playlistPlusButton.click();
+        return this;
     }
 
-    public void clickNewPlaylist(String newPlaylistName){
-        findElement(newPlaylistList).click();
-        findElement(playlistNameField).click();
-        findElement(playlistNameField).sendKeys(newPlaylistName);
-        findElement(playlistNameField).sendKeys(Keys.RETURN);
+    public SharedPage clickNewPlaylist() {
+        newPlaylistList.click();
+        return this;
+    }
+
+    public SharedPage enterPlaylistName (String newPlaylistName){
+        playlistNameField.click();
+        playlistNameField.sendKeys(newPlaylistName);
+        playlistNameField.sendKeys(Keys.RETURN);
+        return this;
     }
 
 }

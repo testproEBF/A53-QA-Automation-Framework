@@ -1,21 +1,33 @@
 package pages;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class PlaylistPage extends BasePage {
     public PlaylistPage(WebDriver givenDriver) {
         super(givenDriver);
     }
-    By editOption = By.cssSelector("li[data-testid*=\"playlist-context-menu-edit\"]");
-    By editPlaylistNameField = By.cssSelector("[name=\"name\"]");
+    @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
+    WebElement editOption;
+    @FindBy(css = "[name=\"name\"]")
+    WebElement editPlaylistNameField;
 
 
-    public void clickEdit(String playlistNewName) {
-        findElement(editOption).click();
-        findElement(editPlaylistNameField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        findElement(editPlaylistNameField).sendKeys(playlistNewName);
-        findElement(editPlaylistNameField).sendKeys(Keys.RETURN);
+    public PlaylistPage clickEdit() {
+        editOption.click();
+        return this;
+    }
+
+    public PlaylistPage deletePlaylistName () {
+        editPlaylistNameField.sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+        return this;
+    }
+
+    public PlaylistPage enterNewPlaylistName (String playlistNewName){
+        editPlaylistNameField.sendKeys(playlistNewName);
+        editPlaylistNameField.sendKeys(Keys.RETURN);
+        return this;
     }
 
 }

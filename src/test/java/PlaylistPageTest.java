@@ -21,16 +21,17 @@ public class PlaylistPageTest extends BaseTest {
         SharedPage sharedPage = new SharedPage(driver);
         PlaylistPage playlistPage = new PlaylistPage(driver);
 
-        loginPage.provideEmail(email);
-        loginPage.providePassword(password);
-        loginPage.clickSubmit();
+        loginPage.provideEmail(email)
+                 .providePassword(password)
+                 .clickSubmit();
 
         String playlistNewName = basePage.generateRandomName();
         String newPlaylistName = basePage.generateRandomName();
 
 
-        sharedPage.clickPlusButton();
-        sharedPage.clickNewPlaylist(newPlaylistName);
+        sharedPage.clickPlusButton()
+                  .clickNewPlaylist()
+                  .enterPlaylistName(newPlaylistName);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("Created playlist")));
@@ -39,7 +40,9 @@ public class PlaylistPageTest extends BaseTest {
         basePage.contextClick(newPlaylistName);
 
         //choose Edit
-        playlistPage.clickEdit(playlistNewName);
+        playlistPage.clickEdit()
+                    .deletePlaylistName()
+                    .enterNewPlaylistName(playlistNewName);
 
         //assertion
         String expectedSuccessMessage = String.format("Updated playlist \"%s.\"", playlistNewName);
