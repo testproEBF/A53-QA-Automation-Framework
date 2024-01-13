@@ -9,9 +9,9 @@ public class PlaylistPage extends BasePage {
         super(givenDriver);
     }
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
-    WebElement editOption;
+    private WebElement editOption;
     @FindBy(css = "[name=\"name\"]")
-    WebElement editPlaylistNameField;
+    private WebElement editPlaylistNameField;
 
 
     public PlaylistPage clickEdit() {

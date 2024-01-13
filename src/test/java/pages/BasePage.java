@@ -1,5 +1,6 @@
 package pages;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,7 +18,13 @@ public class BasePage {
     protected Actions actions;
 
     @FindBy (css = ".success.show")
-    WebElement actualNotificationText;
+    private WebElement actualNotificationText;
+    @FindBy(css = "[title=\"Create a new playlist\"]")
+    private WebElement playlistPlusButton;
+    @FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
+    private WebElement newPlaylistList;
+    @FindBy(css = "#playlists [type=\"text\"]")
+    private WebElement playlistNameField;
 
     public BasePage (WebDriver givenDriver){
         driver = givenDriver;
@@ -39,8 +46,31 @@ public class BasePage {
         return actualNotificationText.getText();
     }
 
-    public void contextClick(String playlistName) {
-        By playlist = By.linkText(playlistName);
-        actions.contextClick(findElement(playlist)).perform();
+    public BasePage contextClickElement (By locator) {
+        actions.contextClick(findElement(locator)).perform();
+        return this;
+    }
+
+    public BasePage waitForInvisibility(String message){
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText(message)));
+        return this;
+    }
+
+
+    public BasePage clickPlusButton(){
+        playlistPlusButton.click();
+        return this;
+    }
+
+    public BasePage clickNewPlaylist() {
+        newPlaylistList.click();
+        return this;
+    }
+
+    public BasePage enterPlaylistName (String newPlaylistName){
+        playlistNameField.click();
+        playlistNameField.sendKeys(newPlaylistName);
+        playlistNameField.sendKeys(Keys.RETURN);
+        return this;
     }
 }
