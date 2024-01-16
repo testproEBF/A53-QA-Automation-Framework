@@ -28,7 +28,7 @@ public class BasePage {
 
     public BasePage (WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofMillis(250));
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
 
@@ -36,6 +36,14 @@ public class BasePage {
 
     public WebElement findElement(By locator){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public Boolean findNullElement(By locator){
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public int countNumberOfPlaylist(){
+        return driver.findElements(By.cssSelector("a[href*=\"playlist\"]")).size();
     }
 
     public String generateRandomName(){

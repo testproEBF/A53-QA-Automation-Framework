@@ -10,12 +10,19 @@ public class PlaylistPage extends BasePage {
     }
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
     private WebElement editOption;
+    @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
+    private WebElement deleteOption;
     @FindBy(css = "[name=\"name\"]")
     private WebElement editPlaylistNameField;
 
 
     public PlaylistPage clickEdit() {
         editOption.click();
+        return this;
+    }
+
+    public PlaylistPage clickDelete() {
+        deleteOption.click();
         return this;
     }
 

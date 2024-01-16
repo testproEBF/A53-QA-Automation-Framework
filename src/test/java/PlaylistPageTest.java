@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -40,6 +41,60 @@ public class PlaylistPageTest extends BaseTest {
         //assertion
         String expectedSuccessMessage = String.format("Updated playlist \"%s.\"", playlistNewName);
         Assert.assertEquals(basePage.getNotification(), expectedSuccessMessage);
+
+    }
+
+    @Test
+    @Parameters({"email", "password"})
+    public void createPlaylist(String email, String password) {
+
+        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        PlaylistPage playlistPage = new PlaylistPage(driver);
+
+        loginPage.provideEmail(email)
+                .providePassword(password)
+                .clickSubmit();
+
+        int x = 50;
+        for (int i = 1; i < +x; i++) {
+            String newPlaylistName = basePage.generateRandomName();
+
+            basePage.clickPlusButton()
+                    .clickNewPlaylist()
+                    .enterPlaylistName(newPlaylistName);
+        }
+
+        int y = basePage.countNumberOfPlaylist();
+        Assert.assertEquals(y,x+61);
+    }
+
+
+    @Test
+    @Parameters({"email", "password"})
+    public void deleteEmptyPlaylist(String email, String password) throws TimeoutException{
+        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        PlaylistPage playlistPage = new PlaylistPage(driver);
+
+        loginPage.login(email, password);
+
+        int x = basePage.countNumberOfPlaylist();
+        System.out.println("There are currently " + x + " playlist/s.");
+
+        for (int i = 0; i <= x; i++){
+            By locator = By.cssSelector("a[href*=\"playlist\"]");
+            basePage.contextClickElement(locator);
+            By shuffleAllLocator = By.cssSelector("#playlistWrapper .btn-shuffle-all");
+
+            if (basePage.findNullElement(shuffleAllLocator) == true){
+                playlistPage.clickDelete();
+            } else {
+                Assert.assertTrue(basePage.findElement(shuffleAllLocator).isDisplayed());
+            }
+        }
+
+
 
     }
 
