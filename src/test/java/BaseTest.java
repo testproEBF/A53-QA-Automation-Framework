@@ -72,16 +72,16 @@ public class BaseTest {
                 WebDriverManager.safaridriver().setup();
                 SafariOptions safariOptions = new SafariOptions();
                 return driver = new SafariDriver(safariOptions);
-            case "grid-safari":
+            case "grid-Safari":
                 caps.setCapability("browserName", "Safari");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-edge":
+            case "grid-Edge":
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-firefox":
+            case "grid-Firefox":
                 caps.setCapability("browserName", "Firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-chrome":
+            case "grid-Chrome":
                 caps.setCapability("browserName", "Chrome");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             default:
