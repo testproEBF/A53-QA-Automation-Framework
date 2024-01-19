@@ -38,6 +38,14 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public Boolean findNullElement(By locator){
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public int countNumberOfPlaylist() {
+        return driver.findElements(By.cssSelector("a[href*=\"playlist\"]")).size();
+    }
+
     public String generateRandomName(){
         return UUID.randomUUID().toString().replace("-", "");
     }
