@@ -21,16 +21,22 @@ public class BaseTest {
 
     public WebDriver driver = null;
     public String url = null;
+    WebDriver getDriver;
+    private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
     @BeforeMethod
     @Parameters ({"BaseURL"})
     public void launchBrowser(String BaseURL) throws MalformedURLException {
-        driver = pickBrowser(System.getProperty("browser"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        threadDriver.set(pickBrowser(System.getProperty("browser")));
+        getDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
         url = BaseURL;
         navigateToUrl(url);
+    }
+
+    public static WebDriver getDriver(){
+        return threadDriver.get();
     }
 
     private WebDriver pickBrowser (String browser) throws MalformedURLException {
@@ -38,7 +44,7 @@ public class BaseTest {
         String gridURL = "http://192.168.1.222:4444";
 
         switch (browser){
-            case "Firefox":
+            case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--remote-allow-origins=*");
@@ -48,20 +54,20 @@ public class BaseTest {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--remote-allow-origins=*");
                 return driver = new EdgeDriver(edgeOptions);
-            case "Safari":
+            case "safari":
                 WebDriverManager.safaridriver().setup();
                 SafariOptions safariOptions = new SafariOptions();
                 return driver = new SafariDriver(safariOptions);
-            case "grid-Safari":
+            case "grid-safari":
                 caps.setCapability("browserName", "Safari");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Edge":
+            case "grid-edge":
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Firefox":
+            case "grid-firefox":
                 caps.setCapability("browserName", "Firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Chrome":
+            case "grid-chrome":
                 caps.setCapability("browserName", "Chrome");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             default:
@@ -73,10 +79,10 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void closeBrowser(){
-        driver.quit();
+    public void tearDown(){
+        threadDriver.get().close();
+        threadDriver.remove();
     }
-
 
     public void navigateToUrl(String url){
         driver.get(url);

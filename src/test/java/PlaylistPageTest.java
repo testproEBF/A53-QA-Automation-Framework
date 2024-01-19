@@ -12,9 +12,9 @@ public class PlaylistPageTest extends BaseTest {
     @Parameters({"email", "password"})
     public void renamePlaylist(String email, String password) {
 
-        BasePage basePage = new BasePage(driver);
-        LoginPage loginPage = new LoginPage(driver);
-        PlaylistPage playlistPage = new PlaylistPage(driver);
+        BasePage basePage = new BasePage(getDriver());
+        LoginPage loginPage = new LoginPage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
 
         loginPage.provideEmail(email)
                  .providePassword(password)
