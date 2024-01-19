@@ -56,7 +56,8 @@ public class PlaylistPageTest extends BaseTest {
                 .providePassword(password)
                 .clickSubmit();
 
-        int x = 20;
+        int x = basePage.countNumberOfPlaylist();
+        int y = 20;
         for (int i = 1; i < +x; i++) {
             String newPlaylistName = basePage.generateRandomName();
 
@@ -65,8 +66,8 @@ public class PlaylistPageTest extends BaseTest {
                     .enterPlaylistName(newPlaylistName);
         }
 
-        int y = basePage.countNumberOfPlaylist();
-        Assert.assertEquals(y,x);
+        int z = basePage.countNumberOfPlaylist();
+        Assert.assertEquals(y,x+y);
     }
 
 
