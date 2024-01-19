@@ -12,40 +12,20 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.time.Duration;
 
 public class BaseTest {
 
-    public WebDriver driver;
-    public String url = "";
-
-    @BeforeSuite
-    static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
+    public WebDriver driver = null;
+    public String url = null;
 
     @BeforeMethod
     @Parameters ({"BaseURL"})
     public void launchBrowser(String BaseURL) throws MalformedURLException {
-
-        String browser = System.getProperty("browser");
-        driver = pickBrowser(browser);
-//        try{
-//            driver = pickBrowser(browser);
-//        } catch (MalformedURLException e) {
-//            System.out.println("Unable to setup driver for browser " + browser + ". Setting up chrome browser as default.");
-//            ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--remote-allow-origins=*");
-//            driver = new ChromeDriver(options);
-//        }
-
-
-
+        driver = pickBrowser(System.getProperty("browser"));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
