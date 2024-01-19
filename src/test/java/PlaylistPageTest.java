@@ -57,8 +57,9 @@ public class PlaylistPageTest extends BaseTest {
                 .clickSubmit();
 
         int x = basePage.countNumberOfPlaylist();
-        int y = 20;
-        for (int i = 1; i < +x; i++) {
+        System.out.println("There is/are currently " + x + " playlist/s.");
+        int y = 5;
+        for (int i = 1; i <= +y; i++) {
             String newPlaylistName = basePage.generateRandomName();
 
             basePage.clickPlusButton()
@@ -67,7 +68,7 @@ public class PlaylistPageTest extends BaseTest {
         }
 
         int z = basePage.countNumberOfPlaylist();
-        Assert.assertEquals(y,x+y);
+        Assert.assertEquals(z,x+y);
     }
 
 
@@ -91,6 +92,8 @@ public class PlaylistPageTest extends BaseTest {
             if (basePage.findNullElement(shuffleAllLocator) == true){
                 playlistPage.clickDelete();
             } else {
+                int y = basePage.countNumberOfPlaylist();
+                System.out.println("There are remaining " + y + " playlist/s.");
                 Assert.assertTrue(basePage.findElement(shuffleAllLocator).isDisplayed());
             }
         }
