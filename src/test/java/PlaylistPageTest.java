@@ -58,16 +58,17 @@ public class PlaylistPageTest extends BaseTest {
 
         int x = basePage.countNumberOfPlaylist();
         System.out.println("There is/are currently " + x + " playlist/s.");
-        int y = 5;
+        int y = 10;
         for (int i = 1; i <= +y; i++) {
             String newPlaylistName = basePage.generateRandomName();
 
             basePage.clickPlusButton()
                     .clickNewPlaylist()
                     .enterPlaylistName(newPlaylistName);
+            System.out.println("Added " + i + " playlist/s.");
         }
-
         int z = basePage.countNumberOfPlaylist();
+        System.out.println("There are now " + x + " playlist/s.");
         Assert.assertEquals(z,x+y);
     }
 
