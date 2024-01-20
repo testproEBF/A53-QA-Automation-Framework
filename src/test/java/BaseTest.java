@@ -34,11 +34,11 @@ public class BaseTest {
     }
 
     private WebDriver pickBrowser (String browser) throws MalformedURLException {
-        DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://192.168.1.222:4444";
+       /* DesiredCapabilities caps = new DesiredCapabilities();
+        String gridURL = "http://192.168.1.222:4444";*/
 
         switch (browser){
-            case "Firefox":
+            case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--remote-allow-origins=*");
@@ -48,22 +48,22 @@ public class BaseTest {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--remote-allow-origins=*");
                 return driver = new EdgeDriver(edgeOptions);
-            case "Safari":
+            case "safari":
                 WebDriverManager.safaridriver().setup();
                 SafariOptions safariOptions = new SafariOptions();
                 return driver = new SafariDriver(safariOptions);
-            case "grid-Safari":
+            /*case "grid-safari":
                 caps.setCapability("browserName", "Safari");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Edge":
+            case "grid-edge":
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Firefox":
+            case "grid-firefox":
                 caps.setCapability("browserName", "Firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             case "grid-Chrome":
                 caps.setCapability("browserName", "Chrome");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);*/
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();

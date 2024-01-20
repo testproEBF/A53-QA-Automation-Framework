@@ -9,6 +9,7 @@
         <classes>
             <class name="BaseTest"/>
             <class name="PlaylistPageTest"/>
+            <class name="LoginTests"/>
             <class name="pages.BasePage"/>
             <class name="pages.LoginPage"/>
             <class name="pages.PlaylistPage"/>
