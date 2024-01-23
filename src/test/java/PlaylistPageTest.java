@@ -68,4 +68,25 @@ public class PlaylistPageTest extends BaseTest {
 
     }
 
+    @Test
+    @Parameters({"email", "password"})
+    public void createPlaylist(String email, String password) {
+
+        BasePage basePage = new BasePage(getDriver());
+        LoginPage loginPage = new LoginPage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
+
+        loginPage.login(email, password);
+
+        String newPlaylistName = basePage.generateRandomName();
+
+        basePage.clickPlusButton()
+                .clickNewPlaylist()
+                .enterPlaylistName(newPlaylistName);
+
+        String expectedSuccessMessage = String.format("Created playlist \"%s.\"", newPlaylistName);
+        Assert.assertEquals(basePage.getNotification(), expectedSuccessMessage);
+    }
+
+
 }
