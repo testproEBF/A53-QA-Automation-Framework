@@ -3,6 +3,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class PlaylistPage extends BasePage {
     public PlaylistPage(WebDriver givenDriver) {
@@ -15,16 +16,21 @@ public class PlaylistPage extends BasePage {
 
 
     public PlaylistPage clickEdit() {
+        Assert.assertNotNull(editOption, "`editOption` not found.");
         editOption.click();
         return this;
     }
 
-    public PlaylistPage deletePlaylistName () {
-        editPlaylistNameField.sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+    public PlaylistPage deletePlaylistName () throws InterruptedException {
+        Assert.assertNotNull(editPlaylistNameField, "`editPlaylistNameField` not found.");
+        editPlaylistNameField.sendKeys(Keys.chord(Keys.COMMAND, "A"));
+        editPlaylistNameField.sendKeys(Keys.DELETE);
         return this;
     }
 
     public PlaylistPage enterNewPlaylistName (String playlistNewName){
+        Assert.assertNotNull(editPlaylistNameField, "`editPlaylistNameField` not found.");
+        Assert.assertNotNull(playlistNewName, "`playlistNewName` not found.");
         editPlaylistNameField.sendKeys(playlistNewName);
         editPlaylistNameField.sendKeys(Keys.RETURN);
         return this;

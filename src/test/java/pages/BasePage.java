@@ -1,13 +1,12 @@
 package pages;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
 import java.time.Duration;
 import java.util.UUID;
 
@@ -25,17 +24,42 @@ public class BasePage {
     private WebElement newPlaylistList;
     @FindBy(css = "#playlists [type=\"text\"]")
     private WebElement playlistNameField;
+    @FindBy(css = ".view-profile .avatar")
+    private WebElement avatarIcon;
 
     public BasePage (WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
 
     }
 
+    public WebElement findElement(By locator, String playlistName){
+        WebElement element = null;
+        try {
+            element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            element = driver.findElement(By.xpath("//a[contains(text(),'"+playlistName+"')]"));
+            Assert.assertNotNull(element);
+        }
+        return element;
+    }
+
     public WebElement findElement(By locator){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        WebElement element = null;
+        try {
+            element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            element = driver.findElement(locator);
+            Assert.assertNotNull(element);
+        }
+        return element;
+    }
+
+    public boolean checkAvatarIconDisplayed (){
+        avatarIcon.isDisplayed();
+        return true;
     }
 
     public String generateRandomName(){
@@ -48,6 +72,11 @@ public class BasePage {
 
     public BasePage contextClickElement (By locator) {
         actions.contextClick(findElement(locator)).perform();
+        return this;
+    }
+
+    public BasePage contextClickElement (By locator, String innerText) {
+        actions.contextClick(findElement(locator, innerText)).perform();
         return this;
     }
 

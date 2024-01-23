@@ -34,14 +34,12 @@ public class BaseTest {
     }
 
     private WebDriver pickBrowser (String browser) throws MalformedURLException {
-       /* DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://192.168.1.222:4444";*/
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridURL = "http://192.168.1.222:4444";
 
         switch (browser){
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.addArguments("--remote-allow-origins=*");
                 return driver = new FirefoxDriver();
             case "MicrosoftEdge":
                 WebDriverManager.edgedriver().setup();
@@ -50,20 +48,19 @@ public class BaseTest {
                 return driver = new EdgeDriver(edgeOptions);
             case "safari":
                 WebDriverManager.safaridriver().setup();
-                SafariOptions safariOptions = new SafariOptions();
-                return driver = new SafariDriver(safariOptions);
-            /*case "grid-safari":
-                caps.setCapability("browserName", "Safari");
+                return driver = new SafariDriver();
+            case "grid-safari":
+                caps.setCapability("browserName", "safari");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             case "grid-edge":
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             case "grid-firefox":
-                caps.setCapability("browserName", "Firefox");
+                caps.setCapability("browserName", "firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "grid-Chrome":
-                caps.setCapability("browserName", "Chrome");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);*/
+            case "grid-chrome":
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
