@@ -5,11 +5,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.safari.SafariOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -21,16 +19,22 @@ public class BaseTest {
 
     public WebDriver driver = null;
     public String url = null;
+    WebDriver getDriver;
+    private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
     @BeforeMethod
     @Parameters ({"BaseURL"})
     public void launchBrowser(String BaseURL) throws MalformedURLException {
-        driver = pickBrowser(System.getProperty("browser"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        threadDriver.set(pickBrowser(System.getProperty("browser")));
+        getDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
         url = BaseURL;
         navigateToUrl(url);
+    }
+
+    public static WebDriver getDriver(){
+        return threadDriver.get();
     }
 
     private WebDriver pickBrowser (String browser) throws MalformedURLException {
@@ -70,8 +74,9 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void closeBrowser(){
-        driver.quit();
+    public void tearDown(){
+        threadDriver.get().close();
+        threadDriver.remove();
     }
 
 

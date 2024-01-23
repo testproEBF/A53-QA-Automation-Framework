@@ -9,12 +9,10 @@ public class LoginTests extends BaseTest{
     @Test
     @Parameters({"email", "password"})
     public void loginValidCredentials(String email, String password) throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
-        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        BasePage basePage = new BasePage(getDriver());
 
-        loginPage.provideEmail(email)
-                 .providePassword(password)
-                 .clickSubmit();
+        loginPage.login(email, password);
 
         /**
          * Workaround safari issue:

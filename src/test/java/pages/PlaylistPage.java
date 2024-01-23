@@ -11,6 +11,8 @@ public class PlaylistPage extends BasePage {
     }
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
     private WebElement editOption;
+    @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
+    private WebElement deleteOption;
     @FindBy(css = "[name=\"name\"]")
     private WebElement editPlaylistNameField;
 
@@ -18,6 +20,11 @@ public class PlaylistPage extends BasePage {
     public PlaylistPage clickEdit() {
         Assert.assertNotNull(editOption, "`editOption` not found.");
         editOption.click();
+        return this;
+    }
+
+    public PlaylistPage clickDelete() {
+        deleteOption.click();
         return this;
     }
 
