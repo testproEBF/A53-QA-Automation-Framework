@@ -14,15 +14,37 @@ public class LoginTests extends BaseTest{
 
         loginPage.login(email, password);
 
-        /**
-         * Workaround safari issue:
+         /** Workaround safari issue:
          *  `org.openqa.selenium.NoSuchElementException`
          *
          * The assumption is safari is slow to load the page
          * after login.
-         */
+         **/
+
         Thread.sleep(5000);
 
         Assert.assertTrue(basePage.checkAvatarIconDisplayed());
+    }
+
+    @Test
+    @Parameters({"email", "password"})
+    public void loginValidCredentials2(String email, String password) throws InterruptedException {
+        LoginPage loginPage = new LoginPage(getDriver());
+        BasePage basePage = new BasePage(getDriver());
+
+        loginPage.login(email, password);
+
+        Assert.assertTrue(basePage.checkAvatarIconDisplayed());
+    }
+
+    @Test(dataProvider = "InvalidLoginData", dataProviderClass=BaseTest.class)
+    //@Parameters({"BaseUrl"})
+    public void loginWithInvalidEmailValidPassword(String email, String password){
+        LoginPage loginPage = new LoginPage(getDriver());
+
+        loginPage.login(email, password);
+
+        //Expected Result
+        Assert.assertEquals(getDriver().getCurrentUrl(), url);
     }
 }

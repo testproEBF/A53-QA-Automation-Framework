@@ -85,6 +85,7 @@ public class PlaylistPageTest extends BaseTest {
                 .enterPlaylistName(newPlaylistName);
 
         String expectedSuccessMessage = String.format("Created playlist \"%s.\"", newPlaylistName);
+
         Assert.assertEquals(basePage.getNotification(), expectedSuccessMessage);
     }
 

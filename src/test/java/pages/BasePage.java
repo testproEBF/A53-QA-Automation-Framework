@@ -67,7 +67,9 @@ public class BasePage {
     }
 
     public String getNotification () {
-        return actualNotificationText.getText();
+        //return actualNotificationText.getText();
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
+        return element.getText();
     }
 
     public BasePage contextClickElement (By locator) {
