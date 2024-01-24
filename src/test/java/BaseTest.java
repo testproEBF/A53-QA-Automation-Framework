@@ -57,7 +57,12 @@ public class BaseTest {
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridURL = "http://192.168.1.222:4444";
 
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--remote-allow-origins=*");
+
         switch (browser){
+            case "chrome":
+                return driver = new ChromeDriver(chromeOptions);
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 return driver = new FirefoxDriver();
@@ -85,8 +90,6 @@ public class BaseTest {
                 return lamdaTest();
             default:
                 WebDriverManager.chromedriver().setup();
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--remote-allow-origins=*");
                 return driver = new ChromeDriver(chromeOptions);
         }
     }
