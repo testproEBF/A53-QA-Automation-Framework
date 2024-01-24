@@ -93,8 +93,8 @@ public class BaseTest {
 
     public WebDriver lamdaTest() throws MalformedURLException {
         String hubURL = "@hub.lamdatest.com/";
-        String username = "enrile.fuentes";
-        String authkey = "12K3XhCWuHpuTAhIxeeFb0bXUbWgYtBXNwY4dWpnrczOY5F3SZ";
+        String username = System.getenv("LT_USERNAME") == null ? "" : System.getenv("LT_USERNAME");
+        String authkey = System.getenv("LT_ACCESS_KEY") == null ? "" : System.getenv("LT_ACCESS_KEY");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
