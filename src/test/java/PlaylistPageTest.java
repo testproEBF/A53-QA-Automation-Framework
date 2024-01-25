@@ -83,7 +83,7 @@ public class PlaylistPageTest extends BaseTest {
         loginPage.login(email, password);
 
         int x = basePage.countNumberOfPlaylist();
-        System.out.println("There are currently " + x + " playlist/s.");
+        System.out.println("There is/are currently " + x + " playlist/s.");
 
         for (int i = 0; i <= x; i++){
             By locator = By.cssSelector("a[href*=\"playlist\"]");
