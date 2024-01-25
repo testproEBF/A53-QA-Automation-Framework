@@ -81,8 +81,6 @@ public class BaseTest {
             case "grid-chrome":
                 caps.setCapability("browserName", "chrome");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            case "cloud":
-                return lambdaTest("chrome");
             case "cloud-chrome":
                 return lambdaTest("chrome");
             case "cloud-firefox":

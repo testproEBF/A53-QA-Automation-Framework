@@ -50,13 +50,9 @@ public class PlaylistPageTest extends BaseTest {
          */
         Thread.sleep(4000);
 
-        playlistPage.clickEdit();
-        Thread.sleep(4000);
-
-        playlistPage.deletePlaylistName();
-        Thread.sleep(4000);
-
-        playlistPage.enterNewPlaylistName(playlistNewName);
+        playlistPage.clickEdit()
+                    .deletePlaylistName()
+                    .enterNewPlaylistName(playlistNewName);
 
         /**
          * Workaround firefox issue:
