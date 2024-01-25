@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="TestNG" parallel="methods" thread-count="4">
+<suite name="TestNG" parallel="methods" thread-count="3">
     <parameter name="BaseURL" value="https://qa.koel.app/"/>
     <parameter name="email" value="enrile.fuentes@testpro.io"/>
     <parameter name="password" value="@mEi99LqzLc5NH8n"/>

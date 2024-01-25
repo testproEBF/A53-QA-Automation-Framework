@@ -1,4 +1,5 @@
 package pages;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,7 @@ public class PlaylistPage extends BasePage {
     }
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
     private WebElement editOption;
+    //By editOption = By.cssSelector("li[data-testid*=\"playlist-context-menu-edit\"]");
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
     private WebElement deleteOption;
     @FindBy(css = "[name=\"name\"]")
@@ -18,6 +20,7 @@ public class PlaylistPage extends BasePage {
 
 
     public PlaylistPage clickEdit() {
+        //findElement(editOption).click();
         Assert.assertNotNull(editOption, "`editOption` not found.");
         editOption.click();
         return this;

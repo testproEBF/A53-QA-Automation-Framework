@@ -18,8 +18,10 @@ public class BasePage {
 
     @FindBy (css = ".success.show")
     private WebElement actualNotificationText;
-    @FindBy(css = "[title=\"Create a new playlist\"]")
-    private WebElement playlistPlusButton;
+    /*@FindBy(css = "[title=\"Create a new playlist\"]")
+    private WebElement playlistPlusButton;*/
+
+    private final By playlistPlusButton = By.cssSelector("[title=\"Create a new playlist\"]");
     @FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
     private WebElement newPlaylistList;
     @FindBy(css = "#playlists [type=\"text\"]")
@@ -89,7 +91,7 @@ public class BasePage {
 
 
     public BasePage clickPlusButton(){
-        playlistPlusButton.click();
+        findElement(playlistPlusButton).click();
         return this;
     }
 
