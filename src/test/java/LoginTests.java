@@ -26,16 +26,6 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(basePage.checkAvatarIconDisplayed());
     }
 
-    @Test
-    @Parameters({"email", "password"})
-    public void loginValidCredentials2(String email, String password) throws InterruptedException {
-        LoginPage loginPage = new LoginPage(getDriver());
-        BasePage basePage = new BasePage(getDriver());
-
-        loginPage.login(email, password);
-
-        Assert.assertTrue(basePage.checkAvatarIconDisplayed());
-    }
 
     @Test(dataProvider = "InvalidLoginData", dataProviderClass=BaseTest.class)
     //@Parameters({"BaseUrl"})
