@@ -43,7 +43,7 @@ public class PlaylistPageTest extends BaseTest {
          *
          * The assumption is firefox is slow to update UI after playlist name edit.
          */
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
 
         //assertion
         String expectedSuccessMessage = String.format("Updated playlist \"%s.\"", playlistNewName);
