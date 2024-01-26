@@ -12,7 +12,6 @@ public class PlaylistPage extends BasePage {
     }
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
     private WebElement editOption;
-    //By editOption = By.cssSelector("li[data-testid*=\"playlist-context-menu-edit\"]");
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
     private WebElement deleteOption;
     @FindBy(css = "[name=\"name\"]")
@@ -20,8 +19,7 @@ public class PlaylistPage extends BasePage {
 
 
     public PlaylistPage clickEdit() {
-        //findElement(editOption).click();
-        Assert.assertNotNull(editOption, "`editOption` not found.");
+        //Assert.assertNotNull(editOption, "`editOption` not found.");
         editOption.click();
         return this;
     }
@@ -31,7 +29,7 @@ public class PlaylistPage extends BasePage {
         return this;
     }
 
-    public PlaylistPage deletePlaylistName () throws InterruptedException {
+    public PlaylistPage deletePlaylistName (){
         Assert.assertNotNull(editPlaylistNameField, "`editPlaylistNameField` not found.");
         editPlaylistNameField.sendKeys(Keys.chord(Keys.COMMAND, "A"));
         editPlaylistNameField.sendKeys(Keys.DELETE);

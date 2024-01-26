@@ -10,8 +10,6 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.UUID;
 
-import static java.sql.DriverManager.getDriver;
-
 public class BasePage {
 
     protected WebDriver driver;
@@ -20,14 +18,8 @@ public class BasePage {
 
     @FindBy (css = ".success.show")
     private WebElement actualNotificationText;
-    /*@FindBy(css = "[title=\"Create a new playlist\"]")
-    private WebElement playlistPlusButton;*/
-
     private final By playlistPlusButton = By.cssSelector("[title=\"Create a new playlist\"]");
-    /*@FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
-    private WebElement newPlaylistList;*/
-
-    By newPlaylistList = By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]");
+    private final By newPlaylistList = By.cssSelector("[data-testid=\"playlist-context-menu-create-simple\"]");
     @FindBy(css = "#playlists [type=\"text\"]")
     private WebElement playlistNameField;
     @FindBy(css = ".view-profile .avatar")
@@ -73,7 +65,6 @@ public class BasePage {
     }
 
     public String getNotification () {
-        //return actualNotificationText.getText();
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
         return element.getText();
     }
@@ -96,15 +87,15 @@ public class BasePage {
 
     public BasePage clickPlusButton(){
         WebElement plusButton = findElement(playlistPlusButton);
-               // wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[title=\"Create a new playlist\"]")));
         actions.moveToElement(plusButton).click().build().perform();
-       // plusButton.click();
         return this;
+
     }
 
     public BasePage clickNewPlaylist() {
-        WebElement newPlaylist = findElement(newPlaylistList);
-        actions.moveToElement(newPlaylist).click().build().perform();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement newPlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(newPlaylistList));
+        newPlaylist.click();
         return this;
     }
 

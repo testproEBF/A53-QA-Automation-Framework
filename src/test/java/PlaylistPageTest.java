@@ -10,7 +10,7 @@ public class PlaylistPageTest extends BaseTest {
 
     @Test
     @Parameters({"email", "password"})
-    public void renamePlaylist(String email, String password) throws InterruptedException {
+    public void renamePlaylist(String email, String password){
 
         BasePage basePage = new BasePage(getDriver());
         LoginPage loginPage = new LoginPage(getDriver());
@@ -26,7 +26,6 @@ public class PlaylistPageTest extends BaseTest {
 
         By playlist = By.linkText(newPlaylistName);
 
-        //Thread.sleep(4000);
         basePage.clickPlusButton()
                 .clickNewPlaylist()
                 .enterPlaylistName(newPlaylistName)
@@ -36,14 +35,6 @@ public class PlaylistPageTest extends BaseTest {
         playlistPage.clickEdit()
                     .deletePlaylistName()
                     .enterNewPlaylistName(playlistNewName);
-
-        /**
-         * Workaround firefox issue:
-         *  `java.lang.AssertionError: expected [Updated playlist "xxx."] but found []`
-         *
-         * The assumption is firefox is slow to update UI after playlist name edit.
-         */
-        //Thread.sleep(4000);
 
         //assertion
         String expectedSuccessMessage = String.format("Updated playlist \"%s.\"", playlistNewName);
