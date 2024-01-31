@@ -1,39 +1,42 @@
 package pages;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage extends BasePage {
+import java.time.Duration;
+
+public class LoginPage extends BasePage{
+
     public LoginPage (WebDriver givenDriver){
         super (givenDriver);
     }
+    public static void openLogin() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-notifications");
+        driver = new ChromeDriver(options);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
-    @FindBy(css = "input[type='email']")
-    private WebElement emailField;
-    @FindBy(css = "input[type='password']")
-    private WebElement passwordField;
-    @FindBy (css = "button[type='submit']")
-    private WebElement submitButton;
-
-    public LoginPage provideEmail (String email){
-        emailField.sendKeys(email);
-        return this;
+        driver.get("https://qa.koel.app/");
     }
 
-    public LoginPage providePassword (String password){
-        passwordField.sendKeys(password);
-        return this;
+    public static void enterEmail(String email) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).sendKeys(email);
     }
 
-    public LoginPage clickSubmit(){
-        submitButton.click();
-        return this;
+    public static void enterPassword(String password) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']"))).sendKeys(password);
     }
 
-    public LoginPage login(String email, String password) {
-        provideEmail(email);
-        providePassword(password);
-        clickSubmit();
-        return this;
+    public static void clickSubmit() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']"))).click();
     }
+
 }
+
+
