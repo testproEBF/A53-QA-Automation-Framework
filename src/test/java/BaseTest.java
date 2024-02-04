@@ -19,7 +19,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Map;
 
 public class BaseTest {
 
@@ -43,7 +42,6 @@ public class BaseTest {
     public void launchBrowser(String BaseURL) throws MalformedURLException {
         threadDriver.set(pickBrowser(System.getProperty("browser")));
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        //driver.manage().window().maximize();
 
         url = BaseURL;
         navigateToUrl(url);

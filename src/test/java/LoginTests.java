@@ -19,7 +19,6 @@ public class LoginTests extends BaseTest{
 
 
     @Test(dataProvider = "InvalidLoginData", dataProviderClass=BaseTest.class)
-    //@Parameters({"BaseUrl"})
     public void loginWithInvalidEmailValidPassword(String email, String password){
         LoginPage loginPage = new LoginPage(getDriver());
 
