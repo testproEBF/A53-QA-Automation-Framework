@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -36,6 +37,11 @@ public class LoginPage extends BasePage{
     public static void clickSubmit() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']"))).click();
     }
+
+    public static void notLoggedIn() {
+        Assert.assertNotNull(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href=\"registration\"]"))));
+    }
+
 
 }
 

@@ -63,4 +63,18 @@ public class LoginStepDefinitions {
     public void loggedIn() {
         BasePage.loggedIn();
     }
+
+    @Then("I am not logged in")
+    public void notLoggedIn() {
+        LoginPage.notLoggedIn();
+    }
+
+    @Given("I am Loggedin using {string} and {string}")
+    public void iAmLoggedin(String email, String password) {
+        LoginPage.openLogin();
+        LoginPage.enterEmail(email);
+        LoginPage.enterPassword(password);
+        LoginPage.clickSubmit();
+    }
+
 }
