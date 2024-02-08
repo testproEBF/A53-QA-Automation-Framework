@@ -7,15 +7,15 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class BasePage {
-    static WebDriver driver;
-    static WebDriverWait wait;
+
+    WebDriver driver;
+    WebDriverWait wait;
 
     public BasePage (WebDriver givenDriver){
         driver = givenDriver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-
-    public static void loggedIn() {
+    public void loggedIn() {
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
     }
 }

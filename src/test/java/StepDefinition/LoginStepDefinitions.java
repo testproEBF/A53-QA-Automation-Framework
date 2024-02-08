@@ -22,6 +22,7 @@ import java.time.Duration;
 
 public class LoginStepDefinitions {
     WebDriver driver;
+    LoginPage loginPage;
 
     @Before
     public void openBrowser(){
@@ -30,6 +31,8 @@ public class LoginStepDefinitions {
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-notifications");
         driver = new ChromeDriver(options);
+
+        loginPage = new LoginPage(driver);
     }
 
     @After
@@ -40,27 +43,27 @@ public class LoginStepDefinitions {
 
     @Given("I open Login Page")
     public void openLogin() {
-        LoginPage.openLogin();
+        loginPage.openLogin();
     }
 
 
     @When("I enter email {string}")
     public void enterEmail(String email) {
-        LoginPage.enterEmail(email);
+        loginPage.enterEmail(email);
     }
 
     @And("I enter password {string}")
     public void enterPassword(String password) {
-        LoginPage.enterPassword(password);
+        loginPage.enterPassword(password);
     }
 
     @And("I click submit")
     public void clickSubmit() {
-       LoginPage.clickSubmit();
+       loginPage.clickSubmit();
     }
 
     @Then("I am logged in")
     public void loggedIn() {
-        BasePage.loggedIn();
+        loginPage.loggedIn();
     }
 }
