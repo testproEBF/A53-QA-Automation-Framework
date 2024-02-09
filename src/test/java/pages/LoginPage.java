@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class LoginPage extends BasePage {
+    /*@FindBy(css = "[type='email']")
+    WebElement emailField;*/
     public LoginPage (WebDriver givenDriver){
         super (givenDriver);
     }
@@ -17,6 +19,7 @@ public class LoginPage extends BasePage {
 
     public void enterEmail(String email) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).sendKeys(email);
+        //emailField.sendKeys(email);
     }
 
     public void enterPassword(String password) {
