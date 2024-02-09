@@ -2,8 +2,9 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
     public LoginPage (WebDriver givenDriver){
         super (givenDriver);
@@ -23,6 +24,10 @@ public class LoginPage extends BasePage{
 
     public void clickSubmit() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']"))).click();
+    }
+
+    public void notLoggedIn() {
+        Assert.assertNotNull(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href=\"registration\"]"))));
     }
 }
 

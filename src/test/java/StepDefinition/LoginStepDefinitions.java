@@ -7,18 +7,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.Parameters;
-import pages.BasePage;
 import pages.LoginPage;
-
-import java.time.Duration;
 
 public class LoginStepDefinitions {
     WebDriver driver;
@@ -65,5 +57,18 @@ public class LoginStepDefinitions {
     @Then("I am logged in")
     public void loggedIn() {
         loginPage.loggedIn();
+    }
+
+    @Then("I am not logged in")
+    public void notLoggedIn() {
+        loginPage.notLoggedIn();
+    }
+
+    @Given("I am LoggedIn using {string} and {string}")
+    public void iAmLoggedIn(String email, String password) {
+        loginPage.openLogin();
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickSubmit();
     }
 }
