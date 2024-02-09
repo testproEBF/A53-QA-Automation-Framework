@@ -7,8 +7,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"src/test/resources/features/Login.feature",
-                    "src/test/resources/features/CreateSmartPlaylist.feature"},
-        publish = true
+                    "src/test/resources/features/CreateSmartPlaylist.feature"}
 )
 
 public class CucumberRunner extends AbstractTestNGCucumberTests {

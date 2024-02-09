@@ -33,30 +33,6 @@ public class CreateSmartPlaylistStepDefinition {
         driver.quit();
     }
 
-    /*String newPlaylistName = basePage.generateRandomName();
-
-    @When("^I click the plus button")
-    public void clickPlusButton() {
-        basePage.clickPlusButton();
-    }
-
-    @And("I click New Playlist")
-    public void clickNewPlaylist() {
-        basePage.clickNewPlaylist();
-    }
-
-
-    @And("I enter playlist name")
-    public void enterPlaylistName() {
-        basePage.enterPlaylistName(newPlaylistName);
-    }
-
-    @Then("I created a playlist")
-    public void createdPlaylist() {
-        String expectedSuccessMessage = String.format("Created playlist \"%s.\"", newPlaylistName);
-        Assert.assertEquals(basePage.getNotification(), expectedSuccessMessage);
-    }*/
-
     @When("I click on the + button under PLAYLISTS on the main menu")
     public void clickPlusButton() {
         basePage.clickPlusButton();

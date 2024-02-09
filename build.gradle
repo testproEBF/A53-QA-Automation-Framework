@@ -22,7 +22,7 @@ dependencies {
 
 test {
     useTestNG() {
-        suites "src/test/resources/TestNG.xml"
+        suites "src/test/resources/CucumberRunner.xml"
         systemProperty "browser", System.getProperty("browser")
     }
 }

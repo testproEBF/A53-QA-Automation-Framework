@@ -44,7 +44,8 @@ public class BasePage {
     }
 
     public void clickPlusButton(){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-plus-circle.create"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']"))).click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-plus-circle.create"))).click();
         //playlistPlusButton.click();
     }
 

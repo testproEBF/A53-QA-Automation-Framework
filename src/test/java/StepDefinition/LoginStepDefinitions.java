@@ -7,9 +7,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 import pages.LoginPage;
 
 public class LoginStepDefinitions {
@@ -51,7 +54,7 @@ public class LoginStepDefinitions {
 
     @And("I click submit")
     public void clickSubmit() {
-       loginPage.clickSubmit();
+       loginPage.clickLogIn();
     }
 
     @Then("I am logged in")
@@ -69,6 +72,8 @@ public class LoginStepDefinitions {
         loginPage.openLogin();
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
-        loginPage.clickSubmit();
+        loginPage.clickLogIn();
+        loginPage.notLoggedIn();
+
     }
 }

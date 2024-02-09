@@ -2,9 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="CucumberRunner" parallel="methods" thread-count="1">
-    <parameter name="BaseURL" value="https://qa.koel.app/"/>
-    <parameter name="email" value="enrile.fuentes@testpro.io"/>
-    <parameter name="password" value="@mEi99LqzLc5NH8n"/>
     <test name="Login Tests using Cucumber" preserve-order="false">
         <classes>
             <class name="CucumberRunner"/>
