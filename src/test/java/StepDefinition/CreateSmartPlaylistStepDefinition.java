@@ -16,22 +16,26 @@ import pages.PlaylistPage;
 public class CreateSmartPlaylistStepDefinition {
 
     WebDriver driver;
-    BasePage basePage = new BasePage(driver);
-    PlaylistPage playlistPage = new PlaylistPage(driver);
+    BasePage basePage;
+    PlaylistPage playlistPage;
 
-   /* @Before
+
+    @Before
     public void openBrowser(){
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-notifications");
         driver = new ChromeDriver(options);
+
+        BasePage basePage = new BasePage(driver);
+        PlaylistPage playlistPage = new PlaylistPage(driver);
     }
 
     @After
     public void closeBrowser(){
         driver.quit();
-    }*/
+    }
 
     @When("I click on the + button under PLAYLISTS on the main menu")
     public void clickPlusButton() {
