@@ -11,32 +11,13 @@ public class PlaylistPage extends BasePage {
         super (givenDriver);
     }
 
-    @FindBy( css = "li[data-testid*=\"playlist-context-menu-edit\"]")
-    private WebElement editOption;
-    @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
-    private WebElement deleteOption;
-    @FindBy(css = "[name=\"name\"]")
-    private WebElement editPlaylistNameField;
+    @FindBy( css = "li[data-testid=\"playlist-context-menu-create-smart\"]")
+    private WebElement newSmartPlaylistOption;
 
 
-    public PlaylistPage clickEdit() {
-        editOption.click();
+    public PlaylistPage clickNewSmartPlaylist() {
+        newSmartPlaylistOption.click();
         return this;
     }
 
-    public PlaylistPage clickDelete() {
-        deleteOption.click();
-        return this;
-    }
-
-    public PlaylistPage deletePlaylistName () {
-        editPlaylistNameField.sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        return this;
-    }
-
-    public PlaylistPage enterNewPlaylistName (String playlistNewName){
-        editPlaylistNameField.sendKeys(playlistNewName);
-        editPlaylistNameField.sendKeys(Keys.RETURN);
-        return this;
-    }
 }

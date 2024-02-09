@@ -17,10 +17,6 @@ public class BasePage {
     private WebElement actualNotificationText;
     @FindBy(css = ".fa.fa-plus-circle.create")
     private WebElement playlistPlusButton;
-    @FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
-    private WebElement newPlaylistList;
-    @FindBy(css = "#playlists [type=\"text\"]")
-    private WebElement playlistNameField;
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
@@ -30,38 +26,14 @@ public class BasePage {
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
     }
 
-    public void clickLogoutButton() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-sign-out"))).click();
-    }
-
-    public void pressEnter() {
-        Actions builder = new Actions(driver);
-        builder.keyDown(Keys.RETURN).keyUp(Keys.RETURN).build().perform();
-    }
-
     public String generateRandomName(){
         return UUID.randomUUID().toString().replace("-", "");
     }
 
     public void clickPlusButton(){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']"))).click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']"))).click();
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-plus-circle.create"))).click();
-        //playlistPlusButton.click();
-    }
-
-    public void clickNewPlaylist() {
-        newPlaylistList.click();
-    }
-
-    public String getNewPlaylistName(){
-        String newPlaylistName = generateRandomName();
-        return newPlaylistName;
-    }
-
-    public void enterPlaylistName (String newPlaylistName){
-        playlistNameField.click();
-        playlistNameField.sendKeys(newPlaylistName);
-        playlistNameField.sendKeys(Keys.RETURN);
+        playlistPlusButton.click();
     }
 
     public String getNotification () {
