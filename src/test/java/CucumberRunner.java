@@ -5,7 +5,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 
-@Test
 @CucumberOptions(
         features = {"src/test/resources/features/Login.feature",
                     "src/test/resources/features/CreateSmartPlaylist.feature"},
