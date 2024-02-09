@@ -12,8 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import pages.BasePage;
 
-public class PlaylistStepDefinition {
-    String newPlaylistName = basePage.generateRandomName();
+public class CreateSmartPlaylistStepDefinition {
 
     WebDriver driver;
     BasePage basePage;
@@ -33,6 +32,8 @@ public class PlaylistStepDefinition {
     public void closeBrowser(){
         driver.quit();
     }
+
+    /*String newPlaylistName = basePage.generateRandomName();
 
     @When("^I click the plus button")
     public void clickPlusButton() {
@@ -54,5 +55,10 @@ public class PlaylistStepDefinition {
     public void createdPlaylist() {
         String expectedSuccessMessage = String.format("Created playlist \"%s.\"", newPlaylistName);
         Assert.assertEquals(basePage.getNotification(), expectedSuccessMessage);
+    }*/
+
+    @When("I click on the + button under PLAYLISTS on the main menu")
+    public void clickPlusButton() {
+        basePage.clickPlusButton();
     }
 }

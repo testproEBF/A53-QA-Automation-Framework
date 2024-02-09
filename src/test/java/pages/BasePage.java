@@ -5,7 +5,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class BasePage {
 
     @FindBy(css = ".success.show")
     private WebElement actualNotificationText;
-    @FindBy(css = "[title=\"Create a new playlist\"]")
+    @FindBy(css = ".fa.fa-plus-circle.create")
     private WebElement playlistPlusButton;
     @FindBy(css = "[data-testid=\"playlist-context-menu-create-simple\"]")
     private WebElement newPlaylistList;
@@ -45,7 +44,8 @@ public class BasePage {
     }
 
     public void clickPlusButton(){
-        playlistPlusButton.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-plus-circle.create"))).click();
+        //playlistPlusButton.click();
     }
 
     public void clickNewPlaylist() {
