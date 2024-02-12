@@ -23,7 +23,7 @@ public class BaseDefinition {
 
     @After
     public void closeBrowser(){
-        BaseDefinition.SHARED_DRIVER.quit();
+        SHARED_DRIVER.quit();
     }
 
 }

@@ -1,59 +1,57 @@
 package pages;
-import com.beust.ah.A;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.time.Duration;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class BasePage {
 
     WebDriver driver;
     WebDriverWait wait;
 
-    @FindBy(css = ".success.show")
-    private WebElement actualNotificationText;
-    @FindBy(css = ".fa.fa-plus-circle.create")
+    //@FindBy(css = ".fa.fa-plus-circle.create")
+    @FindBy(xpath = "//*[@title=\"Create a new playlist\"]")
     private WebElement playlistPlusButton;
-    @FindBy( css = "li[data-testid=\"playlist-context-menu-create-smart\"]")
+    @FindBy(xpath = "//*[text()=\"New Smart Playlist\"]")
     private WebElement newSmartPlaylistOption;
-    @FindBy(css = "img.avatar")
-    private WebElement avatarIcon;
+
+    String recentAddedSmartPlaylistName;
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
+
+    //PlaylistPage playlistPage = new PlaylistPage(driver);
     public void loggedIn() {
-        //Assert.assertTrue(avatarIcon.isDisplayed());
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
     }
 
-    public String generateRandomName(){
-        return UUID.randomUUID().toString().replace("-", "");
+    public void clickPlusButton(){
+        playlistPlusButton.click();
     }
 
-    public BasePage clickPlusButton(){
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']"))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".fa.fa-plus-circle.create"))).click();
-        //playlistPlusButton.click();
-        return this;
-    }
-
-    public BasePage clickNewSmartPlaylist() {
+    public void clickNewSmartPlaylist() {
         newSmartPlaylistOption.click();
-        return this;
     }
 
-    public BasePage toNewSmartPlaylistForm(){
+    public void toNewSmartPlaylistForm(){
         clickPlusButton();
         clickNewSmartPlaylist();
-        return this;
     }
 
     public String getNotification () {
@@ -61,21 +59,81 @@ public class BasePage {
         return notification.getText();
     }
 
-    public BasePage playlistCreatedNotification(String name){
-        String actualMessage = String.format("Created playlist \"%s.\"", name);
-        Assert.assertEquals(getNotification(), actualMessage);
-        return this;
-    }
 
     public BasePage clickSmartPlaylist(String name){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(name))).click();
         return this;
     }
 
-    public BasePage checkCreatedSmartPlaylist(String name){
+    public void checkCreatedSmartPlaylist(String name){
         Assert.assertNotNull(clickSmartPlaylist(name));
-        return this;
     }
 
+    public void checkCreatedSmartPlaylistRandomName(){
+        Assert.assertNotNull(clickSmartPlaylist(recentAddedSmartPlaylistName));
+    }
+
+    public void elementNotFound() {
+        try{
+            Assert.assertNull(clickSmartPlaylist(recentAddedSmartPlaylistName));
+        } catch (TimeoutException e){
+            Assert.assertEquals(driver.findElements(By.linkText(recentAddedSmartPlaylistName)).size(), 0);
+        }
+
+    }
+
+    public String randomStrGenerator (int length){
+        String ALPHABETIC_UPPERCASE_SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String ALPHABETIC_LOWERCASE_SYMBOLS = "abcdefghijklmnopqrstuvwxyz";
+        String NUMERIC_SYMBOLS = "0123456789";
+        String SPECIAL_SYMBOLS = "~!@#$%^&*()_+-={}|:<>?[];',./'";
+        String ALPHANUMERIC_AND_SPECIAL_SYMBOLS =
+                ALPHABETIC_UPPERCASE_SYMBOLS +
+                ALPHABETIC_LOWERCASE_SYMBOLS +
+                NUMERIC_SYMBOLS +
+                SPECIAL_SYMBOLS;
+
+        List<Character> chars = new ArrayList<>(length);
+        boolean hasUpper = false;
+        boolean hasLower = false;
+        boolean hasNumber = false;
+        boolean hasSpecial = false;
+        for (int i = 0; i < length; i++) {
+            if (!hasUpper) {
+                chars.add(ALPHABETIC_UPPERCASE_SYMBOLS.charAt(RandomUtils.nextInt(0, ALPHABETIC_UPPERCASE_SYMBOLS.length())));
+                hasUpper = true;
+            } else if (!hasLower) {
+                chars.add(ALPHABETIC_LOWERCASE_SYMBOLS.charAt(RandomUtils.nextInt(0, ALPHABETIC_LOWERCASE_SYMBOLS.length())));
+                hasLower = true;
+            } else if (!hasNumber) {
+                chars.add(NUMERIC_SYMBOLS.charAt(RandomUtils.nextInt(0, NUMERIC_SYMBOLS.length())));
+                hasNumber = true;
+            } else if (!hasSpecial) {
+                chars.add(SPECIAL_SYMBOLS.charAt(RandomUtils.nextInt(0, SPECIAL_SYMBOLS.length())));
+                hasSpecial = true;
+            } else {
+                chars.add(ALPHANUMERIC_AND_SPECIAL_SYMBOLS.charAt(RandomUtils.nextInt(0, ALPHANUMERIC_AND_SPECIAL_SYMBOLS.length())));
+            }
+        }
+
+        Collections.shuffle(chars);
+
+        return StringUtils.join(chars, "");
+    }
+
+    public void inputRandomName(int length) {
+        String name = randomStrGenerator(length);
+        WebElement nameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".form-row input[name='name']")));
+        nameField.click();
+        nameField.sendKeys(name);
+        recentAddedSmartPlaylistName = name;
+    }
+
+    public void playlistCreatedNotification(){
+        String actualMessage = String.format("Created playlist \"%s.\"", recentAddedSmartPlaylistName);
+        Assert.assertEquals(getNotification(), actualMessage);
+    }
 
 }
+
+
