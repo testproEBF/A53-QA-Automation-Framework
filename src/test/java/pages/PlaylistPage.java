@@ -5,12 +5,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class PlaylistPage extends BasePage {
-    @FindBy(css = ".row [name=\"model[]\"]")
-    WebElement smartPFModelList;
-    @FindBy(css = ".row [name=\"operator[]\"]")
-    WebElement smartPFOperatorList;
-    @FindBy(css = ".row input[name='value[]']")
-    WebElement smartPFValueField;
+
     @FindBy(css = ".btn-add-rule")
     WebElement smartPFAddRuleButton;
     @FindBy(css = ".btn-add-group")
@@ -30,8 +25,6 @@ public class PlaylistPage extends BasePage {
 
     int row;
     int group;
-    String modelOption;
-    String operatorOption;
 
     public PlaylistPage(WebDriver givenDriver) {
         super(givenDriver);
@@ -133,29 +126,6 @@ public class PlaylistPage extends BasePage {
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(songLocator))).isDisplayed());
     }
 
-    public void makeMultipleRules(int numOfRules, String value){
-        int y = numOfRules + 1;
-        group = 1;
-
-        for (int x = 1; x < y ; x++ ){
-            row = x+1;
-//            String model = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='model[]']", group, row);
-            String model = String.format("//div[%s]/div[%s]/select[@name='model[]']", group, row);
-            String modelOption = String.format("//div[%s]/div[%s]/select[@name='model[]']/option[text()='Artist']", group, row);
-            String operator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='operator[]']", group, row);
-            String valueLocator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='value[]']", group, row);
-
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(model))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(operator))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(valueLocator))).sendKeys(value);
-
-            if (x < numOfRules){
-                smartPFAddRuleButton.click();
-            }
-        }
-    }
-
     public void seeEmptyPlaylistRandomName() {
         clickSmartPlaylist(recentAddedSmartPlaylistName);
         Assert.assertNotNull(emptyPlaylist);
@@ -165,28 +135,6 @@ public class PlaylistPage extends BasePage {
         clickSmartPlaylist(name);
         Assert.assertNotNull(emptyPlaylist);
 //        Assert.assertTrue(emptyPlaylist.isDisplayed());
-    }
-
-
-
-    public void makeMultipleGroups(int numOfGroups, String value) {
-        int y = numOfGroups + 1;
-
-        for (int x = 1; x < y ; x++ ){
-            row = 2;
-            group = x;
-            String model = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='model[]']", group, row);
-            String operator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='operator[]']", group, row);
-            String valueLocator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='value[]']", group, row);
-
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(model))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(operator))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(valueLocator))).sendKeys(value);
-
-            if (x < numOfGroups){
-                smartPFAddGroupButton.click();
-            }
-        }
     }
 
     public void stillInNewSmartPlaylistForm() {

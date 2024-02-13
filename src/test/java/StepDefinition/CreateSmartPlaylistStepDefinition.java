@@ -9,7 +9,7 @@ import pages.PlaylistPage;
 public class CreateSmartPlaylistStepDefinition {
 
     BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
-    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.SHARED_DRIVER);;
+    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.SHARED_DRIVER);
 
     @When("I click on the + button under PLAYLISTS on the main menu")
     public void clickPlusButton() {
@@ -26,11 +26,6 @@ public class CreateSmartPlaylistStepDefinition {
     public void inputName(String name) {
         playlistPage.inputName(name);
     }
-
-//    @And("I make a rule with value {string}")
-//    public void makeARule(String value) {
-//        playlistPage.makeARule(value);
-//    }
 
     @And("I make {int} rule or rules: {string} {string} {string}")
     public void makeRuleRules(int ruleNumber, String modelOption, String operatorOption, String value) {
@@ -94,11 +89,6 @@ public class CreateSmartPlaylistStepDefinition {
         basePage.toNewSmartPlaylistForm();
     }
 
-    @And("I make {int} rules with value {string}")
-    public void makeMultipleRules(int numOfRules, String value) {
-        playlistPage.makeMultipleRules(numOfRules, value);
-    }
-
     @And("I will see empty playlist")
     public void seeEmptyPlaylistRandomName() {
         playlistPage.seeEmptyPlaylistRandomName();
@@ -107,11 +97,6 @@ public class CreateSmartPlaylistStepDefinition {
     @And("I will see empty {string} playlist")
     public void seeEmptyPlaylist(String name) {
         playlistPage.seeEmptyPlaylist(name);
-    }
-
-    @And("I make {int} groups with value {string}")
-    public void makeMultipleGroups(int numOfGroups, String value) {
-        playlistPage.makeMultipleGroups(numOfGroups, value);
     }
 
 

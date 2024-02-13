@@ -78,7 +78,7 @@ Feature: Create Smart Playlist feature
     And I will see the created playlist with an asterisk icon and with the correct name under PLAYLISTS
     And I will see empty playlist
 
-  Scenario: Create smart playlist with 257-character name
+  Scenario: Cannot create smart playlist with 257-character name
     And I input a 257-char playlist name in the name text field
     And I make 1 rule or rules: "Artist" "is" "Queen"
     And I click on the Save button
