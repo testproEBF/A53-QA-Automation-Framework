@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,6 +21,7 @@ public class BasePage {
 
     WebDriver driver;
     WebDriverWait wait;
+    Actions actions;
 
     //@FindBy(css = ".fa.fa-plus-circle.create")
     @FindBy(xpath = "//*[@title=\"Create a new playlist\"]")
@@ -32,6 +34,7 @@ public class BasePage {
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -41,7 +44,9 @@ public class BasePage {
     }
 
     public void clickPlusButton(){
-        playlistPlusButton.click();
+        WebElement plusButton = wait.until(ExpectedConditions.elementToBeClickable(playlistPlusButton));
+        actions.moveToElement(plusButton).click().perform();
+//        playlistPlusButton.click();
     }
 
     public void clickNewSmartPlaylist() {
