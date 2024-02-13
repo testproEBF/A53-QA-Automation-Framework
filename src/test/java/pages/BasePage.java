@@ -73,6 +73,11 @@ public class BasePage {
         Assert.assertNotNull(clickSmartPlaylist(recentAddedSmartPlaylistName));
     }
 
+    public void playlistCreatedNotification(){
+        String actualMessage = String.format("Created playlist \"%s.\"", recentAddedSmartPlaylistName);
+        Assert.assertEquals(getNotification(), actualMessage);
+    }
+
     public void elementNotFound() {
         try{
             Assert.assertNull(clickSmartPlaylist(recentAddedSmartPlaylistName));
@@ -99,6 +104,7 @@ public class BasePage {
         boolean hasNumber = false;
         boolean hasSpecial = false;
         for (int i = 0; i < length; i++) {
+
             if (!hasUpper) {
                 chars.add(ALPHABETIC_UPPERCASE_SYMBOLS.charAt(RandomUtils.nextInt(0, ALPHABETIC_UPPERCASE_SYMBOLS.length())));
                 hasUpper = true;
@@ -129,10 +135,7 @@ public class BasePage {
         recentAddedSmartPlaylistName = name;
     }
 
-    public void playlistCreatedNotification(){
-        String actualMessage = String.format("Created playlist \"%s.\"", recentAddedSmartPlaylistName);
-        Assert.assertEquals(getNotification(), actualMessage);
-    }
+
 
 }
 

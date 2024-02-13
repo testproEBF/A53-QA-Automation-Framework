@@ -27,9 +27,19 @@ public class CreateSmartPlaylistStepDefinition {
         playlistPage.inputName(name);
     }
 
-    @And("I make a rule with value {string}")
-    public void makeARule(String value) {
-        playlistPage.makeARule(value);
+//    @And("I make a rule with value {string}")
+//    public void makeARule(String value) {
+//        playlistPage.makeARule(value);
+//    }
+
+    @And("I make {int} rule or rules: {string} {string} {string}")
+    public void makeRuleRules(int ruleNumber, String modelOption, String operatorOption, String value) {
+        playlistPage.makeRuleRules(ruleNumber, modelOption, operatorOption, value);
+    }
+
+    @And("I make {int} groups with rule: {string} {string} {string}")
+    public void makeGroupsWithRule(int groupNumber, String modelOption, String operatorOption, String value) {
+        playlistPage.makeGroups(groupNumber, modelOption, operatorOption, value);
     }
 
     @And("I click on the Save button")
@@ -37,11 +47,16 @@ public class CreateSmartPlaylistStepDefinition {
         playlistPage.clickSaveButton();
     }
 
+
+    @Then("a notification that says the smart playlist {string} has been created will pop up")
+    public void smartPlaylistCreatedNotification(String name) {
+        playlistPage.smartPlaylistCreatedNotification(name);
+    }
+
     @Then("a notification that says the smart playlist has been created will pop up")
     public void playlistCreatedNotification() {
         playlistPage.playlistCreatedNotification();
     }
-
 
     @And("I will see the created playlist {string} with an asterisk icon and with the correct name under PLAYLISTS")
     public void checkCreatedSmartPlaylist(String name) {
@@ -59,6 +74,21 @@ public class CreateSmartPlaylistStepDefinition {
         playlistPage.checkSongsInSmartPlaylist(song, name);
     }
 
+    @And("I will see the all the songs in the playlist")
+    public void seeAll66SongsInPlaylist() {
+        playlistPage.seeAll66SongsInPlaylist();
+    }
+
+    @And("I change rule {int} to {string} {string} {string}")
+    public void editRule(int ruleNumber, String modelOption, String operatorOption, String value) {
+        playlistPage.editRule(ruleNumber, modelOption, operatorOption, value);
+    }
+
+    @And("I change Group {int} rule to {string} {string} {string}")
+    public void changeGroupRule(int groupNumber, String modelOption, String operatorOption, String value) {
+        playlistPage.editGroupRule(groupNumber, modelOption, operatorOption, value);
+    }
+
     @And("I am on New Smart Playlist Form")
     public void toNewSmartPlaylistForm() {
         basePage.toNewSmartPlaylistForm();
@@ -70,8 +100,13 @@ public class CreateSmartPlaylistStepDefinition {
     }
 
     @And("I will see empty playlist")
-    public void seeEmptyPlaylist() {
-        playlistPage.seeEmptyPlaylist();
+    public void seeEmptyPlaylistRandomName() {
+        playlistPage.seeEmptyPlaylistRandomName();
+    }
+
+    @And("I will see empty {string} playlist")
+    public void seeEmptyPlaylist(String name) {
+        playlistPage.seeEmptyPlaylist(name);
     }
 
     @And("I make {int} groups with value {string}")
@@ -82,7 +117,7 @@ public class CreateSmartPlaylistStepDefinition {
 
     @Then("I stay in the New Smart Playlist Form")
     public void stillInNewSmartPlaylistForm() {
-        playlistPage.stillInNewSmartPlaylistForm();
+            playlistPage.stillInNewSmartPlaylistForm();
     }
 
     @And("I click on the Cancel button")
@@ -111,8 +146,9 @@ public class CreateSmartPlaylistStepDefinition {
         playlistPage.inputRandomName(length);
     }
 
-    @And("I will see the song {string} in the playlist")
+    @And("I will see the song {string} in random-named playlist")
     public void checkSongsInSmartPlaylist(String song) {
         playlistPage.checkSongsInSmartPlaylistRandomName(song);
     }
+
 }

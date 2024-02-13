@@ -18,6 +18,8 @@ public class BaseDefinition {
         options.addArguments("--disable-notifications");
         WebDriver driver = new ChromeDriver(options);
 
+        driver.manage().window().maximize();
+
         SHARED_DRIVER = driver;
     }
 

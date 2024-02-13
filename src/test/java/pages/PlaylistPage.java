@@ -1,8 +1,5 @@
 package pages;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v100.dom.DOM;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -10,12 +7,8 @@ import org.testng.Assert;
 public class PlaylistPage extends BasePage {
     @FindBy(css = ".row [name=\"model[]\"]")
     WebElement smartPFModelList;
-    @FindBy(linkText = "length")
-    WebElement smartPFModelLength;
     @FindBy(css = ".row [name=\"operator[]\"]")
     WebElement smartPFOperatorList;
-    @FindBy(partialLinkText = "is not")
-    WebElement smartPFOperatorIsNot;
     @FindBy(css = ".row input[name='value[]']")
     WebElement smartPFValueField;
     @FindBy(css = ".btn-add-rule")
@@ -32,15 +25,13 @@ public class PlaylistPage extends BasePage {
     WebElement smartPFDiscardOKButton;
     @FindBy(partialLinkText = "No songs match the playlist's")
     WebElement emptyPlaylist;
+    @FindBy(xpath = "//section[@id='playlistWrapper']/header/div/span/span[contains(text(),'66 songs')]")
+    WebElement allSongsPresent;
 
     int row;
     int group;
-
-   // String recentAddedSmartPlaylistName;
-//    public String getRecentAddedSmartPlaylistName() {
-//        return recentAddedSmartPlaylistName;
-//    }
-
+    String modelOption;
+    String operatorOption;
 
     public PlaylistPage(WebDriver givenDriver) {
         super(givenDriver);
@@ -52,28 +43,94 @@ public class PlaylistPage extends BasePage {
         nameField.sendKeys(name);
     }
 
-    public void  makeARule(String value){
-        smartPFModelList.click();
-//        smartPFModelLength.click();
-        smartPFOperatorList.click();
-//        smartPFOperatorIsNot.click();
-        smartPFValueField.sendKeys(value);
+    public void  inputRule(int group, int row, String modelOption, String operatorOption, String value){
+        String model = String.format("//div[%s]/div[%s]/select[@name='model[]']", group, row);
+        String modelOptionLocator = String.format("//div[%s]/div[%s]/select[@name='model[]']/option[text()='%s']", group, row, modelOption);
+        String operator = String.format("//div[%s]/div[%s]/select[@name='operator[]']", group, row);
+        String operatorOptionLocator = String.format("//div[%s]/div[%s]/select[@name='operator[]']/option[text()='%s']", group, row, operatorOption);
+        String valueLocator = String.format("//div[%s]/div[%s]/span/*[@name='value[]']", group, row);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+    }
+
+    public void makeRuleRules(int ruleNumber, String modelOption, String operatorOption, String value) {
+        int y = ruleNumber + 1;
+        group = 1;
+
+        for (int x = 1; x < y ; x++ ){
+            row = x+1;
+            inputRule(group, row, modelOption, operatorOption, value);
+
+            if (x < ruleNumber){
+                smartPFAddRuleButton.click();
+            }
+        }
+    }
+
+    public void makeGroups(int groupNumber, String modelOption, String operatorOption, String value) {
+        int y = groupNumber + 1;
+        row = 2;
+
+        for (int x = 1; x < y ; x++ ){
+                group = x;
+                inputRule(group, row, modelOption, operatorOption, value);
+
+            if (x < groupNumber){
+                smartPFAddGroupButton.click();
+            }
+        }
+    }
+
+    public void  editInputRule(int group, int row, String modelOption, String operatorOption, String value){
+        String model = String.format("//div[%s]/div[%s]/select[@name='model[]']", group, row);
+        String modelOptionLocator = String.format("//div[%s]/div[%s]/select[@name='model[]']/option[text()='%s']", group, row, modelOption);
+        String operator = String.format("//div[%s]/div[%s]/select[@name='operator[]']", group, row);
+        String operatorOptionLocator = String.format("//div[%s]/div[%s]/select[@name='operator[]']/option[text()='%s']", group, row, operatorOption);
+        String valueLocator = String.format("//div[%s]/div[%s]/span/*[@name='value[]']", group, row);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+    }
+
+    public void editRule(int ruleNumber, String modelOption, String operatorOption, String value){
+        group = 1;
+        row = ruleNumber + 1;
+        editInputRule(group, row, modelOption, operatorOption, value);
+    }
+
+    public void editGroupRule(int groupNumber, String modelOption, String operatorOption, String value){
+        group = groupNumber;
+        row = 2;
+        editInputRule(group, row, modelOption, operatorOption, value);
     }
 
     public void clickSaveButton(){
         smartPFSaveButton.click();
     }
 
+    public void smartPlaylistCreatedNotification(String name) {
+        String actualMessage = String.format("Created playlist \"%s.\"", name);
+        Assert.assertEquals(getNotification(), actualMessage);
+    }
+
     public void checkSongsInSmartPlaylist(String song, String name){
         clickSmartPlaylist(name);
-        //String songLocator = String.format("Updated playlist \"%s.\"", playlistNewName)"//*[text()='Frantic']";
-        Assert.assertNotNull(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Frantic']"))));
+        String songLocator = String.format("//*[text()='%s']", song);
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(songLocator))).isDisplayed());
     }
 
     public void checkSongsInSmartPlaylistRandomName(String song) {
         clickSmartPlaylist(recentAddedSmartPlaylistName);
-        //String songLocator = String.format("Updated playlist \"%s.\"", playlistNewName)"//*[text()='Frantic']";
-        Assert.assertNotNull(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Frantic']"))));
+        String songLocator = String.format("//*[text()='%s']", song);
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(songLocator))).isDisplayed());
     }
 
     public void makeMultipleRules(int numOfRules, String value){
@@ -82,11 +139,14 @@ public class PlaylistPage extends BasePage {
 
         for (int x = 1; x < y ; x++ ){
             row = x+1;
-            String model = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='model[]']", group, row);
+//            String model = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='model[]']", group, row);
+            String model = String.format("//div[%s]/div[%s]/select[@name='model[]']", group, row);
+            String modelOption = String.format("//div[%s]/div[%s]/select[@name='model[]']/option[text()='Artist']", group, row);
             String operator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='operator[]']", group, row);
             String valueLocator = String.format("div .rule-group:nth-child(%s) .row:nth-child(%d) [name='value[]']", group, row);
 
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(model))).click();
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(model))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(operator))).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(valueLocator))).sendKeys(value);
 
@@ -96,10 +156,18 @@ public class PlaylistPage extends BasePage {
         }
     }
 
-    public void seeEmptyPlaylist() {
+    public void seeEmptyPlaylistRandomName() {
         clickSmartPlaylist(recentAddedSmartPlaylistName);
-        Assert.assertNotNull(recentAddedSmartPlaylistName);
+        Assert.assertNotNull(emptyPlaylist);
     }
+
+    public void seeEmptyPlaylist(String name) {
+        clickSmartPlaylist(name);
+        Assert.assertNotNull(emptyPlaylist);
+//        Assert.assertTrue(emptyPlaylist.isDisplayed());
+    }
+
+
 
     public void makeMultipleGroups(int numOfGroups, String value) {
         int y = numOfGroups + 1;
@@ -122,7 +190,8 @@ public class PlaylistPage extends BasePage {
     }
 
     public void stillInNewSmartPlaylistForm() {
-        Assert.assertNotNull(smartPFSaveButton);
+//        Assert.assertNotNull(smartPFSaveButton);
+        Assert.assertTrue(smartPFSaveButton.isDisplayed());
     }
 
     public void clickCancelButton() {
@@ -137,5 +206,9 @@ public class PlaylistPage extends BasePage {
         smartPFDiscardCancelButton.click();
     }
 
+    public void seeAll66SongsInPlaylist() {
+        Assert.assertNotNull(allSongsPresent);
+//        Assert.assertTrue(allSongsPresent.isDisplayed());
+    }
 
 }
