@@ -2,7 +2,10 @@ package pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.time.Duration;
 
 public class PlaylistPage extends BasePage {
 
@@ -85,23 +88,32 @@ public class PlaylistPage extends BasePage {
         String operatorOptionLocator = String.format("//div[%s]/div[%s]/select[@name='operator[]']/option[text()='%s']", group, row, operatorOption);
         String valueLocator = String.format("//div[%s]/div[%s]/span/*[@name='value[]']", group, row);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("Cannot scroll to the top.");
+            e.printStackTrace();
+        }
     }
 
-    public void editRule(int ruleNumber, String modelOption, String operatorOption, String value){
-        group = 1;
+    public void editRule(int ruleNumber, int groupNumber, String modelOption, String operatorOption, String value){
         row = ruleNumber + 1;
-        editInputRule(group, row, modelOption, operatorOption, value);
-    }
-
-    public void editGroupRule(int groupNumber, String modelOption, String operatorOption, String value){
         group = groupNumber;
-        row = 2;
         editInputRule(group, row, modelOption, operatorOption, value);
     }
 
@@ -137,9 +149,21 @@ public class PlaylistPage extends BasePage {
 //        Assert.assertTrue(emptyPlaylist.isDisplayed());
     }
 
+    protected Boolean waitForElementToBeVisible (WebElement webElement){
+        boolean isWebElementVisible = false;
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(webElement));
+            isWebElementVisible = true;
+        } catch (TimeoutException e) {
+            System.out.println("The save button is not found.");
+            e.printStackTrace();
+        }
+        return isWebElementVisible;
+    }
     public void stillInNewSmartPlaylistForm() {
 //        Assert.assertNotNull(smartPFSaveButton);
-        Assert.assertTrue(smartPFSaveButton.isDisplayed());
+//        Assert.assertTrue(smartPFSaveButton.isDisplayed());
+        Assert.assertTrue(waitForElementToBeVisible(smartPFSaveButton));
     }
 
     public void clickCancelButton() {

@@ -28,6 +28,8 @@ public class BasePage {
     private WebElement playlistPlusButton;
     @FindBy(xpath = "//*[text()=\"New Smart Playlist\"]")
     private WebElement newSmartPlaylistOption;
+    @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
+    private WebElement deleteOption;
 
     String recentAddedSmartPlaylistName;
 
@@ -139,8 +141,39 @@ public class BasePage {
         recentAddedSmartPlaylistName = name;
     }
 
+    public int countNumberOfPlaylist(){
+        return driver.findElements(By.cssSelector("a[href*=\"playlist\"]")).size();
+    }
 
+    public BasePage contextClickElement (By locator) {
+        actions.contextClick(findElement(locator)).perform();
+        return this;
+    }
 
+    public WebElement findElement(By locator){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public BasePage clickDelete() {
+        deleteOption.click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li[data-testid*=\"playlist-context-menu-delete\"]")));
+        return this;
+    }
+
+    public void deleteAllPlaylists() {
+        int x = countNumberOfPlaylist();
+        System.out.println("There is/are currently " + x + " playlist/s.");
+
+        for (int i = 0; i <= x; i++) {
+            By locator = By.cssSelector("a[href*=\"playlist\"]");
+            contextClickElement(locator);
+            clickDelete();
+
+        }
+
+        int y = countNumberOfPlaylist();
+        System.out.println("There is/are now " + y + " playlist/s.");
+    }
 }
 
 

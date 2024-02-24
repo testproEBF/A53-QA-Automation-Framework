@@ -1,7 +1,8 @@
 Feature: Create Smart Playlist feature
 
   Background:
-    Given I am LoggedIn using "enrile.fuentes@testpro.io" and "@mEi99LqzLc5NH8n"
+    Given I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+#    And there are no existing playlists
     And I am on New Smart Playlist Form
 
   Scenario: Create smart playlist with one rule (Title)
@@ -31,7 +32,7 @@ Feature: Create Smart Playlist feature
   Scenario: Create smart playlist with 30 rules
     And I input "30 Rules" in the name text field
     And I make 30 rule or rules: "Artist" "is" "xyz"
-    And I change rule 5 to "Title" "contains" "qwerty"
+    And I change rule 5 of Group 1 to "Title" "contains" "qwerty"
     And I click on the Save button
     Then a notification that says the smart playlist "30 Rules" has been created will pop up
     And I will see the created playlist "30 Rules" with an asterisk icon and with the correct name under PLAYLISTS
@@ -48,7 +49,7 @@ Feature: Create Smart Playlist feature
   Scenario: Create smart playlist with 20 groups
     And I input "20 Groups" in the name text field
     And I make 20 groups with rule: "Length" "is" "1"
-    And I change Group 7 rule to "Title" "contains" "qwerty"
+    And I change rule 1 of Group 7 to "Title" "contains" "qwerty"
     And I click on the Save button
     Then a notification that says the smart playlist "20 Groups" has been created will pop up
     And I will see the created playlist "20 Groups" with an asterisk icon and with the correct name under PLAYLISTS
@@ -98,5 +99,7 @@ Feature: Create Smart Playlist feature
     And I click on the Cancel button
     And I click on the Cancel discard button
     Then I stay in the New Smart Playlist Form
+
+
 
 
