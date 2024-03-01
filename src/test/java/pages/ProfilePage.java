@@ -1,5 +1,6 @@
 package pages;
 
+import StepDefinition.BaseDefinition;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +28,6 @@ public class ProfilePage extends BasePage{
         findElementVisibility(profileCurrentPasswordField).sendKeys(password);
         findElementVisibility(profileEmailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         findElementVisibility(profileEmailField).sendKeys(newEmail);
-//        findElementVisibility(profileSaveButton).click();
         actions.moveToElement(findElementClickable(profileSaveButton)).click().perform();
         getUpdateEmailNotification();
     }
@@ -40,4 +40,20 @@ public class ProfilePage extends BasePage{
     public void waitNotificationDisappear() {
         wait.until(ExpectedConditions.invisibilityOf(notification));
     }
+
+    public void updatePassword(String password, String newPassword) {
+        findElementVisibility(avatarIcon).click();
+        findElementVisibility(profileCurrentPasswordField).sendKeys(password);
+        findElementVisibility(profileNewPasswordField).sendKeys(newPassword);
+        actions.moveToElement(findElementClickable(profileSaveButton)).click().perform();
+        getUpdateEmailNotification();
+    }
+
+//    public void revertChange(String newEmail, String email, String password) {
+//        LoginPage.
+//        loginPage.enterEmail(newEmail);
+//        loginPage.enterPassword(password);
+//        loginPage.clickLogIn();
+//        updateEmail(email, password);
+//    }
 }

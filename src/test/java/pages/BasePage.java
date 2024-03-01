@@ -54,12 +54,24 @@ public class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-//    public WebElement waitForInvisibility(WebElement element){
-//        return wait.until(ExpectedConditions.invisibilityOfElementWithText())
+    protected Boolean waitForElementToBeVisible(WebElement element){
+        boolean isElementVisible = false;
+        try{
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(element));
+            isElementVisible = true;
+        } catch (TimeoutException e) {
+            System.out.println("Webelement is not found.");
+            e.printStackTrace();
+        }
+        return isElementVisible;
+    }
+
+//    public WebElement void moveToElement (WebElement element){
+//        actions.moveToElement(findElementClickable(element)).click().perform();
 //    }
 
     public void loggedIn() {
-        Assert.assertTrue(findElementVisibility(avatarIcon).isDisplayed());
+        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
     }
 
     public void clickPlusButton(){

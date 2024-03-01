@@ -149,17 +149,6 @@ public class PlaylistPage extends BasePage {
 //        Assert.assertTrue(emptyPlaylist.isDisplayed());
     }
 
-    protected Boolean waitForElementToBeVisible (WebElement webElement){
-        boolean isWebElementVisible = false;
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(webElement));
-            isWebElementVisible = true;
-        } catch (TimeoutException e) {
-            System.out.println("The save button is not found.");
-            e.printStackTrace();
-        }
-        return isWebElementVisible;
-    }
     public void stillInNewSmartPlaylistForm() {
 //        Assert.assertNotNull(smartPFSaveButton);
 //        Assert.assertTrue(smartPFSaveButton.isDisplayed());

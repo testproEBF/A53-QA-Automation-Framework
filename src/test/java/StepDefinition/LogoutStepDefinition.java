@@ -9,7 +9,7 @@ public class LogoutStepDefinition {
 
     BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
 
-    @And("I log out")
+    @And("I click log out button")
     public void logOut() {
         basePage.clickLogoutButton();
     }

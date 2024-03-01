@@ -3,7 +3,7 @@ Feature: Login feature
   Background:
     Given I open Login Page
 
-  Scenario: Login Success
+  Scenario: Successful Login
     When I enter email "enrile.fuentes@testpro.io"
     And I enter password "26Pz2$g^GEXUPLaC"
     And I click submit
@@ -49,22 +49,45 @@ Feature: Login feature
   Scenario: Successful Login using New Email After Email Update
     When I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I update my email to "enrile.fuentes+0@testpro.io" using password "26Pz2$g^GEXUPLaC"
-    And I log out
+    And I click log out button
     And I open Login Page
     And I enter email "enrile.fuentes+0@testpro.io"
     And I enter password "26Pz2$g^GEXUPLaC"
     And I click submit
     Then I am logged in
     When I update my email to "enrile.fuentes@testpro.io" using password "26Pz2$g^GEXUPLaC"
-    And I log out
 
-  Scenario: Successful Login using Old Email After Email Update
+  Scenario: Unsuccessful Login using Old Email After Email Update
     When I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I update my email to "enrile.fuentes+0@testpro.io" using password "26Pz2$g^GEXUPLaC"
-    And I log out
+    And I click log out button
     And I open Login Page
     And I enter email "enrile.fuentes@testpro.io"
     And I enter password "26Pz2$g^GEXUPLaC"
     And I click submit
     Then I am not logged in
-    And I change "enrile.fuentes+0@testpro.io" back to "enrile.fuentes@testpro.io" using "26Pz2$g^GEXUPLaC"
+    When I am LoggedIn using "enrile.fuentes+0@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I update my email to "enrile.fuentes@testpro.io" using password "26Pz2$g^GEXUPLaC"
+
+  Scenario: Successful Login using New Password After Password Update
+    When I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I update my password from "26Pz2$g^GEXUPLaC" to "uragonKA@123"
+    And I click log out button
+    And I open Login Page
+    And I enter email "enrile.fuentes@testpro.io"
+    And I enter password "uragonKA@123"
+    And I click submit
+    Then I am logged in
+    And I update my password from "uragonKA@123" to "26Pz2$g^GEXUPLaC"
+
+  Scenario: Unsuccessful Login using Old Password After Password Update
+    When I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I update my password from "26Pz2$g^GEXUPLaC" to "uragonKA@123"
+    And I click log out button
+    And I open Login Page
+    And I enter email "enrile.fuentes@testpro.io"
+    And I enter password "26Pz2$g^GEXUPLaC"
+    And I click submit
+    Then I am not logged in
+    When I am LoggedIn using "enrile.fuentes@testpro.io" and "uragonKA@123"
+    And I update my password from "uragonKA@123" to "26Pz2$g^GEXUPLaC"

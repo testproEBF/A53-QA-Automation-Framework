@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         features = {"src/test/resources/features/Login.feature"
 //                , "src/test/resources/features/CreateSmartPlaylist.feature"
+                  , "src/test/resources/features/Logout.feature"
         }
 )
 
