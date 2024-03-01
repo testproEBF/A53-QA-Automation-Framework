@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,13 +24,18 @@ public class BasePage {
     WebDriverWait wait;
     Actions actions;
 
-    //@FindBy(css = ".fa.fa-plus-circle.create")
+    @FindBy(xpath = "//img[@class=\"avatar\"]")
+    protected WebElement avatarIcon;
+    @FindBy(xpath = "//div[@class=\"success show\"]")
+    protected WebElement notification;
     @FindBy(xpath = "//*[@title=\"Create a new playlist\"]")
     private WebElement playlistPlusButton;
     @FindBy(xpath = "//*[text()=\"New Smart Playlist\"]")
     private WebElement newSmartPlaylistOption;
     @FindBy( css = "li[data-testid*=\"playlist-context-menu-delete\"]")
     private WebElement deleteOption;
+    @FindBy(xpath = "//i[@class=\"fa fa-sign-out\"]")
+    private WebElement logoutButton;
 
     String recentAddedSmartPlaylistName;
 
@@ -40,15 +46,24 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    //PlaylistPage playlistPage = new PlaylistPage(driver);
+    public WebElement findElementVisibility (WebElement element){
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public WebElement findElementClickable (WebElement element){
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+//    public WebElement waitForInvisibility(WebElement element){
+//        return wait.until(ExpectedConditions.invisibilityOfElementWithText())
+//    }
+
     public void loggedIn() {
-        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
+        Assert.assertTrue(findElementVisibility(avatarIcon).isDisplayed());
     }
 
     public void clickPlusButton(){
-        WebElement plusButton = wait.until(ExpectedConditions.elementToBeClickable(playlistPlusButton));
-        actions.moveToElement(plusButton).click().perform();
-//        playlistPlusButton.click();
+        actions.moveToElement(findElementClickable(playlistPlusButton)).click().perform();
     }
 
     public void clickNewSmartPlaylist() {
@@ -61,8 +76,8 @@ public class BasePage {
     }
 
     public String getNotification () {
-        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".success.show")));
-        return notification.getText();
+//  put try catch here
+        return findElementVisibility(notification).getText();
     }
 
 
@@ -173,6 +188,11 @@ public class BasePage {
 
         int y = countNumberOfPlaylist();
         System.out.println("There is/are now " + y + " playlist/s.");
+    }
+
+    public void clickLogoutButton() {
+        findElementVisibility(logoutButton).click();
+        return;
     }
 }
 

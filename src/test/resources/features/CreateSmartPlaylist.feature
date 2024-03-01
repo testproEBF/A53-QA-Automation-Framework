@@ -1,7 +1,8 @@
 Feature: Create Smart Playlist feature
 
   Background:
-    Given I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    Given I open Login Page
+    And I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
 #    And there are no existing playlists
     And I am on New Smart Playlist Form
 

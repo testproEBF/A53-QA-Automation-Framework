@@ -6,13 +6,13 @@ import org.testng.Assert;
 
 public class LoginPage extends BasePage {
     @FindBy(css = "[type='email']")
-    WebElement emailField;
+    private WebElement emailField;
     @FindBy(css = "[type='password']")
-    WebElement passwordField;
+    private WebElement passwordField;
     @FindBy(css = "[type='submit")
-    WebElement loginButton;
+    private WebElement loginButton;
     @FindBy(css = "[href=\"registration\"]")
-    WebElement registerButton;
+    private WebElement registerButton;
 
     public LoginPage (WebDriver givenDriver){
         super (givenDriver);
@@ -23,7 +23,7 @@ public class LoginPage extends BasePage {
     }
 
     public void enterEmail(String email) {
-        emailField.sendKeys(email);
+        findElementClickable(emailField).sendKeys(email);
     }
 
     public void enterPassword(String password) {
@@ -36,6 +36,10 @@ public class LoginPage extends BasePage {
 
     public void notLoggedIn() {
         Assert.assertNotNull(registerButton);
+    }
+
+    public void getLoginNotification(String notification) {
+        Assert.assertEquals(getNotification(), notification);
     }
 }
 

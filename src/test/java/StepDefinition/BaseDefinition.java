@@ -15,10 +15,10 @@ public class BaseDefinition {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-notifications", "--remote-allow-origins=*", "--incognito", "--start-maximized", "-lang=en");
-//        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         WebDriver driver = new ChromeDriver(options);
 
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
 
         SHARED_DRIVER = driver;
     }

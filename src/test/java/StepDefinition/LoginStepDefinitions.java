@@ -42,10 +42,15 @@ public class LoginStepDefinitions {
 
     @Given("I am LoggedIn using {string} and {string}")
     public void iAmLoggedIn(String email, String password) {
-        loginPage.openLogin();
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
         loginPage.clickLogIn();
         loginPage.loggedIn();
     }
+
+    @And("{string} message is displayed")
+    public void getLoginNotification(String notification) {
+        loginPage.getLoginNotification(notification);
+    }
+
 }
