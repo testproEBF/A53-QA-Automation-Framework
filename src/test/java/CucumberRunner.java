@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 @Test
 @CucumberOptions(
         features = {"src/test/resources/features/Login.feature"
-//                , "src/test/resources/features/CreateSmartPlaylist.feature"
-                  , "src/test/resources/features/Logout.feature"
+                , "src/test/resources/features/CreateSmartPlaylist.feature"
+//                  , "src/test/resources/features/Logout.feature"
         },      // Specifies the location of the feature files
         publish = true      // Indicates whether to publish the test results
 )

@@ -88,15 +88,6 @@ public class PlaylistPage extends BasePage {
         String operatorOptionLocator = String.format("//div[%s]/div[%s]/select[@name='operator[]']/option[text()='%s']", group, row, operatorOption);
         String valueLocator = String.format("//div[%s]/div[%s]/span/*[@name='value[]']", group, row);
 
-
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
-
-
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
@@ -140,18 +131,15 @@ public class PlaylistPage extends BasePage {
 
     public void seeEmptyPlaylistRandomName() {
         clickSmartPlaylist(recentAddedSmartPlaylistName);
-        Assert.assertNotNull(emptyPlaylist);
+        Assert.assertTrue(waitForElementToBeVisible(emptyPlaylist));
     }
 
     public void seeEmptyPlaylist(String name) {
         clickSmartPlaylist(name);
-        Assert.assertNotNull(emptyPlaylist);
-//        Assert.assertTrue(emptyPlaylist.isDisplayed());
+        Assert.assertTrue(waitForElementToBeVisible(emptyPlaylist));
     }
 
     public void stillInNewSmartPlaylistForm() {
-//        Assert.assertNotNull(smartPFSaveButton);
-//        Assert.assertTrue(smartPFSaveButton.isDisplayed());
         Assert.assertTrue(waitForElementToBeVisible(smartPFSaveButton));
     }
 

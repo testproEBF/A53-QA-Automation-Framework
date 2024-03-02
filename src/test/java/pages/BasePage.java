@@ -45,7 +45,7 @@ public class BasePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+//        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
         // The constructor initializes the driver, wait, actions, and page elements using the given WebDriver.
     }
 
@@ -60,10 +60,10 @@ public class BasePage {
     protected Boolean waitForElementToBeVisible(WebElement element){
         boolean isElementVisible = false;
         try{
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(element));
+            findElementVisibility(element);
             isElementVisible = true;
         } catch (TimeoutException e) {
-            System.out.println("Webelement is not found.");
+            System.out.println("Web element is not found.");
             e.printStackTrace();
         }
         return isElementVisible;
