@@ -8,8 +8,8 @@ import pages.PlaylistPage;
 
 public class CreateSmartPlaylistStepDefinition {
 
-    BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
-    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.SHARED_DRIVER);
+    BasePage basePage = new BasePage(BaseDefinition.getThreadLocal());
+    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.getThreadLocal());
 
     @When("I click on the + button under PLAYLISTS on the main menu")
     public void clickPlusButton() {

@@ -6,13 +6,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+// The code uses the CucumberOptions annotation to configure the Cucumber test execution.
 @Test
 @CucumberOptions(
         features = {"src/test/resources/features/Login.feature"
 //                , "src/test/resources/features/CreateSmartPlaylist.feature"
                   , "src/test/resources/features/Logout.feature"
-        },
-        publish = true
+        },      // Specifies the location of the feature files
+        publish = true      // Indicates whether to publish the test results
 )
 
 public class CucumberRunner extends AbstractTestNGCucumberTests {

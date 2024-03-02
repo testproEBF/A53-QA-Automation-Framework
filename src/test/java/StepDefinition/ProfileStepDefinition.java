@@ -4,7 +4,7 @@ import pages.ProfilePage;
 
 public class ProfileStepDefinition {
 
-    ProfilePage profilePage = new ProfilePage(BaseDefinition.SHARED_DRIVER);
+    ProfilePage profilePage = new ProfilePage(BaseDefinition.getThreadLocal());
 
     @And("I update my email to {string} using password {string}")
     public void updateEmail(String newEmail, String password) {
