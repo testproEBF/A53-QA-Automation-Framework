@@ -60,7 +60,7 @@ public class BasePage {
             new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(element));
             isElementVisible = true;
         } catch (TimeoutException e) {
-            System.out.println("Webelement is not found.");
+            System.out.println("Web element is not found.");
             e.printStackTrace();
         }
         return isElementVisible;
