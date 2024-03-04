@@ -1,6 +1,5 @@
 package pages;
 
-import StepDefinition.BaseDefinition;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,11 +48,4 @@ public class ProfilePage extends BasePage{
         getUpdateEmailNotification();
     }
 
-//    public void revertChange(String newEmail, String email, String password) {
-//        LoginPage.
-//        loginPage.enterEmail(newEmail);
-//        loginPage.enterPassword(password);
-//        loginPage.clickLogIn();
-//        updateEmail(email, password);
-//    }
 }
