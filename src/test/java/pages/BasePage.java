@@ -57,7 +57,7 @@ public class BasePage {
     protected Boolean waitForElementToBeVisible(WebElement element){
         boolean isElementVisible = false;
         try{
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(element));
+            findElementVisibility(element);
             isElementVisible = true;
         } catch (TimeoutException e) {
             System.out.println("Web element is not found.");
@@ -66,8 +66,12 @@ public class BasePage {
         return isElementVisible;
     }
 
-//    public WebElement void moveToElement (WebElement element){
+//    public void moveToElement (WebElement element){
 //        actions.moveToElement(findElementClickable(element)).click().perform();
+//    }
+//
+//    public WebElement waitForInvisibility (WebElement element){
+//        return wait.until(ExpectedConditions.invisibilityOf(element))
 //    }
 
     public void loggedIn() {
@@ -191,7 +195,7 @@ public class BasePage {
         int x = countNumberOfPlaylist();
         System.out.println("There is/are currently " + x + " playlist/s.");
 
-        for (int i = 0; i <= x; i++) {
+        for (int i = 0; i < x; i++) {
             By locator = By.cssSelector("a[href*=\"playlist\"]");
             contextClickElement(locator);
             clickDelete();
@@ -200,6 +204,7 @@ public class BasePage {
 
         int y = countNumberOfPlaylist();
         System.out.println("There is/are now " + y + " playlist/s.");
+        wait.until(ExpectedConditions.invisibilityOf(notification));
     }
 
     public void clickLogoutButton() {
