@@ -21,4 +21,9 @@ public class CurrentQueueStepDefinition {
     public void checkTotalNumberOfSongs(int numberOfSongs) {
         currentQueuePage.checkTotalNumberOfSongs(numberOfSongs);
     }
+
+    @Then("I will be navigated to Current Queue page")
+    public void checkIfNavigatedToCurrentQueuePage() {
+        currentQueuePage.checkIfNavigatedToCurrentQueuePage();
+    }
 }

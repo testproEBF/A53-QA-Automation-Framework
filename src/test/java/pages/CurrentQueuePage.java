@@ -15,6 +15,9 @@ public class CurrentQueuePage extends BasePage{
     @FindBy(xpath = "//a[@class=\"queue\"]")
     private WebElement currentQueue;
 
+    @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1")
+    private WebElement currentQueueText;
+
     public void goToCurrentQueuePage() {
         actions.moveToElement(currentQueue).doubleClick().perform();
     }
@@ -36,5 +39,9 @@ public class CurrentQueuePage extends BasePage{
         String locator = String.format("%s songs", numberOfSongs);
         WebElement element = findElement(By.linkText(locator));
         Assert.assertTrue(waitForElementToBeVisible(element));
+    }
+
+    public void checkIfNavigatedToCurrentQueuePage() {
+        Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
     }
 }
