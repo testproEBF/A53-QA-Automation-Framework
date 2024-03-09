@@ -46,6 +46,10 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public WebElement findElement(By locator){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
     public WebElement findElementVisibility (WebElement element){
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
@@ -64,6 +68,12 @@ public class BasePage {
             e.printStackTrace();
         }
         return isElementVisible;
+    }
+
+    public int getRandomNumber (int min, int max) {
+        int randomNumbers;
+        randomNumbers = (int) ((Math.random() * (max - min)) + min);
+        return randomNumbers;
     }
 
 //    public void moveToElement (WebElement element){
@@ -179,10 +189,6 @@ public class BasePage {
     public BasePage contextClickElement (By locator) {
         actions.contextClick(findElement(locator)).perform();
         return this;
-    }
-
-    public WebElement findElement(By locator){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public BasePage clickDelete() {

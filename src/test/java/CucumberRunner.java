@@ -9,7 +9,8 @@ import org.testng.annotations.DataProvider;
         features = {
                 "src/test/resources/features/Login.feature"
                 , "src/test/resources/features/CreateSmartPlaylist.feature"
-                  , "src/test/resources/features/Logout.feature"
+                , "src/test/resources/features/Logout.feature"
+                , "src/test/resources/features/CurrentQueue.feature"
         }
 )
 
