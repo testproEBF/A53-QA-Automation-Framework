@@ -125,13 +125,12 @@ public class BasePage {
         Assert.assertEquals(getNotification(), actualMessage);
     }
 
-    public void elementNotFound() {
+    public void playlistNotFound() {
         try{
             Assert.assertNull(clickSmartPlaylist(recentAddedSmartPlaylistName));
         } catch (TimeoutException e){
             Assert.assertEquals(driver.findElements(By.linkText(recentAddedSmartPlaylistName)).size(), 0);
         }
-
     }
 
     public String randomStrGenerator (int length){
@@ -215,6 +214,15 @@ public class BasePage {
     public int getSize(By locator){
         return driver.findElements(locator).size();
     }
+
+    public void elementNotFound(By locator) {
+        try{
+            Assert.assertEquals(driver.findElements(locator)).size(), 0);
+        } catch (TimeoutException e){
+
+        }
+    }
+
 }
 
 

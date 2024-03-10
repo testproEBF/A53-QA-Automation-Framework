@@ -112,7 +112,7 @@ public class CreateSmartPlaylistStepDefinition {
 
     @Then("playlist is not created")
     public void playlistNotCreated() {
-        playlistPage.elementNotFound();
+        playlistPage.playlistNotFound();
     }
 
     @And("I click on the Cancel discard button")

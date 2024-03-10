@@ -17,7 +17,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
 
   Scenario: Track number of currently played song is displayed
     When I navigate to Current Queue page
-    Then I will see track numbers of the 3 songs
+    Then I will see the track numbers of the 3 songs
 
   Scenario: Title of currently played song is displayed
     When I navigate to Current Queue page
@@ -25,16 +25,27 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
 
   Scenario: Artist of currently played song is displayed
     When I navigate to Current Queue page
-    Then I will see artists of the 3 songs
+    Then I will see the artists of the 3 songs
 
   Scenario: Album of currently played song is displayed
     When I navigate to Current Queue page
-    Then I will see track numbers for the 3 songs
+    Then I will see the albums of the 3 songs
 
   Scenario: Song Length of currently played song is displayed
     When I navigate to Current Queue page
-    Then I will see track numbers for the 3 songs
+    Then I will see the playtime of the 3 songs
 
-#  Scenario: 'Shuffle All' button in Current Queue page shuffles songs
-#  Scenario: Current Queue page is empty after clicking 'Clear' button
+  Scenario: 'Shuffle All' button in Current Queue page shuffles songs
+    When I navigate to Current Queue page
+    And I get the titles of the 3 songs in order
+    And I click the Shuffle button
+    And I get the titles of the 3 songs in order after shuffle
+    Then the songs will be shuffled
+
+  Scenario: Current Queue page is empty after clicking 'Clear' button
+    When I navigate to Current Queue page
+    And I click the Clear button
+    Then the Current Queue list will be empty
+#    And "No songs queued. How about shuffling all songs?" message will be displayed
+
 #  Scenario: All songs are displayed on the Current Queue page when 'shuffling all songs' is clicked
