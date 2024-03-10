@@ -182,10 +182,6 @@ public class BasePage {
         recentAddedSmartPlaylistName = name;
     }
 
-    public int countNumberOfPlaylist(){
-        return driver.findElements(By.cssSelector("a[href*=\"playlist\"]")).size();
-    }
-
     public BasePage contextClickElement (By locator) {
         actions.contextClick(findElement(locator)).perform();
         return this;
@@ -193,22 +189,20 @@ public class BasePage {
 
     public BasePage clickDelete() {
         deleteOption.click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li[data-testid*=\"playlist-context-menu-delete\"]")));
         return this;
     }
 
     public void deleteAllPlaylists() {
-        int x = countNumberOfPlaylist();
+        By locator = By.cssSelector("a[href*=\"playlist\"]");
+        int x = getSize(locator);
         System.out.println("There is/are currently " + x + " playlist/s.");
 
         for (int i = 0; i < x; i++) {
-            By locator = By.cssSelector("a[href*=\"playlist\"]");
             contextClickElement(locator);
             clickDelete();
-
         }
 
-        int y = countNumberOfPlaylist();
+        int y = getSize(locator);
         System.out.println("There is/are now " + y + " playlist/s.");
         wait.until(ExpectedConditions.invisibilityOf(notification));
     }
@@ -216,6 +210,10 @@ public class BasePage {
     public void clickLogoutButton() {
         findElementVisibility(logoutButton).click();
         return;
+    }
+
+    public int getSize(By locator){
+        return driver.findElements(locator).size();
     }
 }
 

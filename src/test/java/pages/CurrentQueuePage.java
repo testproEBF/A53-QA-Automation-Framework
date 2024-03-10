@@ -14,9 +14,10 @@ public class CurrentQueuePage extends BasePage{
 
     @FindBy(xpath = "//a[@class=\"queue\"]")
     private WebElement currentQueue;
-
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1")
     private WebElement currentQueueText;
+//    @FindBy(xpath = "(//td[@class=\"track-number text-secondary\"])[1]")
+//    private WebElement trackNumber;
 
     public void goToCurrentQueuePage() {
         actions.moveToElement(currentQueue).doubleClick().perform();
@@ -43,5 +44,21 @@ public class CurrentQueuePage extends BasePage{
 
     public void checkIfNavigatedToCurrentQueuePage() {
         Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
+    }
+
+    public void checkPresenceOfTrackNumber(int songNumber) {
+        for(int x = 1; x <= songNumber; x++){
+            String locator = String.format("(//td[@class=\"track-number text-secondary\"])[%s]", x);
+            String trackNumber = findElement(By.xpath(locator)).getText();
+            Boolean isEmpty = false;
+            if (trackNumber.isEmpty()){
+                System.out.println("The song's track number is missing.");
+                isEmpty = true;
+            } else {
+                System.out.println("The song's track number is " + trackNumber);
+            }
+            Assert.assertFalse(isEmpty);
+        }
+
     }
 }

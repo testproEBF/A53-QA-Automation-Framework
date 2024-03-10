@@ -26,4 +26,9 @@ public class CurrentQueueStepDefinition {
     public void checkIfNavigatedToCurrentQueuePage() {
         currentQueuePage.checkIfNavigatedToCurrentQueuePage();
     }
+
+    @Then("I will see track numbers for the {int} songs")
+    public void checkPresenceOfTrackNumber(int songNumber) {
+        currentQueuePage.checkPresenceOfTrackNumber(songNumber);
+    }
 }

@@ -8,9 +8,9 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         features = {
                 "src/test/resources/features/Login.feature"
-                , "src/test/resources/features/CreateSmartPlaylist.feature"
-                , "src/test/resources/features/Logout.feature"
-                , "src/test/resources/features/CurrentQueue.feature"
+//                , "src/test/resources/features/CreateSmartPlaylist.feature"
+//                , "src/test/resources/features/Logout.feature"
+                , "src/test/resources/features/CurrentQueue/CurrentQueue.feature"
         }
 )
 

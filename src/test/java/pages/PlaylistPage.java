@@ -172,4 +172,9 @@ public class PlaylistPage extends BasePage {
 //        Assert.assertTrue(allSongsPresent.isDisplayed());
     }
 
+    public int countNumberOfPlaylist(){
+        By locator = By.cssSelector("a[href*=\"playlist\"]");
+        return getSize(locator);
+    }
+
 }
