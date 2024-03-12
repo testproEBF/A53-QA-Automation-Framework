@@ -20,8 +20,13 @@ public class CurrentQueueStepDefinition {
     }
 
     @Then("I will see the {int} total number of songs under the text Current Queue")
-    public void checkTotalNumberOfSongs(int numberOfSongs) {
+    public void checkPresenceOfTotalNumberOfSongs(int numberOfSongs) {
         currentQueuePage.checkTotalNumberOfSongs(numberOfSongs);
+    }
+
+    @Then("I will see the total duration of songs under the text Current Queue")
+    public void checkPresenceOfTotalDurationOfSongs() {
+        currentQueuePage.checkPresenceOfTotalDurationOfSongs();
     }
 
     @Then("I will be navigated to Current Queue page")
@@ -98,4 +103,5 @@ public class CurrentQueueStepDefinition {
     public void checkAllSongsAreInCurrentQueuePage() {
         currentQueuePage.checkTotalNumberOfSongs(allSongsPage.TOTAL_NUMBER_OF_SONGS);
     }
+
 }

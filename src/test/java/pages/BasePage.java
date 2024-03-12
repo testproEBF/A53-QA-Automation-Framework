@@ -235,6 +235,27 @@ public class BasePage {
         return isNotFound;
     }
 
+    public void playSong(int numberOfPlayedItems, String message, String locatorFormat, By itemLocator) {
+        int y = getPopulationSize(itemLocator, message);
+        for (int x = 1; x <= numberOfPlayedItems; x++ ){
+            int itemNumber = getRandomNumber(1, y);
+
+            String locator = String.format(locatorFormat, itemNumber);
+            WebElement item = findElement(By.xpath(locator));
+            actions.moveToElement(item).doubleClick().perform();
+        }
+    }
+
+    public void selectPlaylist (String message, String locatorFormat, By itemLocator) {
+        int y = getPopulationSize(itemLocator, message);
+        int itemNumber = getRandomNumber(1, y);
+        String locator = String.format(locatorFormat, itemNumber);
+        WebElement playlist = findElement(By.xpath(locator));
+        playlist.click();
+//        actions.moveToElement(playlist).click().perform();
+
+    }
+
 }
 
 

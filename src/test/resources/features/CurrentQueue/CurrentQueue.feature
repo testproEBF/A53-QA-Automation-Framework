@@ -14,6 +14,8 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     Then I will see the 3 total number of songs under the text Current Queue
 
 #  Scenario: Total duration of currently played songs is displayed
+#    When I navigate to Current Queue page
+#    Then I will see the total duration of songs under the text Current Queue
 
   Scenario: Track number of currently played song is displayed
     When I navigate to Current Queue page

@@ -20,14 +20,8 @@ public class AlbumsPage extends BasePage{
     }
 
     public void playAlbum(int numberOfPlayedAlbums) {
+        String albumsLocatorFormat = "(//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"])[%s]";
         String message = "The total number of albums in Albums Page is ";
-        int y = getPopulationSize(albumsLocator, message);
-        for (int x = 1; x <= numberOfPlayedAlbums; x++ ){
-            int albumItemNumber = getRandomNumber(1, y);
-
-            String albumsLocatorFormat = String.format("(//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"])[%s]", albumItemNumber);
-            WebElement album = findElement(By.xpath(albumsLocatorFormat));
-            actions.moveToElement(album).doubleClick().perform();
-        }
+        playSong(numberOfPlayedAlbums, message, albumsLocatorFormat, albumsLocator);
     }
 }

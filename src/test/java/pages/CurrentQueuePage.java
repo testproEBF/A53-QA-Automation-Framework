@@ -64,6 +64,9 @@ public class CurrentQueuePage extends BasePage{
 
     }
 
+    public void checkPresenceOfTotalDurationOfSongs() {
+    }
+
     public void checkIfNavigatedToCurrentQueuePage() {
 //        Assert.assertFalse(isElementNotFound(currentQueueTextLocator));
         Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
@@ -171,4 +174,6 @@ public class CurrentQueuePage extends BasePage{
     public void clickHyperlinkText(String shufflingAllSongsText) {
         shufflingAllSongsLocator.click();
     }
+
+
 }

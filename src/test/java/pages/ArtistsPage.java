@@ -15,19 +15,14 @@ public class ArtistsPage extends BasePage{
     private WebElement artists;
     By artistsLocator = By.xpath("//*[@id=\"artistsWrapper\"]//*[@class=\"item full\"]");
 
+
     public void goToArtistsPage() {
         artists.click();
     }
 
     public void playArtists(int numberOfPlayedArtists) {
+        String artistsLocatorFormat = "(//*[@id=\"artistsWrapper\"]//*[@class=\"item full\"])[%s]";
         String message = "The total number of artists in Artists Page is ";
-        int y = getPopulationSize(artistsLocator, message);
-        for (int x = 1; x <= numberOfPlayedArtists; x++ ){
-            int artistItemNumber = getRandomNumber(1, y);
-
-            String albumsLocatorFormat = String.format("(//*[@id=\"artistsWrapper\"]//*[@class=\"item full\"])[%s]", artistItemNumber);
-            WebElement artist = findElement(By.xpath(albumsLocatorFormat));
-            actions.moveToElement(artist).doubleClick().perform();
-        }
+        playSong(numberOfPlayedArtists, message, artistsLocatorFormat, artistsLocator);
     }
 }

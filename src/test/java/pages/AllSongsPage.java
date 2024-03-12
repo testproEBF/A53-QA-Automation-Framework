@@ -18,6 +18,7 @@ public class AllSongsPage extends BasePage{
     By allSongsLocator = By.xpath("//*[@id=\"songsWrapper\"]//*[@class=\"song-item\"]");
 
 
+
     public void goToAllSongsPage() {
         actions.moveToElement(allSongs).doubleClick().perform();
     }
