@@ -13,15 +13,21 @@ public class AlbumsPage extends BasePage{
 
     @FindBy(xpath = "//a[@class=\"albums\"]")
     private WebElement albums;
+    By albumsLocator = By.xpath("//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"]");
 
     public void goToAlbumsPage() {
         actions.moveToElement(albums).doubleClick().perform();
     }
 
-    public void playAlbum(int numberOfPlayedAlbums, int totalNumberOfAlbums) {
-        int albumItemNumber = getRandomNumber(1, totalNumberOfAlbums);
-        String locator = String.format("(//article[@class=\"item full\"])[%s]", albumItemNumber);
-        WebElement album = findElement(By.xpath(locator));
-        actions.moveToElement(album).doubleClick().perform();
+    public void playAlbum(int numberOfPlayedAlbums) {
+        String message = "The total number of albums in Albums Page is ";
+        int y = getPopulationSize(albumsLocator, message);
+        for (int x = 1; x <= numberOfPlayedAlbums; x++ ){
+            int albumItemNumber = getRandomNumber(1, y);
+
+            String albumsLocatorFormat = String.format("(//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"])[%s]", albumItemNumber);
+            WebElement album = findElement(By.xpath(albumsLocatorFormat));
+            actions.moveToElement(album).doubleClick().perform();
+        }
     }
 }

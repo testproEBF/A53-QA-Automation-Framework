@@ -12,8 +12,10 @@ public class AlbumsStepDefinition {
         albumsPage.goToAlbumsPage();
     }
 
-    @And("I play {int} out of {int} albums")
-    public void playAlbum(int numberOfPlayedAlbums, int totalNumberOfAlbums) {
-        albumsPage.playAlbum(numberOfPlayedAlbums, totalNumberOfAlbums);
+    @And("I play {int} album in Albums page")
+    public void playAlbum(int numberOfPlayedAlbums) {
+        albumsPage.playAlbum(numberOfPlayedAlbums);
     }
+
+
 }

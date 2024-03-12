@@ -3,7 +3,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
   Background:
     Given I open Login Page
     And I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
-    And I play 3 out of 66 songs in All Songs Page
+    And I play 3 songs in All Songs Page
 
   Scenario: Currently played songs are displayed in the Current Queue page
     When I navigate to Current Queue page
@@ -46,6 +46,10 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     When I navigate to Current Queue page
     And I click the Clear button
     Then the Current Queue list will be empty
-#    And "No songs queued. How about shuffling all songs?" message will be displayed
+    And "No songs queued. How about shuffling all songs?" message will be displayed
 
-#  Scenario: All songs are displayed on the Current Queue page when 'shuffling all songs' is clicked
+  Scenario: All songs are displayed on the Current Queue page when 'shuffling all songs' is clicked
+    When I navigate to Current Queue page
+    And I click the Clear button
+    And I click "shuffling all songs" hyperlink text
+    Then all the songs in All Songs Page is displayed

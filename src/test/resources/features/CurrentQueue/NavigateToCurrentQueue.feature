@@ -7,17 +7,35 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
   Scenario: Navigated to Current Queue page after double clicking a song on Home page
 
   Scenario: Navigated to Current Queue page after double clicking a song on All Songs page
-    When I navigate to All Songs page
-    And I play 1 out of 66 songs
+    When I play 1 songs in All Songs Page
     Then I will be navigated to Current Queue page
 
   Scenario: Navigated to Current Queue page after double clicking a song on Albums page
     When I navigate to Albums page
-    And I play 1 out of 22 albums
+    And I play 1 album in Albums page
     Then I will be navigated to Current Queue page
 
   Scenario: Navigated to Current Queue page after double clicking a song on Artists page
+    When I navigate to Artists page
+    And I play 1 artist in Artists page
+    Then I will be navigated to Current Queue page
+
   Scenario: Navigated to Current Queue page after double clicking a song on Favorites
-  Scenario: Navigated to Current Queue page after double clicking a song on Recently Played page
-  Scenario: Navigated to Current Queue page after double clicking a song on user's created playlist page
-  Scenario: Navigated to Current Queue page after double clicking a song on user's created smart playlist page
+    When I navigate to Favorites page
+    And I play 1 song in Favorites page
+    Then I will be navigated to Current Queue page
+#
+#  Scenario: Navigated to Current Queue page after double clicking a song on Recently Played page
+#    When I navigate to Recently Played page
+#    And I play 1 song in Recently Played page
+#    Then I will be navigated to Current Queue page
+#
+#  Scenario: Navigated to Current Queue page after double clicking a song on user's created playlist page
+#    When I navigate to my playlist page
+#    And I play 1 song in my playlist page
+#    Then I will be navigated to Current Queue page
+#
+#  Scenario: Navigated to Current Queue page after double clicking a song on user's created smart playlist page
+#    When I navigate to my smart playlist page
+#    And I play 1 song in my playlist page
+#    Then I will be navigated to Current Queue page

@@ -1,5 +1,4 @@
 package pages;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,19 +14,25 @@ public class CurrentQueuePage extends BasePage{
     }
 
     private String[] songArray;
-    private String[] songTitlesBeforeShuffle;
-    private String[] songTitlesAfterShuffle;
-
+    private String[] songAttributeBeforeShuffle;
+    private String[] songAttributeAfterShuffle;
     String titleLocatorFormat = "(//td[@class=\"title\"])[%s]";
-    String titleSongAttribute = "title";
+
     @FindBy(xpath = "//a[@class=\"queue\"]")
     private WebElement currentQueue;
+    @FindBy(xpath = "//*[@data-test=\"list-meta\"]")
+    private WebElement totalCountPlaytimeLocator;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1")
     private WebElement currentQueueText;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//*[@class=\"btn-shuffle-all\"]")
     private WebElement shuffleButton;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//*[@class=\"btn-clear-queue\"]")
     private WebElement clearButton;
+    @FindBy(xpath = "//section[@id=\"queueWrapper\"]//div[@class=\"text\"]")
+    private WebElement emptyQueueMessageLocator;
+    @FindBy(xpath = "//*[@class=\"start\"]")
+    private WebElement shufflingAllSongsLocator;
+    By currentQueueTextLocator = By.xpath("//section[@id=\"queueWrapper\"]//h1");
 
 
     public void goToCurrentQueuePage() {
@@ -48,12 +53,19 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkTotalNumberOfSongs(int numberOfSongs) {
-        String locator = String.format("%s songs", numberOfSongs);
-        WebElement element = findElement(By.linkText(locator));
-        Assert.assertTrue(waitForElementToBeVisible(element));
+//        String locator = String.format("%s songs", numberOfSongs);
+//        WebElement element = findElement(By.linkText(locator));
+//        Assert.assertTrue(waitForElementToBeVisible(element));
+
+        String actualNumberOfSongs = totalCountPlaytimeLocator.getText();
+        String totalNumberOfSongs = String.format("%s songs", numberOfSongs);
+        System.out.println(actualNumberOfSongs);
+        Assert.assertTrue(actualNumberOfSongs.contains(totalNumberOfSongs));
+
     }
 
     public void checkIfNavigatedToCurrentQueuePage() {
+//        Assert.assertFalse(isElementNotFound(currentQueueTextLocator));
         Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
     }
 
@@ -88,18 +100,20 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void getSongTitlesInOrderBeforeShuflle(int numberOfSong) {
-        getSongAttributeValue(titleLocatorFormat, titleSongAttribute, numberOfSong);
-        songTitlesBeforeShuffle = new String[numberOfSong];
-        for (int x = 0; x < numberOfSong; x++) {
-            songTitlesBeforeShuffle[x] = songArray[x];
+        getSongAttributeValue(titleLocatorFormat, numberOfSong);
+        songAttributeBeforeShuffle = new String[numberOfSong];
+        System.arraycopy(songArray, 0, songAttributeBeforeShuffle, 0, numberOfSong);
+        for (String i : songAttributeBeforeShuffle){
+            System.out.println(i);
         }
     }
 
     public void getSongTitlesInOrderAfterShuffle(int numberOfSong) {
-        getSongAttributeValue(titleLocatorFormat, titleSongAttribute, numberOfSong);
-        songTitlesAfterShuffle = new String[numberOfSong];
-        for (int x = 0; x < numberOfSong; x++) {
-            songTitlesAfterShuffle[x] = songArray[x];
+        getSongAttributeValue(titleLocatorFormat, numberOfSong);
+        songAttributeAfterShuffle = new String[numberOfSong];
+        System.arraycopy(songArray, 0, songAttributeAfterShuffle, 0, numberOfSong);
+        for (String i : songAttributeAfterShuffle){
+            System.out.println(i);
         }
     }
 
@@ -108,10 +122,10 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkSongsAreShuffled() {
-        Assert.assertFalse(Arrays.equals(songTitlesBeforeShuffle,songTitlesAfterShuffle));
+        Assert.assertFalse(Arrays.equals(songAttributeBeforeShuffle, songAttributeAfterShuffle));
     }
 
-    public Boolean checkPresenceOfSongAttribute(String locatorFormat, String songAttribute, int numberOfSong){
+    public void checkPresenceOfSongAttribute(String locatorFormat, String songAttribute, int numberOfSong){
         boolean isPresent = true;
         for(int x = 1; x <= numberOfSong; x++){
             String locator = String.format(locatorFormat,x);
@@ -124,10 +138,9 @@ public class CurrentQueuePage extends BasePage{
             }
             Assert.assertTrue(isPresent);
         }
-        return isPresent;
     }
 
-    public void getSongAttributeValue(String locatorFormat, String songAttribute, int numberOfSong){
+    public void getSongAttributeValue(String locatorFormat, int numberOfSong){
         songArray = new String[numberOfSong];
         for(int x = 1; x <= numberOfSong; x++){
             String locator = String.format(locatorFormat,x);
@@ -137,17 +150,25 @@ public class CurrentQueuePage extends BasePage{
         }
     }
 
-    public String getSongTitle(int songNumber) {
-        String locator = String.format("(//td[@class=\"title\"])[%s]", songNumber);
-        return findElement(By.xpath(locator)).getText();
-    }
-
     public void clickClearButton() {
         findElementVisibility(clearButton).click();
     }
 
     public void checkIfCurrentQueueListIsEmpty() {
-        int numberOfSong = 1;
-        Assert.assertFalse(checkPresenceOfSongAttribute(titleLocatorFormat, titleSongAttribute, numberOfSong));
+        By clearButtonLocator = By.xpath("//section[@id=\"queueWrapper\"]//*[@class=\"btn-clear-queue\"]");
+        Assert.assertTrue(isElementNotFound(clearButtonLocator), "Current Queue is not empty.");
+    }
+
+    public void getDisplayedMessage(String emptyQueueMessage) {
+        String actualEmptyQueueMessage = findElementVisibility(emptyQueueMessageLocator).getText();
+        String actualEmptyQueueMessageTrimmed = actualEmptyQueueMessage.replaceAll("\\s","").replaceAll("\\n","");
+        String emptyQueueMessageTrimmed = emptyQueueMessage.replaceAll("\\s","").replaceAll("\\n","");
+        System.out.println("Actual message is " + actualEmptyQueueMessageTrimmed);
+        System.out.println("Expected message is " + emptyQueueMessageTrimmed);
+        Assert.assertEquals(emptyQueueMessageTrimmed, actualEmptyQueueMessageTrimmed);
+    }
+
+    public void clickHyperlinkText(String shufflingAllSongsText) {
+        shufflingAllSongsLocator.click();
     }
 }

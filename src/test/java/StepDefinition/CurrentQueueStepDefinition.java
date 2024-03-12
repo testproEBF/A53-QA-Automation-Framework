@@ -2,10 +2,12 @@ package StepDefinition;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import pages.AllSongsPage;
 import pages.CurrentQueuePage;
 
 public class CurrentQueueStepDefinition {
     CurrentQueuePage currentQueuePage = new CurrentQueuePage(BaseDefinition.SHARED_DRIVER);
+    AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.SHARED_DRIVER);
 
     @And("I navigate to Current Queue page")
     public void navigateToCurrentQueuePage() {
@@ -80,5 +82,20 @@ public class CurrentQueueStepDefinition {
     @Then("the Current Queue list will be empty")
     public void checkIfCurrentQueueListIsEmpty() {
         currentQueuePage.checkIfCurrentQueueListIsEmpty();
+    }
+
+    @And("{string} message will be displayed")
+    public void getDisplayedMessage(String emptyQueueMessage) {
+        currentQueuePage.getDisplayedMessage(emptyQueueMessage);
+    }
+
+    @And("I click {string} hyperlink text")
+    public void clickHyperlinkText(String shufflingAllSongsText) {
+        currentQueuePage.clickHyperlinkText(shufflingAllSongsText);
+    }
+
+    @Then("all the songs in All Songs Page is displayed")
+    public void checkAllSongsAreInCurrentQueuePage() {
+        currentQueuePage.checkTotalNumberOfSongs(allSongsPage.TOTAL_NUMBER_OF_SONGS);
     }
 }

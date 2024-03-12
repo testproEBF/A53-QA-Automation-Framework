@@ -6,13 +6,13 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
 public class LoginPage extends BasePage {
-    @FindBy(css = "[type='email']")
+    @FindBy(xpath = "//*[@type='email']")
     private WebElement emailField;
-    @FindBy(css = "[type='password']")
+    @FindBy(xpath = "//*[@type='password']")
     private WebElement passwordField;
-    @FindBy(css = "[type='submit")
+    @FindBy(xpath = "//*[@type='submit']")
     private WebElement loginButton;
-    @FindBy(css = "[href=\"registration\"]")
+    @FindBy(xpath = "//*[@href=\"registration\"]")
     private WebElement registerButton;
 
     public LoginPage (WebDriver givenDriver){

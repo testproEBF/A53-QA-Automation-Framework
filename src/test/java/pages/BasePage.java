@@ -41,7 +41,7 @@ public class BasePage {
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
@@ -215,12 +215,24 @@ public class BasePage {
         return driver.findElements(locator).size();
     }
 
-    public void elementNotFound(By locator) {
-        try{
-            Assert.assertEquals(driver.findElements(locator)).size(), 0);
-        } catch (TimeoutException e){
+    public int getPopulationSize (By locator, String messageToPrint){
+//        int attribute = driver.findElements(By.xpath(locator)).size();
+        int attribute = getSize(locator);
+        System.out.println(messageToPrint + attribute);
+        return attribute;
+    }
 
+    public Boolean isElementNotFound(By locator) {
+        boolean isNotFound = false;
+        try{
+//            Assert.assertEquals(driver.findElements(By.xpath(locator)).size(), 0);
+            Assert.assertEquals(driver.findElements(locator).size(), 0);
+            isNotFound = true;
+        } catch (TimeoutException e) {
+            System.out.println("Web element is found.");
+            e.printStackTrace();
         }
+        return isNotFound;
     }
 
 }
