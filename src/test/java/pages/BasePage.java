@@ -2,14 +2,13 @@ package pages;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -38,12 +37,14 @@ public class BasePage {
     private WebElement logoutButton;
 
     String recentAddedSmartPlaylistName;
+    String playlistName;
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         actions = new Actions(driver);
-        PageFactory.initElements(driver, this);
+//        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
     public WebElement findElement(By locator){
@@ -70,6 +71,22 @@ public class BasePage {
         return isElementVisible;
     }
 
+    protected Boolean fluentWaitForElement(WebElement webElement) {
+        boolean isElementVisible = false;
+        try {
+            new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10))
+                    .pollingEvery(Duration.ofMillis(500))
+                    .ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(webElement));
+            isElementVisible = true;
+        } catch (TimeoutException e){
+            System.out.println("Web element is not found.");
+            e.printStackTrace();
+        }
+        return isElementVisible;
+
+    }
+
+
     public int getRandomNumber (int min, int max) {
         int randomNumbers;
         randomNumbers = (int) ((Math.random() * (max - min)) + min);
@@ -84,8 +101,10 @@ public class BasePage {
 //        return wait.until(ExpectedConditions.invisibilityOf(element))
 //    }
 
-    public void loggedIn() {
-        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
+    public BasePage loggedIn() {
+//        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
+        Assert.assertTrue(fluentWaitForElement(avatarIcon));
+        return this;
     }
 
     public void clickPlusButton(){
@@ -213,6 +232,10 @@ public class BasePage {
 
     public int getSize(By locator){
         return driver.findElements(locator).size();
+//        List<WebElement> itemList = driver.findElements(locator);
+//        Assert.assertNotNull(itemList, "item list is null"+locator.toString());
+//        Assert.assertNotEquals(0, itemList.size(), "size is 0"+locator.toString());
+//        return itemList.size();
     }
 
     public int getPopulationSize (By locator, String messageToPrint){
@@ -236,6 +259,11 @@ public class BasePage {
     }
 
     public void playSong(int numberOfPlayedItems, String message, String locatorFormat, By itemLocator) {
+
+        String FirstItemLocator = String.format(locatorFormat, 1);
+        WebElement firstItem = findElement(By.xpath(FirstItemLocator));
+        findElementVisibility(firstItem);
+
         int y = getPopulationSize(itemLocator, message);
         for (int x = 1; x <= numberOfPlayedItems; x++ ){
             int itemNumber = getRandomNumber(1, y);
@@ -247,11 +275,18 @@ public class BasePage {
     }
 
     public void selectPlaylist (String message, String locatorFormat, By itemLocator) {
+        String firstPlaylistLocator = String.format(locatorFormat, 1);
+        WebElement firstPlaylist = findElement(By.xpath(firstPlaylistLocator));
+        findElementVisibility(firstPlaylist);
+
         int y = getPopulationSize(itemLocator, message);
         int itemNumber = getRandomNumber(1, y);
         String locator = String.format(locatorFormat, itemNumber);
         WebElement playlist = findElement(By.xpath(locator));
         playlist.click();
+        String nameLocator = (locator + "/*[@data-v-e75e0fde=\"\"]");
+        playlistName = findElement(By.xpath(nameLocator)).getText();
+        System.out.println("The selected playlist is " + playlistName + ".");
 //        actions.moveToElement(playlist).click().perform();
 
     }

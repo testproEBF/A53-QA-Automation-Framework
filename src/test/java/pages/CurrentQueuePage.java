@@ -40,10 +40,10 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkPresenceOfSongs(int numberOfSongs) {
-        String locator = String.format(".song-list-wrap.main-scroll-wrap.queue tr.song-item:nth-child(%s)", numberOfSongs);
-        WebElement element = findElement(By.cssSelector(locator));
-        Assert.assertTrue(waitForElementToBeVisible(element));
-
+//        String locator = String.format(".song-list-wrap.main-scroll-wrap.queue tr.song-item:nth-child(%s)", numberOfSongs);
+//        WebElement element = findElement(By.cssSelector(locator));
+//        Assert.assertTrue(waitForElementToBeVisible(element));
+        checkPresenceOfTitle(numberOfSongs);
 //        for (int x = 1; x <= numberOfSongs; x++ ){
 //            String locator = String.format(".song-list-wrap.main-scroll-wrap.queue tr.song-item:nth-child(%s)", x);
 //            WebElement element = findElement(By.cssSelector(locator));
@@ -53,9 +53,6 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkTotalNumberOfSongs(int numberOfSongs) {
-//        String locator = String.format("%s songs", numberOfSongs);
-//        WebElement element = findElement(By.linkText(locator));
-//        Assert.assertTrue(waitForElementToBeVisible(element));
 
         String actualNumberOfSongs = totalCountPlaytimeLocator.getText();
         String totalNumberOfSongs = String.format("%s songs", numberOfSongs);

@@ -185,7 +185,7 @@ public class SmartPlaylistPage extends BasePage {
 
     public void playSongInSmartPlaylist(int numberOfPlayedSongs) {
         String smartPlaylistSongLocatorFormat = "(//*[@class=\"song-list-wrap main-scroll-wrap playlist\"]//*[@class=\"song-item\"])[%s]";
-        String message = "The total number of songs in smart playlist is ";
+        String message = "The total number of songs in Smart Playlist " + playlistName + " is ";
         playSong(numberOfPlayedSongs, message, smartPlaylistSongLocatorFormat, smartPlaylistSongLocator);
     }
 }

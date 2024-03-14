@@ -1,4 +1,5 @@
 package pages;
+import org.apache.commons.logging.Log;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,18 +25,23 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage enterEmail(String email) {
-        findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        findElementClickable(emailField).sendKeys(email);
+        Assert.assertTrue(fluentWaitForElement(emailField));
+        findElementVisibility(emailField).clear();
+        findElementVisibility(emailField).sendKeys(email);
         return this;
     }
 
-    public void enterPassword(String password) {
-        passwordField.sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        passwordField.sendKeys(password);
+    public LoginPage enterPassword(String password) {
+        Assert.assertTrue(fluentWaitForElement(passwordField));
+        findElementVisibility(passwordField).clear();
+        findElementVisibility(passwordField).sendKeys(password);
+        return this;
     }
 
-    public void clickLogIn() {
-        loginButton.click();
+    public LoginPage clickLogIn() {
+        Assert.assertTrue(fluentWaitForElement(loginButton));
+        findElementVisibility(loginButton).click();
+        return this;
     }
 
     public void notLoggedIn() {
