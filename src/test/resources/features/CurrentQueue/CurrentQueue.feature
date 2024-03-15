@@ -1,8 +1,9 @@
+#noinspection SpellCheckingInspection
 Feature: I want to be able to open Current Queue page to be able to see all currently played songs
 
   Background:
     Given I open Login Page
-    And I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am LoggedIn using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I play 3 songs in All Songs Page
 
   Scenario: Currently played songs are displayed in the Current Queue page
@@ -53,5 +54,5 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
   Scenario: All songs are displayed on the Current Queue page when 'shuffling all songs' is clicked
     When I navigate to Current Queue page
     And I click the Clear button
-    And I click "shuffling all songs" hyperlink text
+    And I click shuffling all songs hyperlink text
     Then all the songs in All Songs Page is displayed

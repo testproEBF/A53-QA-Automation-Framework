@@ -19,6 +19,8 @@ public class HomePage extends BasePage{
     public void playSongUnderMostPlayedCategory(int numberOfSongsPlayed) {
         String mostPlayedLocatorFormat = "(//*[@class=\"top-song-list\"]//*[@data-test=\"song-card\"])[%s]";
         String message = "The number of songs in Most Played Category is ";
+
+
         playSong(numberOfSongsPlayed, message, mostPlayedLocatorFormat, mostPlayedSongLocator);
     }
 

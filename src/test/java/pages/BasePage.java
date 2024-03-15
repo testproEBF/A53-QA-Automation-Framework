@@ -41,9 +41,8 @@ public class BasePage {
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         actions = new Actions(driver);
-//        PageFactory.initElements(driver, this);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
@@ -93,22 +92,25 @@ public class BasePage {
         return randomNumbers;
     }
 
-//    public void moveToElement (WebElement element){
-//        actions.moveToElement(findElementClickable(element)).click().perform();
-//    }
+    public void moveToElementClick(WebElement element){
+        actions.moveToElement(findElementClickable(element)).click().perform();
+    }
+
+    public void moveToElementDoubleClick(WebElement element){
+        actions.moveToElement(findElementClickable(element)).doubleClick().perform();
+    }
 //
 //    public WebElement waitForInvisibility (WebElement element){
 //        return wait.until(ExpectedConditions.invisibilityOf(element))
 //    }
 
-    public BasePage loggedIn() {
-//        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
-        Assert.assertTrue(fluentWaitForElement(avatarIcon));
-        return this;
+    public void loggedIn() {
+
+        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
     }
 
     public void clickPlusButton(){
-        actions.moveToElement(findElementClickable(playlistPlusButton)).click().perform();
+        moveToElementClick(playlistPlusButton);
     }
 
     public void clickNewSmartPlaylist() {
@@ -200,14 +202,12 @@ public class BasePage {
         recentAddedSmartPlaylistName = name;
     }
 
-    public BasePage contextClickElement (By locator) {
+    public void contextClickElement (By locator) {
         actions.contextClick(findElement(locator)).perform();
-        return this;
     }
 
-    public BasePage clickDelete() {
+    public void clickDelete() {
         deleteOption.click();
-        return this;
     }
 
     public void deleteAllPlaylists() {
@@ -227,15 +227,10 @@ public class BasePage {
 
     public void clickLogoutButton() {
         findElementVisibility(logoutButton).click();
-        return;
     }
 
     public int getSize(By locator){
         return driver.findElements(locator).size();
-//        List<WebElement> itemList = driver.findElements(locator);
-//        Assert.assertNotNull(itemList, "item list is null"+locator.toString());
-//        Assert.assertNotEquals(0, itemList.size(), "size is 0"+locator.toString());
-//        return itemList.size();
     }
 
     public int getPopulationSize (By locator, String messageToPrint){
@@ -270,7 +265,7 @@ public class BasePage {
 
             String locator = String.format(locatorFormat, itemNumber);
             WebElement item = findElement(By.xpath(locator));
-            actions.moveToElement(item).doubleClick().perform();
+            moveToElementDoubleClick(item);
         }
     }
 
@@ -283,11 +278,10 @@ public class BasePage {
         int itemNumber = getRandomNumber(1, y);
         String locator = String.format(locatorFormat, itemNumber);
         WebElement playlist = findElement(By.xpath(locator));
-        playlist.click();
+        moveToElementClick(playlist);
         String nameLocator = (locator + "/*[@data-v-e75e0fde=\"\"]");
         playlistName = findElement(By.xpath(nameLocator)).getText();
         System.out.println("The selected playlist is " + playlistName + ".");
-//        actions.moveToElement(playlist).click().perform();
 
     }
 

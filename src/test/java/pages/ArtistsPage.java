@@ -17,7 +17,7 @@ public class ArtistsPage extends BasePage{
 
 
     public void goToArtistsPage() {
-        artists.click();
+        moveToElementClick(artists);
     }
 
     public void playArtists(int numberOfPlayedArtists) {

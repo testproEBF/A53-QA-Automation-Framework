@@ -16,7 +16,7 @@ public class FavoritesPage extends BasePage{
     By favoritesLocator = By.xpath("//*[@class=\"song-list-wrap main-scroll-wrap favorites\"]//*[@class=\"song-item\"]");
 
     public void goToFavoritesPage() {
-        favorites.click();
+        moveToElementClick(favorites);
     }
 
     public void playSongInFavoritesPage(int numberOfSongsPlayed) {

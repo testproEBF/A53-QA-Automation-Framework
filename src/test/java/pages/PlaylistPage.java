@@ -2,19 +2,14 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class PlaylistPage extends BasePage{
 
     public PlaylistPage(WebDriver givenDriver) {
         super(givenDriver);
     }
-
-//    @FindBy(xpath = "//a[@class=\"albums\"]")
-//    private WebElement playlist;
-        By playlistLocator = By.xpath("//*[@class=\"playlist playlist\"]");
-        By playlistSongLocator = By.xpath("//*[@class=\"song-list-wrap main-scroll-wrap playlist\"]//*[@class=\"song-item\"]");
+    By playlistLocator = By.xpath("//*[@class=\"playlist playlist\"]");
+    By playlistSongLocator = By.xpath("//*[@class=\"song-list-wrap main-scroll-wrap playlist\"]//*[@class=\"song-item\"]");
 
 
     public void goToPlaylistPage() {

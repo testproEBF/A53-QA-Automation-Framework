@@ -86,26 +86,26 @@ public class SmartPlaylistPage extends BasePage {
         String valueLocator = String.format("//div[%s]/div[%s]/span/*[@name='value[]']", group, row);
 
 
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
 
 
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
-
-        } catch (ElementClickInterceptedException e) {
-            System.out.println("Cannot scroll to the top.");
-            e.printStackTrace();
-        }
+//        try {
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
+//
+//        } catch (ElementClickInterceptedException e) {
+//            System.out.println("Cannot scroll to the top.");
+//            e.printStackTrace();
+//        }
     }
 
     public void editRule(int ruleNumber, int groupNumber, String modelOption, String operatorOption, String value){
@@ -169,10 +169,6 @@ public class SmartPlaylistPage extends BasePage {
 //        Assert.assertTrue(allSongsPresent.isDisplayed());
     }
 
-    public int countNumberOfPlaylist(){
-        By locator = By.cssSelector("a[href*=\"playlist\"]");
-        return getSize(locator);
-    }
 
     By smartPlaylistLocator = By.xpath("//*[@class=\"playlist playlist smart\"]");
     By smartPlaylistSongLocator = By.xpath("//*[@class=\"song-list-wrap main-scroll-wrap playlist\"]//*[@class=\"song-item\"]");

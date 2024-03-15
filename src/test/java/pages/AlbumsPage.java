@@ -13,10 +13,10 @@ public class AlbumsPage extends BasePage{
 
     @FindBy(xpath = "//a[@class=\"albums\"]")
     private WebElement albums;
-    By albumsLocator = By.xpath("//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"]");
+    private final By albumsLocator = By.xpath("//*[@id=\"albumsWrapper\"]//*[@class=\"item full\"]");
 
     public void goToAlbumsPage() {
-        actions.moveToElement(albums).doubleClick().perform();
+        moveToElementClick(albums);
     }
 
     public void playAlbum(int numberOfPlayedAlbums) {

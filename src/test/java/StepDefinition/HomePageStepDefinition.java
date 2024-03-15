@@ -1,7 +1,6 @@
 package StepDefinition;
 
 import io.cucumber.java.en.When;
-import pages.BasePage;
 import pages.HomePage;
 
 public class HomePageStepDefinition {

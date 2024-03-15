@@ -1,4 +1,5 @@
 package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +23,7 @@ public class CurrentQueuePage extends BasePage{
     private WebElement currentQueue;
     @FindBy(xpath = "//*[@data-test=\"list-meta\"]")
     private WebElement totalCountPlaytimeLocator;
-    @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1")
+    @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1[@data-v-223745fc=\"\"]")
     private WebElement currentQueueText;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//*[@class=\"btn-shuffle-all\"]")
     private WebElement shuffleButton;
@@ -32,30 +33,19 @@ public class CurrentQueuePage extends BasePage{
     private WebElement emptyQueueMessageLocator;
     @FindBy(xpath = "//*[@class=\"start\"]")
     private WebElement shufflingAllSongsLocator;
-    By currentQueueTextLocator = By.xpath("//section[@id=\"queueWrapper\"]//h1");
 
 
     public void goToCurrentQueuePage() {
-        actions.moveToElement(currentQueue).doubleClick().perform();
+        moveToElementClick(currentQueue);
     }
 
     public void checkPresenceOfSongs(int numberOfSongs) {
-//        String locator = String.format(".song-list-wrap.main-scroll-wrap.queue tr.song-item:nth-child(%s)", numberOfSongs);
-//        WebElement element = findElement(By.cssSelector(locator));
-//        Assert.assertTrue(waitForElementToBeVisible(element));
         checkPresenceOfTitle(numberOfSongs);
-//        for (int x = 1; x <= numberOfSongs; x++ ){
-//            String locator = String.format(".song-list-wrap.main-scroll-wrap.queue tr.song-item:nth-child(%s)", x);
-//            WebElement element = findElement(By.cssSelector(locator));
-//            Assert.assertTrue(waitForElementToBeVisible(element));
-//            findElementVisibility(element).click();
-//        }
     }
 
-    public void checkTotalNumberOfSongs(int numberOfSongs) {
-
+    public void checkTotalNumberOfSongs(int numberOfSong) {
         String actualNumberOfSongs = totalCountPlaytimeLocator.getText();
-        String totalNumberOfSongs = String.format("%s songs", numberOfSongs);
+        String totalNumberOfSongs = String.format("%s songs", numberOfSong);
         System.out.println(actualNumberOfSongs);
         Assert.assertTrue(actualNumberOfSongs.contains(totalNumberOfSongs));
 
@@ -65,8 +55,8 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkIfNavigatedToCurrentQueuePage() {
-//        Assert.assertFalse(isElementNotFound(currentQueueTextLocator));
         Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
+        System.out.println("The text " + currentQueueText.getText() + " is visible. I am navigated to the Current Queue Page.");
     }
 
     public void checkPresenceOfTrackNumber(int numberOfSong) {
@@ -168,7 +158,7 @@ public class CurrentQueuePage extends BasePage{
         Assert.assertEquals(emptyQueueMessageTrimmed, actualEmptyQueueMessageTrimmed);
     }
 
-    public void clickHyperlinkText(String shufflingAllSongsText) {
+    public void clickHyperlinkText() {
         shufflingAllSongsLocator.click();
     }
 

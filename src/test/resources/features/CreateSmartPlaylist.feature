@@ -1,3 +1,4 @@
+#noinspection SpellCheckingInspection
 Feature: Create Smart Playlist feature
 
   Background:

@@ -27,7 +27,7 @@ public class ProfilePage extends BasePage{
         findElementVisibility(profileCurrentPasswordField).sendKeys(password);
         findElementVisibility(profileEmailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         findElementVisibility(profileEmailField).sendKeys(newEmail);
-        actions.moveToElement(findElementClickable(profileSaveButton)).click().perform();
+        moveToElementClick(profileSaveButton);
         getUpdateEmailNotification();
     }
 
@@ -44,7 +44,7 @@ public class ProfilePage extends BasePage{
         findElementVisibility(avatarIcon).click();
         findElementVisibility(profileCurrentPasswordField).sendKeys(password);
         findElementVisibility(profileNewPasswordField).sendKeys(newPassword);
-        actions.moveToElement(findElementClickable(profileSaveButton)).click().perform();
+        moveToElementClick(profileSaveButton);
         getUpdateEmailNotification();
     }
 

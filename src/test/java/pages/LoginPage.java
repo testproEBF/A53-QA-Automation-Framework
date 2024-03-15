@@ -1,5 +1,4 @@
 package pages;
-import org.apache.commons.logging.Log;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,19 +25,26 @@ public class LoginPage extends BasePage {
 
     public LoginPage enterEmail(String email) {
         Assert.assertTrue(fluentWaitForElement(emailField));
-        findElementVisibility(emailField).clear();
+        findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         findElementVisibility(emailField).sendKeys(email);
         return this;
     }
 
     public LoginPage enterPassword(String password) {
         Assert.assertTrue(fluentWaitForElement(passwordField));
-        findElementVisibility(passwordField).clear();
+        findElementClickable(passwordField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         findElementVisibility(passwordField).sendKeys(password);
         return this;
     }
 
     public LoginPage clickLogIn() {
+        // force few sec delay between each login
+        // this adds "wait" time between logins
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
         Assert.assertTrue(fluentWaitForElement(loginButton));
         findElementVisibility(loginButton).click();
         return this;

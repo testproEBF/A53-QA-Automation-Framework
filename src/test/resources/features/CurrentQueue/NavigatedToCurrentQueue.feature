@@ -1,8 +1,9 @@
+#noinspection SpellCheckingInspection
 Feature: I want to be able to open Current Queue page to be able to see all currently played songs
 
   Background:
     Given I open Login Page
-    And I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am LoggedIn using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
 
   Scenario: Navigated to Current Queue page after double clicking a song on Home page - Most Played
     When I double-click 1 song under Most Played category

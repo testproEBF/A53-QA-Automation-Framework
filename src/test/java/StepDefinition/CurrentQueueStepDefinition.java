@@ -93,10 +93,9 @@ public class CurrentQueueStepDefinition {
     public void getDisplayedMessage(String emptyQueueMessage) {
         currentQueuePage.getDisplayedMessage(emptyQueueMessage);
     }
-
-    @And("I click {string} hyperlink text")
-    public void clickHyperlinkText(String shufflingAllSongsText) {
-        currentQueuePage.clickHyperlinkText(shufflingAllSongsText);
+    @And("I click shuffling all songs hyperlink text")
+    public void clickHyperlinkText() {
+            currentQueuePage.clickHyperlinkText();
     }
 
     @Then("all the songs in All Songs Page is displayed")

@@ -3,7 +3,6 @@ package StepDefinition;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import pages.PlaylistPage;
-import pages.SmartPlaylistPage;
 
 public class PlaylistStepDefinition {
 
