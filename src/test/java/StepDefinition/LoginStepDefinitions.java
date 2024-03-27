@@ -11,12 +11,12 @@ public class LoginStepDefinitions {
     LoginPage loginPage = new LoginPage(BaseDefinition.SHARED_DRIVER);
 
     @Given("I open Login Page")
-    public void openLogin() {
+    public void openLogin() throws InterruptedException {
         loginPage.openLogin();
     }
 
     @When("I enter email {string}")
-    public void enterEmail(String email) {
+    public void enterEmail(String email) throws InterruptedException {
         loginPage.enterEmail(email);
     }
 
@@ -41,7 +41,7 @@ public class LoginStepDefinitions {
     }
 
     @Given("I am LoggedIn using {string} and {string}")
-    public void iAmLoggedIn(String email, String password) {
+    public void iAmLoggedIn(String email, String password) throws InterruptedException {
         loginPage.enterEmail(email)
                 .enterPassword(password)
                 .clickLogIn()

@@ -3,7 +3,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
 
   Background:
     Given I open Login Page
-    And I am LoggedIn using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am LoggedInForCurrentQueueTest using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I play 3 songs in All Songs Page
 
   Scenario: Currently played songs are displayed in the Current Queue page
@@ -14,9 +14,9 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     When I navigate to Current Queue page
     Then I will see the 3 total number of songs under the text Current Queue
 
-#  Scenario: Total duration of currently played songs is displayed
-#    When I navigate to Current Queue page
-#    Then I will see the total duration of songs under the text Current Queue
+  Scenario: Total duration of currently played songs is displayed
+    When I navigate to Current Queue page
+    Then I will see the total length of the 3 songs under the text Current Queue
 
   Scenario: Track number of currently played song is displayed
     When I navigate to Current Queue page
@@ -36,7 +36,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
 
   Scenario: Song Length of currently played song is displayed
     When I navigate to Current Queue page
-    Then I will see the playtime of the 3 songs
+    Then I will see the total length of the 3 songs
 
   Scenario: 'Shuffle All' button in Current Queue page shuffles songs
     When I navigate to Current Queue page

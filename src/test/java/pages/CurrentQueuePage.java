@@ -6,7 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
+import javax.lang.model.element.Element;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class CurrentQueuePage extends BasePage{
 
@@ -17,12 +23,15 @@ public class CurrentQueuePage extends BasePage{
     private String[] songArray;
     private String[] songAttributeBeforeShuffle;
     private String[] songAttributeAfterShuffle;
-    String titleLocatorFormat = "(//td[@class=\"title\"])[%s]";
+    private static final SimpleDateFormat TIME_FORMATTER = new SimpleDateFormat("mm:ss", Locale.ENGLISH);
+    private static final String TITLE_LOCATOR_FORMAT = "(//td[@class=\"title\"])[%s]";
+    private static final String trackNumberLocatorFormat = "(//td[@class=\"track-number text-secondary\"])[%s]";
+
 
     @FindBy(xpath = "//a[@class=\"queue\"]")
     private WebElement currentQueue;
     @FindBy(xpath = "//*[@data-test=\"list-meta\"]")
-    private WebElement totalCountPlaytimeLocator;
+    private WebElement currentQueueTotalCountPlaytimeText;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//h1[@data-v-223745fc=\"\"]")
     private WebElement currentQueueText;
     @FindBy(xpath = "//section[@id=\"queueWrapper\"]//*[@class=\"btn-shuffle-all\"]")
@@ -44,14 +53,32 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkTotalNumberOfSongs(int numberOfSong) {
-        String actualNumberOfSongs = totalCountPlaytimeLocator.getText();
-        String totalNumberOfSongs = String.format("%s songs", numberOfSong);
-        System.out.println(actualNumberOfSongs);
-        Assert.assertTrue(actualNumberOfSongs.contains(totalNumberOfSongs));
-
+        String actualNumberOfSongs = currentQueueTotalCountPlaytimeText.getText();
+        String expectedNumberOfSongs = String.format("%s songs", numberOfSong);
+        System.out.println("The number of songs in Current QueuePage  is " + actualNumberOfSongs + ".");
+        Assert.assertTrue(actualNumberOfSongs.contains(expectedNumberOfSongs));
     }
 
-    public void checkPresenceOfTotalDurationOfSongs() {
+    public void checkTotalNumberOfSongsUnderCurrentQueueText(String expectedNumberOfSongs) {
+        String actualNumberOfSongs = currentQueueTotalCountPlaytimeText.getText();
+        System.out.println("The number of songs in Current QueuePage  is " + actualNumberOfSongs + ".");
+        Assert.assertTrue(actualNumberOfSongs.contains(expectedNumberOfSongs));
+    }
+
+    public void checkPresenceOfTotalLengthOfSongs(int numberOfSongs) throws ParseException {
+        String songAttribute = "duration";
+        final String songLengthLocatorFormat = "(//td[@class=\"time text-secondary\"])[%s]";
+        getSongAttributeValue(songLengthLocatorFormat, songAttribute, numberOfSongs);
+
+        String actualTotalSongDuration = currentQueueTotalCountPlaytimeText.getText();
+        String expectedTotalSongDuration = "00:00";
+        for(int i = 1; i <=numberOfSongs; i++){
+            String x = songArray[i-1];
+            expectedTotalSongDuration = addMinutes(expectedTotalSongDuration, x);
+        }
+        System.out.println("The expected total length of the played songs is " + expectedTotalSongDuration + ".");
+        System.out.println("The actual total length of the played songs is " + actualTotalSongDuration + ".");
+        Assert.assertTrue(actualTotalSongDuration.contains(expectedTotalSongDuration));
     }
 
     public void checkIfNavigatedToCurrentQueuePage() {
@@ -60,7 +87,6 @@ public class CurrentQueuePage extends BasePage{
     }
 
     public void checkPresenceOfTrackNumber(int numberOfSong) {
-        String trackNumberLocatorFormat = "(//td[@class=\"track-number text-secondary\"])[%s]";
         String songAttribute = "track number";
         checkPresenceOfSongAttribute(trackNumberLocatorFormat, songAttribute, numberOfSong);
     }
@@ -85,26 +111,22 @@ public class CurrentQueuePage extends BasePage{
 
     public void checkPresenceOfPlaytime(int numberOfSong) {
         String PlaytimeLocatorFormat = "(//td[@class=\"time text-secondary\"])[%s]";
-        String songAttribute = "playtime";
+        String songAttribute = "length";
         checkPresenceOfSongAttribute(PlaytimeLocatorFormat, songAttribute, numberOfSong);
     }
 
     public void getSongTitlesInOrderBeforeShuflle(int numberOfSong) {
-        getSongAttributeValue(titleLocatorFormat, numberOfSong);
+        String songAttribute = "title";
+        getSongAttributeValue(TITLE_LOCATOR_FORMAT, songAttribute, numberOfSong);
         songAttributeBeforeShuffle = new String[numberOfSong];
         System.arraycopy(songArray, 0, songAttributeBeforeShuffle, 0, numberOfSong);
-        for (String i : songAttributeBeforeShuffle){
-            System.out.println(i);
-        }
     }
 
     public void getSongTitlesInOrderAfterShuffle(int numberOfSong) {
-        getSongAttributeValue(titleLocatorFormat, numberOfSong);
+        String songAttribute = "title";
+        getSongAttributeValue(TITLE_LOCATOR_FORMAT, songAttribute, numberOfSong);
         songAttributeAfterShuffle = new String[numberOfSong];
         System.arraycopy(songArray, 0, songAttributeAfterShuffle, 0, numberOfSong);
-        for (String i : songAttributeAfterShuffle){
-            System.out.println(i);
-        }
     }
 
     public void clickShuffleButton() {
@@ -130,13 +152,14 @@ public class CurrentQueuePage extends BasePage{
         }
     }
 
-    public void getSongAttributeValue(String locatorFormat, int numberOfSong){
+    public void getSongAttributeValue(String locatorFormat, String songAttribute,int numberOfSong){
         songArray = new String[numberOfSong];
         for(int x = 1; x <= numberOfSong; x++){
             String locator = String.format(locatorFormat,x);
             String attributeValue = findElement(By.xpath(locator)).getText();
             int y = x - 1;
             songArray[y] = attributeValue;
+            System.out.println( "The " + songAttribute + " of song " + x + " is " + songArray[y]);
         }
     }
 
@@ -162,5 +185,15 @@ public class CurrentQueuePage extends BasePage{
         shufflingAllSongsLocator.click();
     }
 
+    private String addMinutes(String timeString1, String timeString2) throws ParseException {
+        Date time1 = TIME_FORMATTER.parse(timeString1);
+        Date time2 = TIME_FORMATTER.parse(timeString2);
+
+        Date referenceTime = TIME_FORMATTER.parse("00:00");
+        long sum = (time1.getTime() - referenceTime.getTime()) + (time2.getTime() - referenceTime.getTime());
+        String totalTime = TIME_FORMATTER.format(new Date(sum));
+//        System.out.println("Time1 + Time2: " + totalTime);
+        return totalTime;
+    }
 
 }

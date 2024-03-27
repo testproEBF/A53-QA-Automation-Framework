@@ -4,11 +4,22 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import pages.AllSongsPage;
 import pages.CurrentQueuePage;
+import pages.LoginPage;
+
+import java.text.ParseException;
 
 public class CurrentQueueStepDefinition {
     CurrentQueuePage currentQueuePage = new CurrentQueuePage(BaseDefinition.SHARED_DRIVER);
     AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.SHARED_DRIVER);
+    LoginPage loginPage = new LoginPage(BaseDefinition.SHARED_DRIVER);
 
+    @And("I am LoggedInForCurrentQueueTest using {string} and {string}")
+    public void loggedInForCurrentQueueTestUsingAnd(String email, String password) throws InterruptedException {
+        loginPage.enterEmail(email)
+                .enterPassword(password)
+                .clickLogIn()
+                .loggedInForCurrentQueue(email, password);
+    }
     @And("I navigate to Current Queue page")
     public void navigateToCurrentQueuePage() {
         currentQueuePage.goToCurrentQueuePage();
@@ -24,10 +35,11 @@ public class CurrentQueueStepDefinition {
         currentQueuePage.checkTotalNumberOfSongs(numberOfSongs);
     }
 
-    @Then("I will see the total duration of songs under the text Current Queue")
-    public void checkPresenceOfTotalDurationOfSongs() {
-        currentQueuePage.checkPresenceOfTotalDurationOfSongs();
+    @Then("I will see the total length of the {int} songs under the text Current Queue")
+    public void checkPresenceOfTotalLengthOfSongs(int numberOfSongs) throws ParseException {
+        currentQueuePage.checkPresenceOfTotalLengthOfSongs(numberOfSongs);
     }
+
 
     @Then("I will be navigated to Current Queue page")
     public void checkIfNavigatedToCurrentQueuePage() {
@@ -35,33 +47,33 @@ public class CurrentQueueStepDefinition {
     }
 
     @Then("I will see the track numbers of the {int} songs")
-    public void checkPresenceOfTrackNumber(int numberOfSong) {
-        currentQueuePage.checkPresenceOfTrackNumber(numberOfSong);
+    public void checkPresenceOfTrackNumber(int numberOfSongs) {
+        currentQueuePage.checkPresenceOfTrackNumber(numberOfSongs);
     }
 
     @Then("I will see the titles of the {int} songs")
-    public void checkPresenceOfTitle(int numberOfSong) {
-        currentQueuePage.checkPresenceOfTitle(numberOfSong);
+    public void checkPresenceOfTitle(int numberOfSongs) {
+        currentQueuePage.checkPresenceOfTitle(numberOfSongs);
     }
 
     @Then("I will see the artists of the {int} songs")
-    public void checkPresenceOfArtist(int numberOfSong) {
-        currentQueuePage.checkPresenceOfArtist(numberOfSong);
+    public void checkPresenceOfArtist(int numberOfSongs) {
+        currentQueuePage.checkPresenceOfArtist(numberOfSongs);
     }
 
     @Then("I will see the albums of the {int} songs")
-    public void checkPresenceOfAlbum(int numberOfSong) {
-        currentQueuePage.checkPresenceOfAlbum(numberOfSong);
+    public void checkPresenceOfAlbum(int numberOfSongs) {
+        currentQueuePage.checkPresenceOfAlbum(numberOfSongs);
     }
 
-    @Then("I will see the playtime of the {int} songs")
-    public void checkPresenceOfPlaytime(int numberOfSong) {
-        currentQueuePage.checkPresenceOfPlaytime(numberOfSong);
+    @Then("I will see the total length of the {int} songs")
+    public void checkPresenceOfPlaytime(int numberOfSongs) {
+        currentQueuePage.checkPresenceOfPlaytime(numberOfSongs);
     }
 
     @And("I get the titles of the {int} songs in order")
-    public void getSongTitlesInOrder(int numberOfSong) {
-        currentQueuePage.getSongTitlesInOrderBeforeShuflle(numberOfSong);
+    public void getSongTitlesInOrder(int numberOfSongs) {
+        currentQueuePage.getSongTitlesInOrderBeforeShuflle(numberOfSongs);
     }
 
     @And("I click the Shuffle button")
@@ -70,8 +82,8 @@ public class CurrentQueueStepDefinition {
     }
 
     @And("I get the titles of the {int} songs in order after shuffle")
-    public void getSongTitlesInOrderAfterShuffle(int numberOfSong) {
-        currentQueuePage.getSongTitlesInOrderAfterShuffle(numberOfSong);
+    public void getSongTitlesInOrderAfterShuffle(int numberOfSongs) {
+        currentQueuePage.getSongTitlesInOrderAfterShuffle(numberOfSongs);
     }
 
     @Then("the songs will be shuffled")
@@ -100,7 +112,8 @@ public class CurrentQueueStepDefinition {
 
     @Then("all the songs in All Songs Page is displayed")
     public void checkAllSongsAreInCurrentQueuePage() {
-        currentQueuePage.checkTotalNumberOfSongs(allSongsPage.TOTAL_NUMBER_OF_SONGS);
+        String expectedNumberOfSongs = allSongsPage.allSongsTotalCountPlaytimeText.getText();
+        currentQueuePage.checkTotalNumberOfSongsUnderCurrentQueueText(expectedNumberOfSongs);
     }
 
 }

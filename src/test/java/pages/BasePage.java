@@ -1,8 +1,9 @@
 package pages;
-
+import StepDefinition.BaseDefinition;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -11,11 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 
 public class BasePage {
 
@@ -105,8 +104,7 @@ public class BasePage {
 //    }
 
     public void loggedIn() {
-
-        Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
+            Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
     }
 
     public void clickPlusButton(){

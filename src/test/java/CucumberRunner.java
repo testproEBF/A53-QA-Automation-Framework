@@ -10,8 +10,8 @@ import org.testng.annotations.DataProvider;
 //                "src/test/resources/features/Login.feature"
 //                , "src/test/resources/features/CreateSmartPlaylist.feature"
 //                , "src/test/resources/features/Logout.feature"
-//                 "src/test/resources/features/CurrentQueue/CurrentQueue.feature"
-                 "src/test/resources/features/CurrentQueue/NavigatedToCurrentQueue.feature"
+                 "src/test/resources/features/CurrentQueue/CurrentQueue.feature"
+                 ,"src/test/resources/features/CurrentQueue/NavigatedToCurrentQueue.feature"
         }
 )
 

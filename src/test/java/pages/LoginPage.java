@@ -19,15 +19,34 @@ public class LoginPage extends BasePage {
         super (givenDriver);
     }
 
-    public void openLogin(){
-        driver.get("https://qa.koel.app/");
+    public void openLogin() throws InterruptedException {
+        //workaround for 429 error (too many requests)
+        try{
+            driver.get("https://qa.koel.app/");
+        } catch (AssertionError e){
+            Thread.sleep(5000);
+            driver.get("https://qa.koel.app/");
+        }
+
     }
 
-    public LoginPage enterEmail(String email) {
-        Assert.assertTrue(fluentWaitForElement(emailField));
-        findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-        findElementVisibility(emailField).sendKeys(email);
-        return this;
+    public LoginPage enterEmail(String email) throws InterruptedException {
+        // workaround on the 429 error that causes random failed logins
+        // this method reloads the page and forces several seconds delay when 429 error is encountered
+        try {
+            Assert.assertTrue(fluentWaitForElement(emailField));
+            findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+            findElementVisibility(emailField).sendKeys(email);
+            return this;
+        } catch (AssertionError error){
+            Thread.sleep(5000);
+            openLogin();
+            Thread.sleep(5000);
+            Assert.assertTrue(fluentWaitForElement(emailField));
+            findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
+            findElementVisibility(emailField).sendKeys(email);
+            return this;
+        }
     }
 
     public LoginPage enterPassword(String password) {
@@ -39,15 +58,37 @@ public class LoginPage extends BasePage {
 
     public LoginPage clickLogIn() {
         // force few sec delay between each login
-        // this adds "wait" time between logins
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        }
+        // workaround on the 429 error that causes random failed logins
+        // `429 Too Many Requests` error on `/api/data` call which is an API called immediately after login
+        //  429 error is caused by Rate Limiting; the API does not allow the user / frontend application to send “too many requests in a given amount of time”
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException ex) {
+//            throw new RuntimeException(ex);
+//        }
         Assert.assertTrue(fluentWaitForElement(loginButton));
         findElementVisibility(loginButton).click();
         return this;
+
+    }
+
+    public void loggedInForCurrentQueue(String email, String password) throws InterruptedException {
+        // workaround on the 429 error that causes random failed logins
+        // this method reloads the page and forces several seconds delay when 429 error is encountered
+        try {
+            Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
+        } catch (AssertionError error){
+            Thread.sleep(5000);
+            openLogin();
+            Thread.sleep(5000);
+            enterEmail(email);
+            Thread.sleep(5000);
+            enterPassword(password);
+            Thread.sleep(5000);
+            clickLogIn();
+            Thread.sleep(5000);
+            Assert.assertTrue(waitForElementToBeVisible(avatarIcon));
+        }
     }
 
     public void notLoggedIn() {
@@ -58,6 +99,7 @@ public class LoginPage extends BasePage {
         Assert.assertTrue(waitForElementToBeVisible(notification));
         Assert.assertEquals(getNotification(), message);
     }
+
 }
 
 
