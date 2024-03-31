@@ -26,6 +26,8 @@ public class BasePage {
     protected WebElement avatarIcon;
     @FindBy(xpath = "//div[@class=\"success show\"]")
     protected WebElement notification;
+    @FindBy(xpath = "//div[@class=\"error show\"]")
+    protected WebElement errorNotification;
     @FindBy(xpath = "//*[@title=\"Create a new playlist\"]")
     private WebElement playlistPlusButton;
     @FindBy(xpath = "//*[text()=\"New Smart Playlist\"]")
@@ -40,7 +42,7 @@ public class BasePage {
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
@@ -55,6 +57,11 @@ public class BasePage {
 
     public WebElement findElementClickable (WebElement element){
         return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void clickElementWithJavaScript(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", element);
     }
 
     protected Boolean waitForElementToBeVisible(WebElement element){
@@ -121,8 +128,11 @@ public class BasePage {
     }
 
     public String getNotification () {
-//  put try catch here
         return findElementVisibility(notification).getText();
+    }
+
+    public String getErrorNotification(){
+        return findElementVisibility(errorNotification).getText();
     }
 
 
@@ -224,7 +234,8 @@ public class BasePage {
     }
 
     public void clickLogoutButton() {
-        findElementVisibility(logoutButton).click();
+//        findElementVisibility(logoutButton).click();
+        clickElementWithJavaScript(logoutButton);
     }
 
     public int getSize(By locator){
@@ -283,6 +294,9 @@ public class BasePage {
 
     }
 
+    public void goToProfileAndPreferencesPage() {
+        findElementVisibility(avatarIcon).click();
+    }
 }
 
 

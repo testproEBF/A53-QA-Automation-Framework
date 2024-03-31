@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,29 +24,23 @@ public class ProfilePage extends BasePage{
     }
 
     public void updateEmail(String newEmail, String password){
-        findElementVisibility(avatarIcon).click();
         findElementVisibility(profileCurrentPasswordField).sendKeys(password);
         findElementVisibility(profileEmailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         findElementVisibility(profileEmailField).sendKeys(newEmail);
         moveToElementClick(profileSaveButton);
-        getUpdateEmailNotification();
     }
 
-    public void getUpdateEmailNotification(){
-        String message = "Profile updated.";
-        Assert.assertEquals(getNotification(), message);
-    }
-
-    public void waitNotificationDisappear() {
-        wait.until(ExpectedConditions.invisibilityOf(notification));
+    public void getProfileUpdateSuccessfulNotification(String successMessage){
+        Assert.assertEquals(getNotification(), successMessage);
     }
 
     public void updatePassword(String password, String newPassword) {
-        findElementVisibility(avatarIcon).click();
         findElementVisibility(profileCurrentPasswordField).sendKeys(password);
         findElementVisibility(profileNewPasswordField).sendKeys(newPassword);
         moveToElementClick(profileSaveButton);
-        getUpdateEmailNotification();
     }
 
+    public void getDisplayedErrorNotification(String errorMessage) {
+        Assert.assertEquals(getErrorNotification(), errorMessage);
+    }
 }
