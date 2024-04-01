@@ -10,29 +10,29 @@ public class ProfileStepDefinition {
     BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
 
     @And("I navigate to Profile and Preferences Page")
-    private void goToProfileAndPreferencesPage() {
+    public void goToProfileAndPreferencesPage() {
         basePage.goToProfileAndPreferencesPage();
     }
 
     @And("I update my email to {string} using password {string}")
-    private void updateEmail(String newEmail, String password) {
+    public void updateEmail(String newEmail, String password) {
         profilePage.updateEmail(newEmail, password);
     }
 
     @Then("a notification {string} is displayed")
-    private void successNotificationIsDisplayed(String successMessage) {
+    public void successNotificationIsDisplayed(String successMessage) {
         profilePage.getProfileUpdateSuccessfulNotification(successMessage);
 //        profilePage.waitNotificationDisappear();
     }
 
     @And("I update my password from {string} to {string}")
-    private void updatePassword(String password, String newPassword) {
+    public void updatePassword(String password, String newPassword) {
         profilePage.updatePassword(password, newPassword);
 //        profilePage.waitNotificationDisappear();
     }
 
     @Then("an error notification {string} is displayed")
-    private void anErrorNotificationIsDisplayed(String errorMessage) {
+    public void anErrorNotificationIsDisplayed(String errorMessage) {
         profilePage.getDisplayedErrorNotification(errorMessage);
     }
 }

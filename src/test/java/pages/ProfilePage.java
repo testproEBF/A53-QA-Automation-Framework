@@ -31,6 +31,7 @@ public class ProfilePage extends BasePage{
     }
 
     public void getProfileUpdateSuccessfulNotification(String successMessage){
+        Assert.assertTrue(waitForElementToBeVisible(notification));
         Assert.assertEquals(getNotification(), successMessage);
     }
 
@@ -41,6 +42,7 @@ public class ProfilePage extends BasePage{
     }
 
     public void getDisplayedErrorNotification(String errorMessage) {
+        Assert.assertTrue(waitForElementToBeVisible(errorNotification));
         Assert.assertEquals(getErrorNotification(), errorMessage);
     }
 }

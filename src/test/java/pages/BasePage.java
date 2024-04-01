@@ -295,7 +295,8 @@ public class BasePage {
     }
 
     public void goToProfileAndPreferencesPage() {
-        findElementVisibility(avatarIcon).click();
+        clickElementWithJavaScript(avatarIcon);
+//        findElementVisibility(avatarIcon).click();
     }
 }
 
