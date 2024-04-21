@@ -7,13 +7,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {
-//                "src/test/resources/features/Login.feature"
-//                , "src/test/resources/features/CreateSmartPlaylist.feature"
-//                , "src/test/resources/features/Logout.feature"
-//                 ,"src/test/resources/features/CurrentQueue/CurrentQueue.feature"
-//                 ,"src/test/resources/features/CurrentQueue/NavigatedToCurrentQueue.feature"
-                "src/test/resources/features/ProfileAndPreferences/ProfileAndPreferences.feature"
-                ,"src/test/resources/features/ProfileAndPreferences/FailedProfileAndPreferences.feature"
+                "src/test/resources/features/Login.feature"
         }
 )
 
