@@ -24,6 +24,7 @@ Feature: Create Smart Playlist feature
     And I will see the created playlist "a" with an asterisk icon and with the correct name under PLAYLISTS
     And I will see the all the songs in the playlist
 
+  @smoke
   Scenario: Create smart playlist with two rules
     And I input "2 Rules" in the name text field
     And I make 2 rule or rules: "Length" "is greater than" "1"
@@ -41,6 +42,7 @@ Feature: Create Smart Playlist feature
     And I will see the created playlist "30 Rules" with an asterisk icon and with the correct name under PLAYLISTS
     And I will see empty "30 Rules" playlist
 
+  @smoke
   Scenario: Create smart playlist with two groups
     And I input "2 Groups" in the name text field
     And I make 2 groups with rule: "Length" "is not" "1"

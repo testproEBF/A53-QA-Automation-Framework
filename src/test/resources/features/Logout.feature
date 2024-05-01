@@ -1,6 +1,6 @@
 #noinspection SpellCheckingInspection
 @regression
-Feature: Create Smart Playlist feature
+Feature: Logout feature
 
   Background:
     Given I open Login Page

@@ -1,6 +1,6 @@
 #noinspection SpellCheckingInspection
 @regression
-Feature: I want to be able to open Current Queue page to be able to see all currently played songs
+Feature: I want to be navigated to Current Queue page from different pages
 
   Background:
     Given I open Login Page

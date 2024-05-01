@@ -1,58 +1,75 @@
-@regression
+@regression @update
 Feature: Update password in Profile and Preferences Page
 
   Background:
     Given I open Login Page
-    And I am LoggedIn using "enrile.fuentes@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am LoggedIn using "enrile.fuentes+0@testpro.io" and "M4DBkwT5Mp$Y!6"
     And I navigate to Profile and Preferences Page
 
-  Scenario: Successful Login Using New Password After Password Update
-    When I update my password from "26Pz2$g^GEXUPLaC" to "fdsaLKJH%^&567"
+  @smoke
+  Scenario: Successful Login using New Email After Successful Email Update
+    When I update my email to "enrile.fuentes+9@testpro.io" using password "M4DBkwT5Mp$Y!6"
     Then a notification "Profile updated." is displayed
     And I click log out button
     And I open Login Page
-    And I enter email "enrile.fuentes@testpro.io"
+    And I enter email "enrile.fuentes+9@testpro.io"
+    And I enter password "M4DBkwT5Mp$Y!6"
+    And I click submit
+    Then I am logged in
+    And I navigate to Profile and Preferences Page
+    When I update my email to "enrile.fuentes+0@testpro.io" using password "M4DBkwT5Mp$Y!6"
+
+  Scenario: Unsuccessful Login using Old Email After Successful Email Update
+    When I update my email to "enrile.fuentes+9@testpro.io" using password "M4DBkwT5Mp$Y!6"
+    Then a notification "Profile updated." is displayed
+    And I click log out button
+    And I open Login Page
+    And I enter email "enrile.fuentes+0@testpro.io"
+    And I enter password "M4DBkwT5Mp$Y!6"
+    And I click submit
+    Then I am not logged in
+    When I am LoggedIn using "enrile.fuentes+9@testpro.io" and "M4DBkwT5Mp$Y!6"
+    And I navigate to Profile and Preferences Page
+    And I update my email to "enrile.fuentes+0@testpro.io" using password "M4DBkwT5Mp$Y!6"
+
+  @smoke
+  Scenario: Successful Login Using New Password After Successful Password Update
+    When I update my password from "M4DBkwT5Mp$Y!6" to "fdsaLKJH%^&567"
+    Then a notification "Profile updated." is displayed
+    And I click log out button
+    And I open Login Page
+    And I enter email "enrile.fuentes+0@testpro.io"
     And I enter password "fdsaLKJH%^&567"
     And I click submit
     Then I am logged in
     And I navigate to Profile and Preferences Page
-    And I update my password from "fdsaLKJH%^&567" to "26Pz2$g^GEXUPLaC"
+    And I update my password from "fdsaLKJH%^&567" to "M4DBkwT5Mp$Y!6"
 
-  Scenario: Unsuccessful Login Using New Password After Password Update
-    When I update my password from "26Pz2$g^GEXUPLaC" to "fdsaLKJH%^&567"
+  Scenario: Unsuccessful Login Using Old Password After Successful Password Update
+    When I update my password from "M4DBkwT5Mp$Y!6" to "fdsaLKJH%^&567"
     Then a notification "Profile updated." is displayed
     And I click log out button
     And I open Login Page
-    And I enter email "enrile.fuentes@testpro.io"
-    And I enter password "26Pz2$g^GEXUPLaC"
+    And I enter email "enrile.fuentes+0@testpro.io"
+    And I enter password "M4DBkwT5Mp$Y!6"
     And I click submit
     Then I am not logged in
-    When I am LoggedIn using "enrile.fuentes@testpro.io" and "fdsaLKJH%^&567"
+    When I am LoggedIn using "enrile.fuentes+0@testpro.io" and "fdsaLKJH%^&567"
     And I navigate to Profile and Preferences Page
-    And I update my password from "fdsaLKJH%^&567" to "26Pz2$g^GEXUPLaC"
+    And I update my password from "fdsaLKJH%^&567" to "M4DBkwT5Mp$Y!6"
 
-  Scenario: Unsuccessful Password Update using Without a Numerical Character Password
-    When I update my password from "26Pz2$g^GEXUPLaC" to "FDS%^&*(mnbv"
-    Then an error notification "The new password must contain at least one number." is displayed
+  Scenario Outline: Unsuccessful Password Update
+    When I update my password from "<current password>" to "<new password>"
+    Then an error notification "<message>" is displayed
 
-  Scenario: Unsuccessful Password Update using Without a Special Character Password
-    When I update my password from "26Pz2$g^GEXUPLaC" to "FDS56789mnbv"
-    Then an error notification "The new password must contain at least one symbol." is displayed
+  Examples:
+    | current password | new password     | message                                                      |
+    | M4DBkwT5Mp$Y!6   | FDS%^&*(mnbv     | The new password must contain at least one number.           |
+    | M4DBkwT5Mp$Y!6   | FDS56789mnbv     | The new password must contain at least one symbol.           |
+    | M4DBkwT5Mp$Y!6   | fdsLKJ%^7        | The new password must be at least 10 characters.             |
+#    | M4DBkwT5Mp$Y!6   | fdsLKJ%^7mnbvcxz | The new password must not exceed 15 characters.              |
+#    | M4DBkwT5Mp$Y!6   | fds%^789mnbv     | The new password must contain at least one uppercase letter. |
+#    | M4DBkwT5Mp$Y!6   | FDS%^789MNBV     | The new password must contain at least one lowercase letter. |
 
-  Scenario: Unsuccessful Password Update using 9-character Password
-    When I update my password from "26Pz2$g^GEXUPLaC" to "fdsLKJ%^7"
-    Then an error notification "The new password must be at least 10 characters." is displayed
-
-#  Scenario: Unsuccessful Password Update using 16-character Password
-#    When I update my password from "26Pz2$g^GEXUPLaC" to "fdsLKJ%^7mnbvcxz"
-#    Then an error notification "The new password must not exceed 15 characters." is displayed
-#
-#  Scenario: Unsuccessful Password Update using Without an Uppercase Letter Password
-#    When I update my password from "26Pz2$g^GEXUPLaC" to "fds%^789mnbv"
-#    Then an error notification "The new password must contain at least one uppercase letter." is displayed
-#
-#  Scenario: Unsuccessful Password Update using Without a Lowercase Letter Password
-#    When I update my password from "26Pz2$g^GEXUPLaC" to "FDS%^789MNBV"
-#    Then an error notification "The new password must contain at least one lowercase letter." is displayed
 
 

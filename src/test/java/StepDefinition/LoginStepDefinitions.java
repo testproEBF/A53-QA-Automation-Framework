@@ -48,9 +48,8 @@ public class LoginStepDefinitions {
                 .loggedIn();
     }
 
-    @And("{string} message is displayed")
+    @And("the message {string} is displayed")
     public void getLoginNotification(String notification) {
-        loginPage.getLoginNotification(notification);
+            loginPage.getLoginNotification(notification);
     }
-
 }
