@@ -1,3 +1,4 @@
+@regression
 Feature: Update password in Profile and Preferences Page
 
   Background:

@@ -1,4 +1,5 @@
 #noinspection SpellCheckingInspection
+@regression
 Feature: Create Smart Playlist feature
 
   Background:

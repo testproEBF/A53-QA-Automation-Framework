@@ -1,4 +1,5 @@
 #noinspection SpellCheckingInspection
+@smoke @regression
 Feature: Login feature
 
   Background:

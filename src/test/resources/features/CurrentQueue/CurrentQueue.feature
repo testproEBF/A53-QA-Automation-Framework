@@ -1,4 +1,5 @@
 #noinspection SpellCheckingInspection
+@regression
 Feature: I want to be able to open Current Queue page to be able to see all currently played songs
 
   Background:
