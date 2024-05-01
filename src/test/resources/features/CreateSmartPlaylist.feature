@@ -1,6 +1,8 @@
 #noinspection SpellCheckingInspection
 @regression
-Feature: Create Smart Playlist feature
+Feature: Smart Playlist Creation
+  As a user
+  I want to create a Smart playlist in app, so that I can enjoy the music and modify my settings and preferences
 
   Background:
     Given I open Login Page

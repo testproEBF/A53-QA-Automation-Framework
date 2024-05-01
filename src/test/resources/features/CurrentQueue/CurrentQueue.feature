@@ -1,12 +1,15 @@
 #noinspection SpellCheckingInspection
-@regression @smoke
-Feature: I want to be able to open Current Queue page to be able to see all currently played songs
+@regression
+Feature: Current Queue Page Elements Validation
+  As a user
+  I want to be able to open Current Queue page to be able to see all currently played songs
 
   Background:
     Given I open Login Page
     And I am LoggedInForCurrentQueueTest using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I play 3 songs in All Songs Page
 
+  @smoke
   Scenario: Currently played songs are displayed in the Current Queue page
     When I navigate to Current Queue page
     Then I will see all 3 songs
@@ -23,6 +26,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     When I navigate to Current Queue page
     Then I will see the track numbers of the 3 songs
 
+  @smoke
   Scenario: Title of currently played song is displayed
     When I navigate to Current Queue page
     Then I will see the titles of the 3 songs
@@ -39,6 +43,7 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     When I navigate to Current Queue page
     Then I will see the total length of the 3 songs
 
+  @smoke
   Scenario: 'Shuffle All' button in Current Queue page shuffles songs
     When I navigate to Current Queue page
     And I get the titles of the 3 songs in order
@@ -46,12 +51,14 @@ Feature: I want to be able to open Current Queue page to be able to see all curr
     And I get the titles of the 3 songs in order after shuffle
     Then the songs will be shuffled
 
+  @smoke
   Scenario: Current Queue page is empty after clicking 'Clear' button
     When I navigate to Current Queue page
     And I click the Clear button
     Then the Current Queue list will be empty
     And "No songs queued. How about shuffling all songs?" message will be displayed
 
+  @smoke
   Scenario: All songs are displayed on the Current Queue page when 'shuffling all songs' is clicked
     When I navigate to Current Queue page
     And I click the Clear button

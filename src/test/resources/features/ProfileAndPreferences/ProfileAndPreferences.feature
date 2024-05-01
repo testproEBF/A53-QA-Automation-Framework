@@ -1,5 +1,7 @@
 @regression @update
-Feature: Update password in Profile and Preferences Page
+Feature: Password and Email Update Validation
+  As a user
+  I want to update my email and/or password and be able to access my account after update
 
   Background:
     Given I open Login Page
