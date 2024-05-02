@@ -13,13 +13,6 @@ public class CurrentQueueStepDefinition {
     AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.SHARED_DRIVER);
     LoginPage loginPage = new LoginPage(BaseDefinition.SHARED_DRIVER);
 
-    @And("I am LoggedInForCurrentQueueTest using {string} and {string}")
-    public void loggedInForCurrentQueueTestUsingAnd(String email, String password) throws InterruptedException {
-        loginPage.enterEmail(email)
-                .enterPassword(password)
-                .clickLogIn()
-                .loggedInForCurrentQueue(email, password);
-    }
     @And("I navigate to Current Queue page")
     public void navigateToCurrentQueuePage() {
         currentQueuePage.goToCurrentQueuePage();

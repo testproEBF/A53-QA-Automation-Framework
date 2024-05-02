@@ -6,7 +6,7 @@ Feature: Current Queue Page Elements Validation
 
   Background:
     Given I open Login Page
-    And I am LoggedInForCurrentQueueTest using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am logged in using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I play 3 songs in All Songs Page
 
   @smoke

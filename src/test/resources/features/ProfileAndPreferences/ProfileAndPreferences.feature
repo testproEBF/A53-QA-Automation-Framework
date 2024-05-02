@@ -5,7 +5,7 @@ Feature: Password and Email Update Validation
 
   Background:
     Given I open Login Page
-    And I am LoggedIn using "enrile.fuentes+0@testpro.io" and "M4DBkwT5Mp$Y!6"
+    And I am logged in using "enrile.fuentes+0@testpro.io" and "M4DBkwT5Mp$Y!6"
     And I navigate to Profile and Preferences Page
 
   @smoke

@@ -4,10 +4,10 @@
 <suite name="CucumberRunner" parallel="methods" thread-count="1">
     <test name="Login Tests using Cucumber" preserve-order="true">
         <classes>
-<!--            <class name="LoginPageTestRunner"/>-->
+            <class name="LoginPageTestRunner"/>
 <!--            <class name="LogoutTestRunner"/>-->
 <!--            <class name="runners.SmartPlaylistTestRunner"/>-->
-            <class name="CurrentQueueTestRunner"/>
+<!--            <class name="CurrentQueueTestRunner"/>-->
 <!--            <class name="ProfileAndPreferencesTestRunner"/>-->
 <!--            <class name="SmokeTestRunner"/>-->
 <!--            <class name="RegressionTestRunner"/>-->

@@ -11,7 +11,7 @@ public class AllSongsPage extends BasePage{
         super (givenDriver);
     }
 
-    public int TOTAL_NUMBER_OF_SONGS;
+
 
     @FindBy (xpath = "//a[@class=\"songs\"]")
     private WebElement allSongs;
@@ -27,9 +27,10 @@ public class AllSongsPage extends BasePage{
     }
 
     public void playSongInAllSongsPage(int numberOfPlayedSongs) {
+        int totalNumberOfSongs;
         String message = "The total number of songs in All Songs Page is ";
         int y = getPopulationSize(allSongsLocator, message);
-        TOTAL_NUMBER_OF_SONGS = y;
+        totalNumberOfSongs = y;
         for (int x = 1; x <= numberOfPlayedSongs; x++ ){
             int songItemNumber = getRandomNumber(1, y);
 

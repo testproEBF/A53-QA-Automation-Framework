@@ -20,7 +20,10 @@ public class LoginPage extends BasePage {
     }
 
     public void openLogin() throws InterruptedException {
-        //workaround for 429 error (too many requests)
+        // force few sec delay between each login
+        // workaround on the 429 error that causes random failed logins
+        // `429 Too Many Requests` error on `/api/data` call which is an API called immediately after login
+        //  429 error is caused by Rate Limiting; the API does not allow the user / frontend application to send “too many requests in a given amount of time”
         try{
             driver.get("https://qa.koel.app/");
         } catch (AssertionError e){
@@ -32,7 +35,6 @@ public class LoginPage extends BasePage {
 
     public LoginPage enterEmail(String email) throws InterruptedException {
         // workaround on the 429 error that causes random failed logins
-        // this method reloads the page and forces several seconds delay when 429 error is encountered
         try {
             Assert.assertTrue(fluentWaitForElement(emailField));
             findElementClickable(emailField).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
@@ -57,19 +59,9 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage clickLogIn() {
-        // force few sec delay between each login
-        // workaround on the 429 error that causes random failed logins
-        // `429 Too Many Requests` error on `/api/data` call which is an API called immediately after login
-        //  429 error is caused by Rate Limiting; the API does not allow the user / frontend application to send “too many requests in a given amount of time”
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException ex) {
-//            throw new RuntimeException(ex);
-//        }
         Assert.assertTrue(fluentWaitForElement(loginButton));
         findElementVisibility(loginButton).click();
         return this;
-
     }
 
     public void loggedInForCurrentQueue(String email, String password) throws InterruptedException {

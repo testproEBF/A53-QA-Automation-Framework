@@ -40,7 +40,7 @@ public class LoginStepDefinitions {
         loginPage.notLoggedIn();
     }
 
-    @Given("I am LoggedIn using {string} and {string}")
+    @Given("I am logged in using {string} and {string}")
     public void iAmLoggedIn(String email, String password) throws InterruptedException {
         loginPage.enterEmail(email)
                 .enterPassword(password)

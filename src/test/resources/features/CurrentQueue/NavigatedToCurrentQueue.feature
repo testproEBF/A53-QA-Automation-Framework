@@ -6,7 +6,7 @@ Feature: Navigation to Current Queue Validation
 
   Background:
     Given I open Login Page
-    And I am LoggedInForCurrentQueueTest using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am logged in using "enrile.fuentes+6@testpro.io" and "26Pz2$g^GEXUPLaC"
 
   Scenario: Navigated to Current Queue page after double clicking a song on Home page - Most Played
     When I double-click 1 song under Most Played category

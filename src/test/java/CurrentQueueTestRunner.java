@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {
-                  "src/test/resources/features/CurrentQueue/CurrentQueue.feature"
+                  "src/test/resources/features/CurrentQueue/CurrentQueuePageElements.feature"
                  ,"src/test/resources/features/CurrentQueue/NavigatedToCurrentQueue.feature"
         }
 )
@@ -20,10 +20,9 @@ public class CurrentQueueTestRunner extends AbstractTestNGCucumberTests {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Override
-    @DataProvider (parallel = true)
-    public Object[][] scenarios(){
-        return super.scenarios();
+    @DataProvider
+    public Object[][] features(){
+        return testNGCucumberRunner.provideScenarios();
     }
 
     @AfterClass(alwaysRun = true)
