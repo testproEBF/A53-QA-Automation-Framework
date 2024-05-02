@@ -7,9 +7,9 @@
 <!--            <class name="LoginPageTestRunner"/>-->
 <!--            <class name="LogoutTestRunner"/>-->
 <!--            <class name="runners.SmartPlaylistTestRunner"/>-->
-<!--            <class name="CurrentQueueTestRunner"/>-->
+            <class name="CurrentQueueTestRunner"/>
 <!--            <class name="ProfileAndPreferencesTestRunner"/>-->
-            <class name="SmokeTestRunner"/>
+<!--            <class name="SmokeTestRunner"/>-->
 <!--            <class name="RegressionTestRunner"/>-->
 
         </classes>

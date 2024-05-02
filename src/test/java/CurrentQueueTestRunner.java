@@ -20,9 +20,10 @@ public class CurrentQueueTestRunner extends AbstractTestNGCucumberTests {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @DataProvider
-    public Object[][] features(){
-        return testNGCucumberRunner.provideScenarios();
+    @Override
+    @DataProvider (parallel = true)
+    public Object[][] scenarios(){
+        return super.scenarios();
     }
 
     @AfterClass(alwaysRun = true)
