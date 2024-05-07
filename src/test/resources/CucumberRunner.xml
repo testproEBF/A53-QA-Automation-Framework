@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="CucumberRunner" parallel="methods" thread-count="1">
-    <test name="Login Tests using Cucumber" preserve-order="true">
+<suite name="CucumberRunner" parallel="methods" thread-count="4">
+    <test name="Koel App Tests using Cucumber" preserve-order="false">
         <classes>
-            <class name="LoginPageTestRunner"/>
+            <class name="ArtistsTestRunner"/>
+<!--            <class name="CurrentQueueTestRunner"/>           -->
+<!--            <class name="LoginPageTestRunner"/>-->
 <!--            <class name="LogoutTestRunner"/>-->
-<!--            <class name="runners.SmartPlaylistTestRunner"/>-->
-<!--            <class name="CurrentQueueTestRunner"/>-->
 <!--            <class name="ProfileAndPreferencesTestRunner"/>-->
+<!--            <class name="SmartPlaylistTestRunner"/>-->
 <!--            <class name="SmokeTestRunner"/>-->
 <!--            <class name="RegressionTestRunner"/>-->
-
         </classes>
     </test>
 </suite>

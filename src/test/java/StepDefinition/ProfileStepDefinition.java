@@ -6,8 +6,8 @@ import pages.ProfilePage;
 
 public class ProfileStepDefinition {
 
-    ProfilePage profilePage = new ProfilePage(BaseDefinition.SHARED_DRIVER);
-    BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
+    ProfilePage profilePage = new ProfilePage(BaseDefinition.getThreadLocal());
+    BasePage basePage = new BasePage(BaseDefinition.getThreadLocal());
 
     @And("I navigate to Profile and Preferences Page")
     public void goToProfileAndPreferencesPage() {

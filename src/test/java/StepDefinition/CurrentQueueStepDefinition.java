@@ -9,9 +9,9 @@ import pages.LoginPage;
 import java.text.ParseException;
 
 public class CurrentQueueStepDefinition {
-    CurrentQueuePage currentQueuePage = new CurrentQueuePage(BaseDefinition.SHARED_DRIVER);
-    AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.SHARED_DRIVER);
-    LoginPage loginPage = new LoginPage(BaseDefinition.SHARED_DRIVER);
+    CurrentQueuePage currentQueuePage = new CurrentQueuePage(BaseDefinition.getThreadLocal());
+    AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.getThreadLocal());
+    LoginPage loginPage = new LoginPage(BaseDefinition.getThreadLocal());
 
     @And("I navigate to Current Queue page")
     public void navigateToCurrentQueuePage() {

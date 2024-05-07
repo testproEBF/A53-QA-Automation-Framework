@@ -6,7 +6,7 @@ import pages.SmartPlaylistPage;
 
 public class SmartPlaylistStepDefinition {
 
-    SmartPlaylistPage smartPlaylistPage = new SmartPlaylistPage(BaseDefinition.SHARED_DRIVER);
+    SmartPlaylistPage smartPlaylistPage = new SmartPlaylistPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to my smart playlist page")
     public void goToSmartPlaylistPage() {

@@ -5,7 +5,7 @@ import io.cucumber.java.en.When;
 import pages.AlbumsPage;
 
 public class AlbumsStepDefinition {
-    AlbumsPage albumsPage = new AlbumsPage(BaseDefinition.SHARED_DRIVER);
+    AlbumsPage albumsPage = new AlbumsPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to Albums page")
     public void navigateToAlbumsPage() {

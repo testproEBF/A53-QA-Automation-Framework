@@ -6,7 +6,7 @@ import pages.FavoritesPage;
 
 public class FavoritesStepDefinition {
 
-    FavoritesPage favoritesPage = new FavoritesPage (BaseDefinition.SHARED_DRIVER);
+    FavoritesPage favoritesPage = new FavoritesPage (BaseDefinition.getThreadLocal());
 
     @When("I navigate to Favorites page")
     public void gooFavoritesPage() {

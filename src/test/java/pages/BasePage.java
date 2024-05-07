@@ -26,6 +26,7 @@ public class BasePage {
     protected WebElement avatarIcon;
     @FindBy(xpath = "//div[@class=\"success show\"]")
     protected WebElement notification;
+    protected By notificationLocator = By.partialLinkText("Created playlist");
     @FindBy(xpath = "//div[@class=\"error show\"]")
     protected WebElement errorNotification;
     @FindBy(xpath = "//*[@title=\"Create a new playlist\"]")
@@ -239,6 +240,7 @@ public class BasePage {
     }
 
     public int getSize(By locator){
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return driver.findElements(locator).size();
     }
 

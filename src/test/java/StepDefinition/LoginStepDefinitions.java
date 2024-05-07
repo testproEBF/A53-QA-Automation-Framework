@@ -8,7 +8,7 @@ import pages.LoginPage;
 
 public class LoginStepDefinitions {
 
-    LoginPage loginPage = new LoginPage(BaseDefinition.SHARED_DRIVER);
+    LoginPage loginPage = new LoginPage(BaseDefinition.getThreadLocal());
 
     @Given("I open Login Page")
     public void openLogin() throws InterruptedException {

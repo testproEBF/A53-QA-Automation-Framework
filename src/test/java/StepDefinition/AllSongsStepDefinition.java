@@ -5,7 +5,7 @@ import io.cucumber.java.en.When;
 import pages.AllSongsPage;
 
 public class AllSongsStepDefinition {
-    AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.SHARED_DRIVER);
+    AllSongsPage allSongsPage = new AllSongsPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to All Songs page")
     public void navigateToAllSongsPage() {

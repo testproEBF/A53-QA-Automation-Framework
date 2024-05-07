@@ -20,7 +20,7 @@ Feature: Logout Validation
     And I click log out button
     Then I am not logged in
     And I open Login Page
-    And I am LoggedIn using "enrile.fuentes+9@testpro.io" and "26Pz2$g^GEXUPLaC"
+    And I am logged in using "enrile.fuentes+9@testpro.io" and "26Pz2$g^GEXUPLaC"
     And I navigate to Profile and Preferences Page
     And I update my email to "enrile.fuentes@testpro.io" using password "26Pz2$g^GEXUPLaC"
 
@@ -31,6 +31,6 @@ Feature: Logout Validation
     And I click log out button
     Then I am not logged in
     And I open Login Page
-    And I am LoggedIn using "enrile.fuentes@testpro.io" and "uragonKA@123"
+    And I am logged in using "enrile.fuentes@testpro.io" and "uragonKA@123"
     And I navigate to Profile and Preferences Page
     And I update my password from "uragonKA@123" to "26Pz2$g^GEXUPLaC"

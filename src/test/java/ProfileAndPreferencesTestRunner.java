@@ -7,8 +7,8 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {
-                "src/test/resources/features/ProfileAndPreferences/ProfileAndPreferences.feature"
-                ,"src/test/resources/features/ProfileAndPreferences/FailedProfileAndPreferences.feature"
+                "src/test/resources/features/profileAndPreferences/ProfileAndPreferences.feature"
+                ,"src/test/resources/features/profileAndPreferences/FailedProfileAndPreferences.feature"
         }
 )
 
@@ -16,17 +16,18 @@ public class ProfileAndPreferencesTestRunner extends AbstractTestNGCucumberTests
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass(alwaysRun = true)
-    public void setUpCucumber(){
+    public void setUpCucumber() {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @DataProvider
-    public Object[][] features(){
-        return testNGCucumberRunner.provideScenarios();
+    @Override
+    @DataProvider(parallel = true)
+    public Object[][] scenarios() {
+        return super.scenarios();
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDownClass(){
+    public void tearDownClass() {
         testNGCucumberRunner.finish();
     }
 }

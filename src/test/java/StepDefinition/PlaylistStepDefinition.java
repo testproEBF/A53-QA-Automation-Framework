@@ -6,7 +6,7 @@ import pages.PlaylistPage;
 
 public class PlaylistStepDefinition {
 
-    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.SHARED_DRIVER);
+    PlaylistPage playlistPage = new PlaylistPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to my playlist page")
     public void goToMyPlaylistPage() {

@@ -6,7 +6,7 @@ import pages.RecentlyPlayedPage;
 
 public class RecentlyPlayedStepDefinition {
 
-    RecentlyPlayedPage recentlyPlayedPage = new RecentlyPlayedPage(BaseDefinition.SHARED_DRIVER);
+    RecentlyPlayedPage recentlyPlayedPage = new RecentlyPlayedPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to Recently Played page")
     public void goToRecentlyPlayedPage() {

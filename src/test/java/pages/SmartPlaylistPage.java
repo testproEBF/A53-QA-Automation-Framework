@@ -93,19 +93,6 @@ public class SmartPlaylistPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
 
-
-//        try {
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(model))).click();
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(modelOptionLocator))).click();
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operator))).click();
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(operatorOptionLocator))).click();
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(Keys.chord(Keys.COMMAND, "A", Keys.BACK_SPACE));
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(valueLocator))).sendKeys(value);
-//
-//        } catch (ElementClickInterceptedException e) {
-//            System.out.println("Cannot scroll to the top.");
-//            e.printStackTrace();
-//        }
     }
 
     public void editRule(int ruleNumber, int groupNumber, String modelOption, String operatorOption, String value){
@@ -120,7 +107,7 @@ public class SmartPlaylistPage extends BasePage {
 
     public void smartPlaylistCreatedNotification(String name) {
         String actualMessage = String.format("Created playlist \"%s.\"", name);
-        Assert.assertEquals(getNotification(), actualMessage);
+        Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOfElementWithText(notificationLocator, "Created playlist")));
     }
 
     public void checkSongsInSmartPlaylist(String song, String name){
@@ -143,12 +130,9 @@ public class SmartPlaylistPage extends BasePage {
     public void seeEmptyPlaylist(String name) {
         clickSmartPlaylist(name);
         Assert.assertNotNull(emptyPlaylist);
-//        Assert.assertTrue(emptyPlaylist.isDisplayed());
     }
 
     public void stillInNewSmartPlaylistForm() {
-//        Assert.assertNotNull(smartPFSaveButton);
-//        Assert.assertTrue(smartPFSaveButton.isDisplayed());
         Assert.assertTrue(waitForElementToBeVisible(smartPFSaveButton));
     }
 
@@ -166,7 +150,6 @@ public class SmartPlaylistPage extends BasePage {
 
     public void seeAll66SongsInPlaylist() {
         Assert.assertNotNull(allSongsPresent);
-//        Assert.assertTrue(allSongsPresent.isDisplayed());
     }
 
 

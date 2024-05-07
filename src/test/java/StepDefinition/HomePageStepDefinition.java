@@ -5,7 +5,7 @@ import pages.HomePage;
 
 public class HomePageStepDefinition {
     
-    HomePage homePage = new HomePage(BaseDefinition.SHARED_DRIVER);
+    HomePage homePage = new HomePage(BaseDefinition.getThreadLocal());
     
 
     @When("I double-click {int} song under Most Played category")

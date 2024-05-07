@@ -5,7 +5,7 @@ import pages.BasePage;
 
 public class LogoutStepDefinition {
 
-    BasePage basePage = new BasePage(BaseDefinition.SHARED_DRIVER);
+    BasePage basePage = new BasePage(BaseDefinition.getThreadLocal());
 
     @And("I click log out button")
     public void logOut() {

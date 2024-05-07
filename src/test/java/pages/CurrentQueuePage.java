@@ -83,6 +83,7 @@ public class CurrentQueuePage extends BasePage{
 
     public void checkIfNavigatedToCurrentQueuePage() {
         Assert.assertTrue(waitForElementToBeVisible(currentQueueText));
+        Assert.assertEquals(currentQueueText.getText(), "Current Queue");
         System.out.println("The text " + currentQueueText.getText() + " is visible. I am navigated to the Current Queue Page.");
     }
 
