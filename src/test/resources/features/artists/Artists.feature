@@ -23,9 +23,9 @@ Feature: Play artists' songs
 
   Scenario: Validate selected artist's song/s automatically play from thumbnail view
     When I navigate to Artists page
-    And I click "Till Paradiso" artist's thumbnail in "Thumbnail" view
+    And I click "Xylo-Ziko" artist's thumbnail in "Thumbnail" view
     Then I will be navigated to Current Queue page
-    And the selected "Till Paradiso" artist's songs will be added to the queue
+    And the selected "Xylo-Ziko" artist's songs will be added to the queue
     And the artist's songs will automatically play
 
   Scenario: Validate user is able to play a song of the selected artist from thumbnail view
@@ -37,9 +37,9 @@ Feature: Play artists' songs
   Scenario: Validate selected artist's song/s automatically play from list view
     When I navigate to Artists page
     And I click the View as list button on the top right of the page
-    And I click "Dan Brasco" artist's thumbnail in "List" view
+    And I click "Makaih Beats" artist's thumbnail in "List" view
     Then I will be navigated to Current Queue page
-    And the selected "Dan Brasco" artist's songs will be added to the queue
+    And the selected "Makaih Beats" artist's songs will be added to the queue
     And the artist's songs will automatically play
 
   Scenario: Validate user is able to play a song of the selected artist from list view
