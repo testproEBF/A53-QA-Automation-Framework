@@ -12,10 +12,17 @@ public class SearchResultsPage extends BasePage{
     }
 
     @FindBy (xpath = "//*[@class=\"artists\"]/p")
-    private WebElement artistResults;
+    private WebElement artistNegativeSearchResults;
+    @FindBy (xpath = "//section[@class=\"artists\"]//a[@class=\"name\"]")
+    private WebElement artistPositiveSearchResults;
 
 
     public void displayArtistUnderArtistsInSearchResults(String artistName) {
-        Assert.assertEquals(artistResults.getText(), artistName);
+        try{
+            Assert.assertEquals(artistPositiveSearchResults.getText(), artistName);
+        } catch (Exception e){
+            Assert.assertEquals(artistNegativeSearchResults.getText(), artistName);
+        }
+
     }
 }

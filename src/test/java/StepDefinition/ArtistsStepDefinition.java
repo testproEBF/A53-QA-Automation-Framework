@@ -4,9 +4,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.ArtistsPage;
+import pages.MainFooterPage;
 
 public class ArtistsStepDefinition {
     ArtistsPage artistsPage = new ArtistsPage(BaseDefinition.getThreadLocal());
+    MainFooterPage mainFooterPage = new MainFooterPage(BaseDefinition.getThreadLocal());
 
     @When("I navigate to Artists page")
     public void navigateToAllSongsPage() {
@@ -39,8 +41,8 @@ public class ArtistsStepDefinition {
     }
 
     @When("I click the View as thumbnails button beside the View as list button")
-    public void clickArtistsViewAsThumbnailsButton() {
-        artistsPage.clickArtistsViewAsThumbnailsButton();
+    public void clickArtistSViewAsThumbnailsButton() {
+        artistsPage.clickArtistViewAsThumbnailsButton();
     }
 
     @And("I click {string} artist's thumbnail in {string} view")
@@ -55,12 +57,13 @@ public class ArtistsStepDefinition {
 
     @And("the artist's songs will automatically play")
     public void checkArtistSSongSAutomaticallyPlay() {
-        artistsPage.checkArtistSSongSAutomaticallyPlay();
+        mainFooterPage.checkArtistSSongIsPlaying();
     }
 
+
     @And("I click artist's name in {string} view")
-    public void clickArtistSName(String viewMode) throws InterruptedException{
-        artistsPage.clickArtistSName(viewMode);
+    public void clickArtist(String viewMode) throws InterruptedException{
+        artistsPage.clickArtist(viewMode);
     }
 
     @Then("I will be navigated to the artist's page")
@@ -71,6 +74,16 @@ public class ArtistsStepDefinition {
     @And("I will be able to play a song")
     public void playArtistSSongs(){
         artistsPage.playArtistSSongs();
+        mainFooterPage.checkArtistSSongIsPlaying();
+    }
+
+    @And("I click the View as {string} button on the top right of the page")
+    public void selectArtistsPageViewMode(String viewModeButton) {
+        if (viewModeButton.equals("List")){
+            artistsPage.clickArtistViewAsListButton();
+        } else {
+            artistsPage.clickArtistViewAsThumbnailsButton();
+        }
     }
 
 }

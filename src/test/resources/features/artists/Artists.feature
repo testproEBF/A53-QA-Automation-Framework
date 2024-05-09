@@ -17,34 +17,51 @@ Feature: Play artists' songs
     When I click the View as thumbnails button beside the View as list button
     Then I will see the artists in thumbnail view
 
-  Scenario: Validate user is able to find artists using search field
-    When I search for the artist "Lobo Loco" using the search bar
-    Then I will see "Lobo Loco" under the Artists section of the search results
+  Scenario Outline: Validate user is able to find artist "<Artist's Name>" using search field
+    When I search for the existing artist "<Artist's Name>" using the search bar
+    Then I will see "<Artist's Name>" under the Artists section of the search results
 
-  Scenario: Validate selected artist's song/s automatically play from thumbnail view
+    Examples:
+    | Artist's Name    |
+    | Origami Repetika |
+    | REW<<            |
+    | Unknown Artist   |
+
+  Scenario Outline: Validate "<Artist>" artist's song/s automatically play in "<View Mode>" view
     When I navigate to Artists page
-    And I click "Xylo-Ziko" artist's thumbnail in "Thumbnail" view
+    And I click the View as "<View Mode Button>" button on the top right of the page
+    And I click "<Artist>" artist's thumbnail in "<View Mode>" view
     Then I will be navigated to Current Queue page
-    And the selected "Xylo-Ziko" artist's songs will be added to the queue
+    And the selected "<Artist>" artist's songs will be added to the queue
     And the artist's songs will automatically play
 
-  Scenario: Validate user is able to play a song of the selected artist from thumbnail view
-    When I navigate to Artists page
-    And I click artist's name in "Thumbnail" view
-    Then I will be navigated to the artist's page
-    And I will be able to play a song
-#
-  Scenario: Validate selected artist's song/s automatically play from list view
-    When I navigate to Artists page
-    And I click the View as list button on the top right of the page
-    And I click "Makaih Beats" artist's thumbnail in "List" view
-    Then I will be navigated to Current Queue page
-    And the selected "Makaih Beats" artist's songs will be added to the queue
-    And the artist's songs will automatically play
+    Examples:
+      | View Mode Button | Artist       | View Mode |
+      | List             | Chad Crouch  | List      |
+      | List             | Makaih Beats | List      |
+      | List             | Xylo-Ziko    | List      |
+      | Thumbnail        | Chad Crouch  | Thumbnail |
+      | Thumbnail        | Makaih Beats | Thumbnail |
+      | Thumbnail        | Xylo-Ziko    | Thumbnail |
 
-  Scenario: Validate user is able to play a song of the selected artist from list view
+  Scenario Outline: Validate user is able to play a song of the randomly selected artist in "<View Mode>" View
     When I navigate to Artists page
     And I click the View as list button on the top right of the page
-    And I click artist's name in "List" view
+    And I click the View as "<View Mode Button>" button on the top right of the page
+    And I click artist's name in "<View Mode>" view
     Then I will be navigated to the artist's page
     And I will be able to play a song
+
+    Examples:
+      | View Mode Button | View Mode |
+      | List             | List      |
+      | Thumbnail        | Thumbnail |
+
+
+
+
+#  Scenario: Validate user is able to play a song of the selected artist from thumbnail view
+#    When I navigate to Artists page
+#    And I click artist's name in "Thumbnail" view
+#    Then I will be navigated to the artist's page
+#    And I will be able to play a song

@@ -13,4 +13,9 @@ public class MainFooterPage extends BasePage {
         super(givenDriver);
     }
 
+
+    public void checkArtistSSongIsPlaying() {
+//        Assert.assertNull(mainFooterPage.soundBar);
+        Assert.assertTrue(soundBar.isDisplayed());
+    }
 }

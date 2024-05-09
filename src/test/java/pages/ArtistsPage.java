@@ -24,9 +24,9 @@ public class ArtistsPage extends BasePage{
     private WebElement compactArtistsThumbnail;
     @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@class=\"item full\"]")
     private WebElement fullArtistsThumbnail;
-    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@class=\"list\"]")
+    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@data-test=\"view-mode-list\"]")
     private WebElement viewAsListButton;
-    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@class=\"thumbnails\"]")
+    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@data-test=\"view-mode-thumbnail\"]")
     private WebElement viewAsThumbnailButton;
     @FindBy (xpath = "//*[@id=\"artistWrapper\"]//h1")
     private WebElement selectedArtistsPageName;
@@ -70,7 +70,7 @@ public class ArtistsPage extends BasePage{
         Assert.assertTrue(compactArtistsThumbnail.isDisplayed());
     }
 
-    public void clickArtistsViewAsThumbnailsButton() {
+    public void clickArtistViewAsThumbnailsButton() {
         viewAsThumbnailButton.click();
     }
 
@@ -131,13 +131,7 @@ public class ArtistsPage extends BasePage{
         }
     }
 
-
-    public void checkArtistSSongSAutomaticallyPlay() {
-//        Assert.assertNull(mainFooterPage.soundBar);
-        Assert.assertTrue(mainFooterPage.soundBar.isDisplayed());
-    }
-
-    public void clickArtistSName(String viewMode) throws InterruptedException{
+    public void clickArtist(String viewMode) throws InterruptedException{
         selectViewModeString(viewMode);
         System.out.println("Artists page is in " + viewMode);
         selectArtist(viewModeString);
