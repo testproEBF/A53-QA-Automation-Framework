@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
-import javax.lang.model.element.Element;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -142,7 +141,7 @@ public class CurrentQueuePage extends BasePage{
         boolean isPresent = true;
         for(int x = 1; x <= numberOfSong; x++){
             String locator = String.format(locatorFormat,x);
-            String attribute = findElement(By.xpath(locator)).getText();
+            String attribute = findElementVisibility(By.xpath(locator)).getText();
             if (attribute.isEmpty()){
                 System.out.println("The song's " + songAttribute + " is missing.");
                 isPresent = false;
@@ -157,7 +156,7 @@ public class CurrentQueuePage extends BasePage{
         songArray = new String[numberOfSong];
         for(int x = 1; x <= numberOfSong; x++){
             String locator = String.format(locatorFormat,x);
-            String attributeValue = findElement(By.xpath(locator)).getText();
+            String attributeValue = findElementVisibility(By.xpath(locator)).getText();
             int y = x - 1;
             songArray[y] = attributeValue;
             System.out.println( "The " + songAttribute + " of song " + x + " is " + songArray[y]);

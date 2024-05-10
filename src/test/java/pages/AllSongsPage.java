@@ -40,7 +40,7 @@ public class AllSongsPage extends BasePage{
             }
 
             String locator = String.format("(//*[@id=\"songsWrapper\"]//*[@class=\"song-item\"])[%s]", songItemNumber);
-            WebElement song = findElement(By.xpath(locator));
+            WebElement song = findElementVisibility(By.xpath(locator));
             moveToElementDoubleClick(song);
             System.out.println("Double clicked on the song element");
 

@@ -46,7 +46,7 @@ public class ArtistsStepDefinition {
     }
 
     @And("I click {string} artist's thumbnail in {string} view")
-    public void clickArtistSThumbnail(String artistName, String viewMode) throws InterruptedException {
+    public void clickArtistSThumbnail(String artistName, String viewMode){
         artistsPage.clickArtists(artistName, viewMode);
     }
 
