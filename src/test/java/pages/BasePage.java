@@ -42,9 +42,9 @@ public class BasePage {
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         actions = new Actions(driver);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 3), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
     }
 
     public WebElement findElementVisibility(By locator){

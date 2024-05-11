@@ -56,7 +56,7 @@ public class ArtistsStepDefinition {
 
     @And("I click {string} artist's thumbnail in {string} view")
     public void clickArtistSThumbnail(String artistName, String viewMode) throws InterruptedException {
-        artistsPage.clickArtists(artistName, viewMode);
+        artistsPage.clickArtistSThumbnail(artistName, viewMode);
     }
 
     @And("the selected {string} artist's songs will be added to the queue")
@@ -71,8 +71,8 @@ public class ArtistsStepDefinition {
 
 
     @And("I click artist's name in {string} view")
-    public void clickArtist(String viewMode) throws InterruptedException{
-        artistsPage.clickArtist(viewMode);
+    public void clickArtistSName(String viewMode) throws InterruptedException{
+        artistsPage.clickArtistSName(viewMode);
     }
 
     @Then("I will be navigated to the artist's page")

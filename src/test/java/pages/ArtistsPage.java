@@ -1,11 +1,9 @@
 package pages;
 
-import StepDefinition.BaseDefinition;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-
 import java.util.List;
 
 public class ArtistsPage extends BasePage{
@@ -85,16 +83,33 @@ public class ArtistsPage extends BasePage{
         return viewModeString;
     }
 
-    public void clickArtists(String artistName, String viewMode) throws InterruptedException {
+    public void clickArtistSThumbnail(String artistName, String viewMode) throws InterruptedException {
         selectViewModeString(viewMode);
-        int numberOfTimesToScrollDown = 10;
-        String artistsThumbnailLocatorFormat = String.format("//*[@id=\"artistsWrapper\"]//*[@class=\"%s\" and @title=\"%s\"]//a[@class=\"control control-play font-size-0\"]", viewModeString, artistName);
+        String artistsThumbnailLocatorFormat = String.format(
+            "//*[@id=\"artistsWrapper\"]//*[@class=\"%s\" and @title=\"%s\"]//a[@class=\"control control-play font-size-0\"]", viewModeString, artistName);
         try {
             WebElement artistThumbnail = driver.findElement(By.xpath(artistsThumbnailLocatorFormat));
             moveToElementClick(artistThumbnail);
         } catch (Exception e) {
+
+            //Problem: Cannot find the element not in view. Returns TimeoutException
+
+            //Solution 1: Changed Xpath to Css selector: Nothing changed in results
+//            artistsThumbnailLocatorFormat = String.format(
+//              "#artistsWrapper article[class|=\"%s\"][title|=%s] .control.control-play.font-size-0", viewModeString, artistName);
+
+            //Solution 2: Used Thread.sleep: Nothing changed in results
+            //Thread.sleep(100000);
+
+            //Solution 3: Use javascript scrollAndClick:Nothing changed in results
+            //In conjunction with scrollPageDown: Inconsistent results. Returns MoveTargetOutOfBoundsException
+//            scrollAndClickJS(artistThumbnail);
+
+            //Solution 4: Scroll to the bottom of the page first so that all artist will be visible in DOM: SUCCESS! All artists are found.
+            int numberOfTimesToScrollDown = 10;
             clickFirstArtist(viewModeString);
             scrollPageDown(numberOfTimesToScrollDown);
+
             WebElement artistThumbnail = findElementVisibility(By.xpath(artistsThumbnailLocatorFormat));
             moveToElementClick(artistThumbnail);
         }
@@ -109,7 +124,9 @@ public class ArtistsPage extends BasePage{
     private void scrollPageDown(int numberOfTimesToScrollDown) throws InterruptedException {
         for (int x = 0; x <= numberOfTimesToScrollDown; x++){
             actions.sendKeys(Keys.PAGE_DOWN).build().perform();
-            Thread.sleep(30);
+            //Has to be added to make sure the UI can keep up with the scrolling command sent by Selenium.
+            //The 50 millis is the optimum time to give consistent correct total number of artists.
+            Thread.sleep(50);
         }
     }
 
@@ -124,21 +141,42 @@ public class ArtistsPage extends BasePage{
         }
     }
 
-    public void clickArtist(String viewMode) throws InterruptedException{
+    public void clickArtistSName(String viewMode) throws InterruptedException{
         selectViewModeString(viewMode);
         System.out.println("Artists page is in " + viewMode);
         getTotalNumberOfArtists(viewModeString);
         selectArtist();
-        clickArtist();
+        clickSelectedArtist();
     }
 
     private void getTotalNumberOfArtists(String viewModeString) throws InterruptedException {
+
+        //Solution 1: Used different xpath selector: Only 9 Artists are found
+//        allArtistNameLink = By.xpath("(//*[@id=\"artistsWrapper\"]//div/a)");
+
+        //Solution 2: Use css selector: Still 9 Artists
+//        allArtistNameLink = By.cssSelector("#artistsWrapper div .name");
+
+        //Solution 3: Scroll to the bottom using JS (Did not scroll to the bottom): Still 9 Artists
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+
+        //Solution 4: Scroll to the bottom of the page first so that all artist will be visible in DOM
+        //SUCCESS! Correct total number of artists are found.
         int numberOfTimesToScrollDown = 10;
         clickFirstArtist(viewModeString);
         scrollPageDown(numberOfTimesToScrollDown);
+
         String allArtistNameLinkLocatorFormat = String.format("//*[@id=\"artistsWrapper\"]//*[@class=\"%s\"]", viewModeString);
         allArtistNameLink = By.xpath(allArtistNameLinkLocatorFormat);
+
+        //Solution 5: Used Thread.sleep: Inconsistent results. Can find up to 18 artists only
+//        Thread.sleep(10000);
+
         numberOfArtists = getSize(allArtistNameLink);
+
+        //Solution 6: Use List<WebElements>: Only 9 artists are found
+//        numberOfArtists = getElements(allArtistNameLinkLocatorFormat).size();
     }
 
     private void selectArtist(){
@@ -151,7 +189,7 @@ public class ArtistsPage extends BasePage{
         System.out.println("The selected artist is " + selectedArtistName);
     }
 
-    private void clickArtist(){
+    private void clickSelectedArtist(){
         moveToElementClick(selectedArtist);
 //        selectedArtist.click();
     }
