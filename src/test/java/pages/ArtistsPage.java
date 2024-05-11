@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+
 import java.util.List;
 
 public class ArtistsPage extends BasePage{
@@ -12,8 +13,6 @@ public class ArtistsPage extends BasePage{
     public ArtistsPage(WebDriver givenDriver) {
         super(givenDriver);
     }
-
-    MainFooterPage mainFooterPage = new MainFooterPage(BaseDefinition.getThreadLocal());
 
     @FindBy (xpath = "//a[@class=\"artists\"]")
     private WebElement artists;
@@ -24,9 +23,9 @@ public class ArtistsPage extends BasePage{
     private WebElement compactArtistsThumbnail;
     @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@class=\"item full\"]")
     private WebElement fullArtistsThumbnail;
-    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@data-test=\"view-mode-list\"]")
+    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@title=\"View as list\"]")
     private WebElement viewAsListButton;
-    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@data-test=\"view-mode-thumbnail\"]")
+    @FindBy (xpath = "//*[@id=\"artistsWrapper\"]//*[@title=\"View as thumbnails\"]")
     private WebElement viewAsThumbnailButton;
     @FindBy (xpath = "//*[@id=\"artistWrapper\"]//h1")
     private WebElement selectedArtistsPageName;
@@ -40,9 +39,13 @@ public class ArtistsPage extends BasePage{
     private static final String viewThumbnail = "item full";
     private static final String viewList = "item compact";
     String viewModeString;
+    By allArtistNameLink;
+    private int numberOfArtists;
 
     public void goToArtistsPage() {
         moveToElementClick(artists);
+        Assert.assertNotNull(viewAsListButton);
+        Assert.assertNotNull(viewAsThumbnailButton);
     }
 
     public void playArtists(int numberOfPlayedArtists) {
@@ -56,24 +59,23 @@ public class ArtistsPage extends BasePage{
         Assert.assertEquals(artistsPageHeader.getText(), "Artists");
     }
 
-    public void displayArtistsInThumbnailView() {
-
+    public void checkArtistsDisplayedInThumbnailView() {
         Assert.assertTrue(fullArtistsThumbnail.isDisplayed());
     }
 
     public void clickArtistViewAsListButton() {
-        viewAsListButton.click();
+        moveToElementClick(viewAsListButton);
     }
 
-    public void displayArtistsInAListView() {
+    public void checkArtistsDisplayedInListView() {
         Assert.assertTrue(compactArtistsThumbnail.isDisplayed());
     }
 
     public void clickArtistViewAsThumbnailsButton() {
-        viewAsThumbnailButton.click();
+        moveToElementClick(viewAsThumbnailButton);
     }
 
-    private String selectViewModeString (String viewMode, String viewModeString){
+    private String selectViewModeString (String viewMode){
         if (viewMode.equals("Thumbnail")) {
             viewModeString = viewThumbnail;
         }
@@ -83,22 +85,18 @@ public class ArtistsPage extends BasePage{
         return viewModeString;
     }
 
-    public void clickArtists(String artistName, String viewMode){
-        selectViewModeString(viewMode, viewModeString);
+    public void clickArtists(String artistName, String viewMode) throws InterruptedException {
+        selectViewModeString(viewMode);
         int numberOfTimesToScrollDown = 10;
         String artistsThumbnailLocatorFormat = String.format("//*[@id=\"artistsWrapper\"]//*[@class=\"%s\" and @title=\"%s\"]//a[@class=\"control control-play font-size-0\"]", viewModeString, artistName);
         try {
             WebElement artistThumbnail = driver.findElement(By.xpath(artistsThumbnailLocatorFormat));
-            actions.moveToElement(artistThumbnail).perform();
-            actions.click(artistThumbnail).perform();
+            moveToElementClick(artistThumbnail);
         } catch (Exception e) {
             clickFirstArtist(viewModeString);
             scrollPageDown(numberOfTimesToScrollDown);
-            scrollPageDown(numberOfTimesToScrollDown);
-            scrollPageDown(numberOfTimesToScrollDown);
             WebElement artistThumbnail = findElementVisibility(By.xpath(artistsThumbnailLocatorFormat));
-            actions.moveToElement(artistThumbnail).perform();
-            actions.click(artistThumbnail).perform();
+            moveToElementClick(artistThumbnail);
         }
     }
 
@@ -108,9 +106,10 @@ public class ArtistsPage extends BasePage{
         firstArtistThumbnail.sendKeys(Keys.DOWN);
     }
 
-    private void scrollPageDown(int numberOfTimesToScrollDown){
-        for (int x = 0; x <= 10; x++){
+    private void scrollPageDown(int numberOfTimesToScrollDown) throws InterruptedException {
+        for (int x = 0; x <= numberOfTimesToScrollDown; x++){
             actions.sendKeys(Keys.PAGE_DOWN).build().perform();
+            Thread.sleep(30);
         }
     }
 
@@ -126,54 +125,35 @@ public class ArtistsPage extends BasePage{
     }
 
     public void clickArtist(String viewMode) throws InterruptedException{
-        selectViewModeString(viewMode, viewModeString);
+        selectViewModeString(viewMode);
         System.out.println("Artists page is in " + viewMode);
-        selectArtist(viewModeString);
+        getTotalNumberOfArtists(viewModeString);
+        selectArtist();
         clickArtist();
     }
 
-    private void selectArtist(String viewModeString) throws InterruptedException{
+    private void getTotalNumberOfArtists(String viewModeString) throws InterruptedException {
         int numberOfTimesToScrollDown = 10;
-        //Solution # 1 ~ still 18 Artists
-//        WebElement allArtistInThumbnail = driver.findElement(By.xpath("//*[@id=\"artistsWrapper\"]//*[@class=\"artists main-scroll-wrap as-thumbnails\"]"));
-//        List<WebElement> allArtistInThumbnailList = allArtistInThumbnail.findElements(By.xpath("./article"));
-//        int numberOfArtists = allArtistInThumbnailList.size();
-//        System.out.println(numberOfArtists);
-
-        String allArtistInThumbnailLocatorFormat = String.format("//*[@id=\"artistsWrapper\"]//*[@class=\"%s\"]", viewModeString);
-
-        //Solution # 2 ~ still 18 Artists
-//        By allArtistInThumbnail = By.xpath("(//*[@id=\"artistsWrapper\"]//div/a)");
-
-        //Solution # 3 ~ still 18 Artists
-//        By allArtistInThumbnail = By.cssSelector("#artistsWrapper div .name");
-
-        //Solution # 4 ~ still 18 Artists, does not scroll to the bottom
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
-
-        By allArtistInThumbnail = By.xpath(allArtistInThumbnailLocatorFormat);
         clickFirstArtist(viewModeString);
         scrollPageDown(numberOfTimesToScrollDown);
-        scrollPageDown(numberOfTimesToScrollDown);
-        scrollPageDown(numberOfTimesToScrollDown);
+        String allArtistNameLinkLocatorFormat = String.format("//*[@id=\"artistsWrapper\"]//*[@class=\"%s\"]", viewModeString);
+        allArtistNameLink = By.xpath(allArtistNameLinkLocatorFormat);
+        numberOfArtists = getSize(allArtistNameLink);
+    }
 
-        //Solution # 5 ~ not consistent (18 or 20)
-        Thread.sleep(10000);
-
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(allArtistInThumbnail));
-        final int numberOfArtists = getSize(allArtistInThumbnail);
-
+    private void selectArtist(){
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(allArtistNameLink));
         int randomArtistNumber =  getRandomNumber( 1, numberOfArtists);
-        String artistNameInThumbnailLocatorFormat = String.format("(//*[@id=\"artistsWrapper\"]//div/a)[%s]", randomArtistNumber);
-        selectedArtist = findElementVisibility(By.xpath(artistNameInThumbnailLocatorFormat));
+        String selectedArtistNameLinkLocatorFormat = String.format("(//*[@id=\"artistsWrapper\"]//div/a)[%s]", randomArtistNumber);
+        selectedArtist = findElementVisibility(By.xpath(selectedArtistNameLinkLocatorFormat));
         selectedArtistName = selectedArtist.getText();
         System.out.println("The total number of artists is " + numberOfArtists);
         System.out.println("The selected artist is " + selectedArtistName);
     }
 
     private void clickArtist(){
-        selectedArtist.click();
+        moveToElementClick(selectedArtist);
+//        selectedArtist.click();
     }
 
     public void navigatedToArtistSPage() {
@@ -199,9 +179,7 @@ public class ArtistsPage extends BasePage{
     }
 
     private void playSong(){
-        Assert.assertNotNull(selectedArtistSSong);
         actions.doubleClick(selectedArtistSSong).perform();
-        Assert.assertTrue(mainFooterPage.soundBar.isDisplayed());
     }
 
 }

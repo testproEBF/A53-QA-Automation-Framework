@@ -42,9 +42,9 @@ public class BasePage {
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         actions = new Actions(driver);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 3), this);
     }
 
     public WebElement findElementVisibility(By locator){
@@ -98,8 +98,13 @@ public class BasePage {
         return randomNumbers;
     }
 
+    public void moveToElement(WebElement element){
+        actions.moveToElement(findElementClickable(element)).perform();
+    }
+
     public void moveToElementClick(WebElement element){
-        actions.moveToElement(findElementClickable(element)).click().perform();
+        moveToElement(element);
+        actions.click(element).perform();
     }
 
     public void moveToElementDoubleClick(WebElement element){
@@ -299,6 +304,45 @@ public class BasePage {
         clickElementWithJavaScript(avatarIcon);
 //        findElementVisibility(avatarIcon).click();
     }
+
+    public void scrollIntoViewJS (WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, 0);");
+        actions.moveToElement(element, element.getSize().getWidth(), element.getSize().getHeight());
+        actions.perform();
+    }
+
+    public void scrollAndClickJS (WebElement element){
+        scrollIntoViewJS(element);
+        findElementVisibility(element);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click()", element);
+    }
+
+    public List<WebElement> getElements (String xpathLocatorFormat){
+        By elementLocator = By.xpath(xpathLocatorFormat);
+        int listSize = getWrappedWebElements(elementLocator).size();
+        if (listSize == 0){
+            throw new NoSuchElementException(
+                    "List of requested elements is empty!");
+        }
+        List<WebElement> elements = new ArrayList<>();
+        for (int i = 1; i <= listSize; i++){
+            WebElement element = driver.findElement(By.xpath(String.format("(%s)[%s]", xpathLocatorFormat, i)));
+            elements.add(element);
+        }
+        return elements;
+    }
+
+    public List<WebElement> getWrappedWebElements (By elementLocator){
+        return waitForPresenceOfAllElements(elementLocator);
+    }
+
+    public List<WebElement> waitForPresenceOfAllElements (By elementLocator){
+        return new WebDriverWait(driver, Duration.ofSeconds(3)).
+                until(ExpectedConditions.presenceOfAllElementsLocatedBy(elementLocator));
+    }
+
 }
 
 

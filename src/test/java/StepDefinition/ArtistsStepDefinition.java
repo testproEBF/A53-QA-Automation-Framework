@@ -27,7 +27,7 @@ public class ArtistsStepDefinition {
 
     @And("I will see the artists in thumbnail view")
     public void displayArtistsInThumbnailViewInAlphabeticalOrder() {
-        artistsPage.displayArtistsInThumbnailView();
+        artistsPage.checkArtistsDisplayedInThumbnailView();
     }
 
     @When("I click the View as list button on the top right of the page")
@@ -37,7 +37,7 @@ public class ArtistsStepDefinition {
 
     @Then("I will see the artists in a list view")
     public void displayArtistsInAListViewInAlphabeticalOrder() {
-        artistsPage.displayArtistsInAListView();
+        artistsPage.checkArtistsDisplayedInListView();
     }
 
     @When("I click the View as thumbnails button beside the View as list button")
@@ -45,8 +45,17 @@ public class ArtistsStepDefinition {
         artistsPage.clickArtistViewAsThumbnailsButton();
     }
 
+    @And("I click the View as {string} button on the top right of the page")
+    public void selectArtistsPageViewMode(String viewModeButton) {
+        if (viewModeButton.equals("List")){
+            artistsPage.clickArtistViewAsListButton();
+        } else {
+            artistsPage.clickArtistViewAsThumbnailsButton();
+        }
+    }
+
     @And("I click {string} artist's thumbnail in {string} view")
-    public void clickArtistSThumbnail(String artistName, String viewMode){
+    public void clickArtistSThumbnail(String artistName, String viewMode) throws InterruptedException {
         artistsPage.clickArtists(artistName, viewMode);
     }
 
@@ -71,20 +80,14 @@ public class ArtistsStepDefinition {
         artistsPage.navigatedToArtistSPage();
     }
 
-    @And("I will be able to play a song")
-    public void playArtistSSongs(){
+    @When("I play any of the artist's songs")
+    public void playAnyOfTheArtistSSongs() {
         artistsPage.playArtistSSongs();
+    }
+
+    @Then("the song will be played")
+    public void theSongWillBePlayed() {
         mainFooterPage.checkArtistSSongIsPlaying();
     }
-
-    @And("I click the View as {string} button on the top right of the page")
-    public void selectArtistsPageViewMode(String viewModeButton) {
-        if (viewModeButton.equals("List")){
-            artistsPage.clickArtistViewAsListButton();
-        } else {
-            artistsPage.clickArtistViewAsThumbnailsButton();
-        }
-    }
-
 }
 
